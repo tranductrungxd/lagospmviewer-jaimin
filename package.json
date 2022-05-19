@@ -1,0 +1,25 @@
+{
+  "name": "lagosviewer",
+  "version": "1.0.0",
+  "description": "New Viewer for LagosPM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "author": "Jaimin",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "forge-apis": "^0.9.0",
+    "body-parser": "^1.20.0",
+    "cors": "2.8.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "mssql": "^8.1.0",
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}

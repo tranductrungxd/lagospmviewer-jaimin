@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Autodesk Redirect</title>
+</head>
+<style type="text/css">
+	.header {
+  font-family: 'Lato', sans-serif;
+  text-align: center;
+  color: #333;
+  margin: 15% 20%;
+}
+
+.icon {
+  display: block;
+  cursor: pointer;
+  margin: auto;
+  width: 10%;
+  -o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+  transition: .5s;
+}
+
+.icon:hover {
+  cursor: pointer;
+  -webkit-filter: opacity(.2);
+  filter: opacity(.2);
+}
+
+.prompt {
+  cursor: pointer;
+  margin: auto;
+  width: 13rem;
+}
+
+#tweetQuote {
+  display: block;
+}
+
+#quote {
+  font-size: 3rem;
+}
+
+#author {
+  font-size: 2rem;
+}
+
+/*
+font-family: 'Montserrat', sans-serif;
+font-family: 'Roboto', sans-serif;
+font-family: 'Lato', sans-serif;
+font-family: 'Oswald', sans-serif;
+*/
+</style>
+<body>
+
+	<div class="header">
+	  <p id="quote"></p>
+	  <b><p id="author"></p></b>
+	</div>
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  
+<script type="text/javascript">
+	getQuote();
+
+function getQuote() {
+  $('#quote').html("Hold on a sec! We are logging you in.");
+  $('#author').html("LagosPM");
+  localStorage.setItem("bimToken", `<%= accessToken %>`);
+  localStorage.setItem("refreshToken",`<%= refreshToken %>`);
+  localStorage.setItem("expire",`<%= expireIn %>`);
+  setTimeout(() => {
+  	window.close();
+  },2000);
+}
+</script>
+</body>
+</html>
