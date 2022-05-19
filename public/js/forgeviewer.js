@@ -86,7 +86,7 @@ function loginToBim360() {
         sessionStorage.removeItem("bimToken");
         var url = "https://developer.api.autodesk.com//authentication/v1/authorize?"
         +"client_id=AlJ2FkCOhpF8lNDLDGdqKAsHszQ7px6n&response_type=code&redirect_uri="
-        +"http://lagosviewer.herokuapp.com/forge/oauth/tokenForge_3Legs&scope=data:read%20data:write%20data:create%20data:search%20code:all%20account:read%20user-profile:read%20viewables:read";
+        +"https://lagosviewer.herokuapp.com/forge/oauth/tokenForge_3Legs&scope=data:read%20data:write%20data:create%20data:search%20code:all%20account:read%20user-profile:read%20viewables:read";
         var left = (screen.width / 2) - (650 / 2);
         var top = (screen.height / 3) - (600 / 2);
         var newWindow = window.open(url, 'Logon to your BIM360 account.', 'height=600,width=650,top=' + top + ',left=' + left);
