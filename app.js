@@ -45,5 +45,8 @@ router.route("/wirs").get( async (req,res)=>{
 
 router.use("/forge", require("./forge/forgeApis"));
 
-app.listen(port, () => console.info(`listening on port ${port}`))
+const PORT = process.env.PORT || 4000;
 
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
