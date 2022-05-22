@@ -345,48 +345,47 @@ function fetchAllIssuesFromBim360() {
 
 $(document).on("click","#addWIR",function() {
     var issueData = "";
-    var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
-    pushPinExtension.removeAllItems(); 
-     pushPinExtension.pushPinManager.addEventListener('pushpin.created', function (e) {
-            pushPinExtension.pushPinManager.removeEventListener('pushpin.created', arguments.callee);
-            pushPinExtension.endCreateItem();
-
-            var target_urn = sessionStorage.getItem("containerUrn");
-            var starting_version = 1;
     
-           var issue = pushPinExtension.getItemById(pushPinExtension.pushPinManager.pushPinList[0].itemData.id ); 
-           
-            if (issue === null) return; 
-            var data = {
-              type: 'quality_issues',
-              attributes: {
-                title: "", 
-                description: "",
-                status: "",
-                due_date: "",
-                target_urn: "",
-                starting_version: "", 
-                ng_issue_type_id: "",
-                ng_issue_subtype_id: "",
+     var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
+     pushPinExtension.removeAllItems(); 
+      pushPinExtension.pushPinManager.addEventListener('pushpin.created', function (e) {
+             pushPinExtension.pushPinManager.removeEventListener('pushpin.created', arguments.callee);
+            pushPinExtension.endCreateItem();
+             var target_urn = sessionStorage.getItem("containerUrn");
+             var starting_version = 1;
+               var issue = pushPinExtension.getItemById(pushPinExtension.pushPinManager.pushPinList[0].itemData.id ); 
+         
+             if (issue === null) return; 
+             var data = {
+               type: 'quality_issues',
+               attributes: {
+                 title: "", 
+                 description: "",
+                 status: "",
+                 due_date: "",
+                 target_urn: "",
+                 starting_version: "", 
+                 ng_issue_type_id: "",
+                 ng_issue_subtype_id: "",
 
-                sheet_metadata: { 
-                  is3D: true,
-                  sheetGuid: this.viewer.model.getDocumentNode().data.guid,
-                  sheetName: this.viewer.model.getDocumentNode().data.name
-                },
-                pushpin_attributes: { 
-                  attributes_version : 2,
-                  type: 'TwoDVectorPushpin', 
-                  object_id: issue.objectId, 
-                  location: issue.position, 
-                  viewer_state: issue.viewerState 
-                },
-              }
+                 sheet_metadata: { 
+                   is3D: true,
+                   sheetGuid: this.viewer.model.getDocumentNode().data.guid,
+                   sheetName: this.viewer.model.getDocumentNode().data.name
+                 },
+                 pushpin_attributes: { 
+                   attributes_version : 2,
+                   type: 'TwoDVectorPushpin', 
+                   object_id: issue.objectId, 
+                   location: issue.position, 
+                   viewer_state: issue.viewerState 
+                 },
+               }
             };
-            var ids = sessionStorage.getItem("containerId");
-            $("#myModal").toggle("modal");
-        });     
-    pushPinExtension.startCreateItem({ label: "New", status: 'open', type: 'issues' });
+             var ids = sessionStorage.getItem("containerId");
+             $("#myModal").toggle("modal");
+         });     
+     pushPinExtension.startCreateItem({ label: "New", status: 'open', type: 'issues' });
             
 });
 

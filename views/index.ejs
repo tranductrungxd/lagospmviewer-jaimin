@@ -24,7 +24,7 @@
     </div>
     <div class="jss25 jss26">
       <a style="cursor: pointer;" class="tooltip1" title="Add WIR" class="" id="addWIR"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="LocationOnIcon"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
-        <span class="tooltiptext1">WIR ADG</span>
+        <span class="tooltiptext1">WIR</span>
       </a>
     </div>
   </div>
@@ -34,24 +34,37 @@
     <div>
       <ul class="MuiList-root MuiList-padding MuiList-dense css-1ontqvh">
         <li class="jss13 MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-q6hm0g" style="background: none;">
-          <h4 style="margin-left:30%;">WIR ADG</h4><hr>  
+          <h4 style="margin-left:30%;">WIR ADG</h4>  
         </li> 
       </ul>
+      <hr class="hrstyle">
       <ul class="MuiList-root MuiList-padding MuiList-dense css-1ontqvh">
         <div>
           <% for(var i=0; i<wirs.length; i++) {%>
             <li></li>
             <li class="jss13 MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-q6hm0g" style="background: none;">
               <div class="jss17 MuiListItemIcon-root css-1f8bwsm"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="LocationOnIcon"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg></div>
-              <div class="jss18"><%= wirs[i].pid %></div>&nbsp;
               <div class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-1xar93x" title="Need to inspect the foundation at this location.">
-                <span class="MuiTypography-root MuiTypography-body2 jss19 MuiListItemText-primary css-14tqbo1"><%= wirs[i].location %></span>
-                <p class="MuiTypography-root MuiTypography-body2 jss20 MuiListItemText-secondary css-mbfek"><%= wirs[i].type_of_structure %></p>
+                <span class="MuiTypography-root MuiTypography-body2 jss19 MuiListItemText-primary css-14tqbo1">
+                  <% if(wirs[i].inspection_type=="sbe"){ %>
+                    Sand Blast Cleaning of Rebars
+                  <% } else if(wirs[i].inspection_type=="swe"){ %>  
+                    Sea Wall Deligence
+                 <% } else if(wirs[i].inspection_type=="tc"){ %>  
+                  Thermal Control
+               <% } else if(wirs[i].inspection_type=="sw"){ %>  
+                Shotcrete Works
+             <% } else if(wirs[i].inspection_type=="sri"){ %>  
+              Still Reinforcement Installation
+           <% } %>
+                  </span>
+                <p class="MuiTypography-root MuiTypography-body2 jss20 MuiListItemText-secondary css-mbfek"><%= wirs[i].structure %></p>
               </div>
               <span class="jss14"><%= wirs[i].date_of_inspection %></span>
               <div class="MuiListItemSecondaryAction-root css-y3qv5r">
                 <div class="jss21"><button class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall jss22 css-1j7qk7u" tabindex="0" type="button" aria-label="View in LagosPM"><a href="https://demo.lagospm.com/ltepage.cfm?fn=punchlist.editpunch&amp;punchid=2287&amp;pid=17&amp;lte=true" target="_blank"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="jss22" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><g><path fill="none" d="M0 0h24v24H0z"></path><path d="M5.828 7l2.536 2.536L6.95 10.95 2 6l4.95-4.95 1.414 1.414L5.828 5H13a8 8 0 1 1 0 16H4v-2h9a6 6 0 1 0 0-12H5.828z"></path></g></svg></a><span class="MuiTouchRipple-root css-w0pj6f"></span></button></div></div>
             </li>
+            <hr class="MuiDivider-root MuiDivider-fullWidth css-39bbo6">
          <% } %>
         </div>
       </ul>
@@ -71,8 +84,8 @@
 <div class="modal-dialog modal-xl">
   <div class="modal-content">
 
-    <div class="modal-body">
-      <div class="row">
+    <div class="modal-body" style="padding: 0px;">
+      <div class="row" style="padding: 19px 20px 10px 40px;">
         <div class="col-md-3">
           <img style="height: 40%;" src="img/Picture1.png" />
         </div>
@@ -88,29 +101,30 @@
       </div>
       <div class="row">
         <div class="col-md-3"></div>
-        <div class="col-md-6">
+        <div class="col-md-6" style="margin-left: 45px;">
           <b><h6>GUGGENHEIM ABU DHABI MUSEUM PROJECT - MAIN WORKS</h6>
             <h6 style="margin-left: 35px;">INSPECTION CHECKLIST - REBAR COUPLER TESTING</h6></b>
         </div>
         <div class="col-md-3"></div>
       </div>
       <hr>
+      <hr class="hrstyle">
       <div class="row">
         <div class="col-md-6" style="border-right: 1px solid grey;">
-           <div class="form-group row">
-              <label for="dateOfTesting" class="col-sm-4 col-form-label">Date of Testing:</label>
+           <div class="form-group row" style="margin-top: 10px;">
+              <label for="dateOfTesting" class="col-sm-4 col-form-label alignCss">Date of Testing:</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="dateOfTesting" placeholder="Enter date of testing" />
               </div>
             </div>
             <div style="margin-top: 5px;" class="form-group row">
-              <label for="timeOfTesting" class="col-sm-4 col-form-label">Time of Testing:</label>
+              <label for="timeOfTesting" class="col-sm-4 col-form-label alignCss">Time of Testing:</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="timeOfTesting" placeholder="Enter time of testing" >
               </div>
             </div>
-            <div style="margin-top: 5px;" class="form-group row">
-              <label for="locationOfTesting" class="col-sm-4 col-form-label">Location of Testing:</label>
+            <div style="margin-top: 5px; margin-bottom: 10px;" class="form-group row">
+              <label for="locationOfTesting" class="col-sm-4 col-form-label alignCss">Location of Testing:</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="locationOfTesting" placeholder="Enter location of testing" />
               </div>
@@ -118,41 +132,42 @@
         </div>
         <div class="col-md-6">
            <div class="form-group row">
-              <label for="dateOfTesting" class="col-sm-2 col-form-label">Client:</label>
+              <label for="dateOfTesting" class="col-sm-2 col-form-label alignCss">Client:</label>
               <label for="dateOfTesting" class="col-sm-10 col-form-label">Department of Culture and Tourism (DCT)</label>
             </div>
             <div style="margin-top: 5px;" class="form-group row">
-              <label for="dateOfTesting" class="col-sm-2 col-form-label">Contractor:</label>
+              <label for="dateOfTesting" class="col-sm-2 col-form-label alignCss">Contractor:</label>
               <label for="dateOfTesting" class="col-sm-10 col-form-label">Sixco-Trojan Joint Venture (STJV)</label>
             </div>
-            <div style="margin-top: 5px;" class="form-group row">
-              <label for="dateOfTesting" class="col-sm-2 col-form-label">Project:</label>
+            <div style="margin-top: 5px; margin-bottom: 10px;" class="form-group row">
+              <label for="dateOfTesting" class="col-sm-2 col-form-label alignCss">Project:</label>
               <label for="dateOfTesting" class="col-sm-10 col-form-label">Sobha Hartland</label>
             </div>
         </div>
       </div>
-      <hr>
+      <hr class="hrstyle">
+      <hr class="hrstyle" style="margin-top: 10px;">
       <div class="row">
         <div class="col-md-6" style="border-right: 1px solid grey;"><b style="margin-left: 210px;">Description</b></div>
         <div class="col-md-6"><b style="margin-left: 210px;">Status</b></div>
       </div>
-      <hr>
+      <hr class="hrstyle">
       <div class="row">
         <div class="col-md-6" style="border-right: 1px solid grey;">
-          <div class="form-group row">
-              <label for="structure" class="col-sm-4 col-form-label">Structure:</label>
+          <div class="form-group row" style="margin-top: 10px;">
+              <label for="structure" class="col-sm-4 col-form-label alignCss">Structure:</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="structure" placeholder="Enter structure" />
               </div>
             </div>
             <div style="margin-top: 5px;" class="form-group row">
-              <label for="typeOfStructure" class="col-sm-4 col-form-label">Type of Structure:</label>
+              <label for="typeOfStructure" class="col-sm-4 col-form-label alignCss">Type of Structure:</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="typeOfStructure" placeholder="Enter type of structure" >
               </div>
             </div>
             <div style="margin-top: 5px;" class="form-group row">
-              <label for="rdNo" class="col-sm-4 col-form-label">Reference Drawing No:</label>
+              <label for="rdNo" class="col-sm-4 col-form-label alignCss">Reference Drawing No:</label>
               <div class="col-sm-8">
                 <input type="text" class="form-control" id="rdNo" placeholder="Enter drawing no" />
               </div>
@@ -183,11 +198,12 @@
           </div>
         </div>
       </div>
+      <hr class="hrstyle">
       <hr>
       <div class="row">
         <div class="col-md-12">
           <div class="form-group row">
-              <label for="inspectionType" class="col-sm-2 col-form-label"><b>Inspection Type:</b></label>
+              <label for="inspectionType" class="col-sm-2 col-form-label alignCss"><b>Inspection Type:</b></label>
               <div class="col-sm-4">
                 <select id="inspectionType" class="form-control">
                     <option value="0"> Please Select </option>
@@ -2409,7 +2425,7 @@
     </div>
 
     <!-- Modal footer -->
-    <div class="modal-footer">
+    <div class="modal-footer" style="margin-top: 10px;">
       <button type="button" class="btn btn-primary">Save</button>
       <button type="button" class="btn btn-danger" id="modalCancel">Close</button>
     </div>

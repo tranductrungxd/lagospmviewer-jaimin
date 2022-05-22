@@ -2,6 +2,23 @@
     --separator-border: hsla(0,0%,50%,.35)
 }
 
+.alignCss {
+    display: inline-block;
+    text-align: right;
+}
+
+.hrstyle {
+    margin: 0;
+}
+
+.css-39bbo6 {
+    margin: 0px;
+    flex-shrink: 0;
+    border-width: 0px 0px thin;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
 .allotment-module_splitView__1rmCV {
     height: 100%;
     overflow: hidden;
