@@ -456,3 +456,11 @@ Autodesk.Viewing.theExtensionManager.registerExtension('BIM360IssueExtension', B
 
 //https://shrouded-ridge-44534.herokuapp.com/api/forge/oauth/callback
 //http://localhost:80/Lagos/Home/autodeskRedirect
+
+/* 
+git add .
+git commit -am "make it better"
+git push heroku master
+git push ordigin master
+
+*/
