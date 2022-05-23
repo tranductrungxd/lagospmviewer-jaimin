@@ -54,6 +54,24 @@
     padding: 8px 0px;
     position: relative;
 }
+
+::-webkit-scrollbar {
+    width: 0.5em;
+}
+::-webkit-scrollbar-button {
+    background: #ccc
+}
+::-webkit-scrollbar-track-piece {
+    background: #888
+}
+::-webkit-scrollbar-thumb {
+    background: #ffe493
+}
+
+.mainUlwir {
+    overflow-y: auto;
+}
+
 .css-1f8bwsm {
     min-width: 56px;
     color: rgba(0, 0, 0, 0.54);

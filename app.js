@@ -28,7 +28,7 @@ router.use((request,response,next)=>{
     next();
 });
 
-router.route("").get( async (req,res)=>{
+router.route("/").get( async (req,res)=>{
     const payload = await new SQL_LPM().getWirs();
     res.render('index', {wirs: payload.data});
 });
@@ -41,6 +41,21 @@ router.route("/wirs").get( async (req,res)=>{
         console.log(err);
         res.status(500).send("Error");
       }
+});
+
+router.route("/wirs").post( async (req,res)=>{
+  try {
+    const wir = req.body;
+    wir.consent=="undefined" ? wir.consent=0 : wir.consent=1;
+    wir.yesConsent=="undefined" ? wir.yesConsent=0 : wir.yesConsent=1;
+    wir.noConsent=="undefined" ? wir.noConsent=0 : wir.noConsent=1;
+    wir.reviewNot=="undefined" ? wir.reviewNot=0 : wir.reviewNot=1;
+    await new SQL_LPM().createNewWIR(wir);
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+    res.redirect("");
+  }
 });
 
 router.use("/forge", require("./forge/forgeApis"));

@@ -38,7 +38,7 @@
         </li> 
       </ul>
       <hr class="hrstyle">
-      <ul class="MuiList-root MuiList-padding MuiList-dense css-1ontqvh">
+      <ul class="MuiList-root MuiList-padding MuiList-dense css-1ontqvh mainUlwir">
         <div>
           <% for(var i=0; i<wirs.length; i++) {%>
             <li></li>
@@ -48,7 +48,7 @@
                 <span class="MuiTypography-root MuiTypography-body2 jss19 MuiListItemText-primary css-14tqbo1">
                   <% if(wirs[i].inspection_type=="sbe"){ %>
                     Sand Blast Cleaning of Rebars
-                  <% } else if(wirs[i].inspection_type=="swe"){ %>  
+                  <% } else if(wirs[i].inspection_type=="swd"){ %>  
                     Sea Wall Deligence
                  <% } else if(wirs[i].inspection_type=="tc"){ %>  
                   Thermal Control
@@ -85,6 +85,7 @@
   <div class="modal-content">
 
     <div class="modal-body" style="padding: 0px;">
+      <form method="post" action="wirs">
       <div class="row" style="padding: 19px 20px 10px 40px;">
         <div class="col-md-3">
           <img style="height: 40%;" src="img/Picture1.png" />
@@ -114,19 +115,19 @@
            <div class="form-group row" style="margin-top: 10px;">
               <label for="dateOfTesting" class="col-sm-4 col-form-label alignCss">Date of Testing:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="dateOfTesting" placeholder="Enter date of testing" />
+                <input type="text" class="form-control" id="dateOfTesting" name="dateOfTesting" placeholder="Enter date of testing" />
               </div>
             </div>
             <div style="margin-top: 5px;" class="form-group row">
               <label for="timeOfTesting" class="col-sm-4 col-form-label alignCss">Time of Testing:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="timeOfTesting" placeholder="Enter time of testing" >
+                <input type="text" class="form-control" id="timeOfTesting" name="timeOfTesting" placeholder="Enter time of testing" >
               </div>
             </div>
             <div style="margin-top: 5px; margin-bottom: 10px;" class="form-group row">
               <label for="locationOfTesting" class="col-sm-4 col-form-label alignCss">Location of Testing:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="locationOfTesting" placeholder="Enter location of testing" />
+                <input type="text" class="form-control" id="locationOfTesting" name="locationOfTesting" placeholder="Enter location of testing" />
               </div>
             </div>
         </div>
@@ -157,43 +158,43 @@
           <div class="form-group row" style="margin-top: 10px;">
               <label for="structure" class="col-sm-4 col-form-label alignCss">Structure:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="structure" placeholder="Enter structure" />
+                <input type="text" class="form-control" id="structure" name="structure" placeholder="Enter structure" />
               </div>
             </div>
             <div style="margin-top: 5px;" class="form-group row">
               <label for="typeOfStructure" class="col-sm-4 col-form-label alignCss">Type of Structure:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="typeOfStructure" placeholder="Enter type of structure" >
+                <input type="text" class="form-control" id="typeOfStructure" name="typeOfStructure" placeholder="Enter type of structure" >
               </div>
             </div>
             <div style="margin-top: 5px;" class="form-group row">
               <label for="rdNo" class="col-sm-4 col-form-label alignCss">Reference Drawing No:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="rdNo" placeholder="Enter drawing no" />
+                <input type="text" class="form-control" id="rdNo" name="rdNo" placeholder="Enter drawing no" />
               </div>
             </div>
             <div style="margin-top: 5px;" class="form-group row">
               <label for="statementRef" class="col-sm-4 col-form-label">Method Statement Ref No:</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="statementRef" placeholder="Enter statement no" />
+                <input type="text" class="form-control" id="statementRef" name="statementRef" placeholder="Enter statement no" />
               </div>
             </div>
         </div>
         <div class="col-md-6">
           <div class="row">
-            <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="" /></div>
+            <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="consent" /></div>
             <div class="col-md-11"><label class="col-form-label">: Consent to Proceed</label></div>
           </div>
           <div class="row">
-            <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="" /></div>
+            <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="yesConsent" /></div>
             <div class="col-md-11"><label class="col-form-label">: Consent to proceed, subject to comment</label></div>
           </div>
           <div class="row">
-            <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="" /></div>
+            <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="noConsent" /></div>
             <div class="col-md-11"><label class="col-form-label">: No Consent to proceed</label></div>
           </div>
           <div class="row">
-            <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="" /></div>
+            <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="reviewNot" /></div>
             <div class="col-md-11"><label class="col-form-label">: Review not required, for information</label></div>
           </div>
         </div>
@@ -205,7 +206,7 @@
           <div class="form-group row">
               <label for="inspectionType" class="col-sm-2 col-form-label alignCss"><b>Inspection Type:</b></label>
               <div class="col-sm-4">
-                <select id="inspectionType" class="form-control">
+                <select name="inspectionType" id="inspectionType" class="form-control">
                     <option value="0"> Please Select </option>
                     <option value="sbe"> SAND BLAST CLEANING OF REBARS</option>
                     <option value="swd"> SEA WALL DILIGENCE</option>
@@ -2422,14 +2423,12 @@
               </div>
                         </div>
       </div>
-    </div>
-
-    <!-- Modal footer -->
-    <div class="modal-footer" style="margin-top: 10px;">
-      <button type="button" class="btn btn-primary">Save</button>
+      <hr>
+      <button type="submit" class="btn btn-primary">Save</button>
       <button type="button" class="btn btn-danger" id="modalCancel">Close</button>
+    </form>
     </div>
-
+    
   </div>
 </div>
 </div>

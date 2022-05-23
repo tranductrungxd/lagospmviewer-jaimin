@@ -85,7 +85,7 @@ function loginToBim360() {
         sessionStorage.removeItem("expire");
         sessionStorage.removeItem("bimToken");
         var url = "https://developer.api.autodesk.com//authentication/v1/authorize?"
-        +"client_id=AlJ2FkCOhpF8lNDLDGdqKAsHszQ7px6n&response_type=code&redirect_uri="
+        +"client_id=QsqosEk9aHS6VIdEWrfgPBiOBBqFHB5r&response_type=code&redirect_uri="
         +"https://lagosviewer.herokuapp.com/forge/oauth/tokenForge_3Legs&scope=data:read%20data:write%20data:create%20data:search%20code:all%20account:read%20user-profile:read%20viewables:read";
         var left = (screen.width / 2) - (650 / 2);
         var top = (screen.height / 3) - (600 / 2);
@@ -345,7 +345,6 @@ function fetchAllIssuesFromBim360() {
 
 $(document).on("click","#addWIR",function() {
     var issueData = "";
-    
      var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
      pushPinExtension.removeAllItems(); 
       pushPinExtension.pushPinManager.addEventListener('pushpin.created', function (e) {
@@ -386,7 +385,7 @@ $(document).on("click","#addWIR",function() {
              $("#myModal").toggle("modal");
          });     
      pushPinExtension.startCreateItem({ label: "New", status: 'open', type: 'issues' });
-            
+          
 });
 
 BIM360CreateIssuePanel = function(parentContainer, id, title, content, x, y)

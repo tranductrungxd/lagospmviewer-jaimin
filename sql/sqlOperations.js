@@ -112,56 +112,40 @@ class SQL_LPM {
       }
     });
   }
-  createNewSnag = async (snag) => {
+  createNewWIR = async (wir) => {
     return new Promise(async (resolve) => {
       try {
         const {
-          ProjectID,
-          PunchID,
-          dateSubmitted,
-          dateCompleted,
-          bidPackageId,
-          Location,
-          Item,
-          ResponsibleParty,
-          Status,
-          SubSignOff,
-          ContractorSignOff,
-          FinalSignOff,
-          Origin,
-          Originator,
-          Comments,
-          listnumber,
-          itemnumber,
-          history,
-          attachment,
-          Drawing_Link,
-        } = snag;
-
+          dateOfTesting,
+          timeOfTesting,
+          locationOfTesting,
+          structure,
+          typeOfStructure,
+          rdNo,
+          statementRef,
+          consent,
+          yesConsent,
+          noConsent,
+          reviewNot,
+          inspectionType
+        } = wir;
+       
         const pool = await pools.poolWebConnect;
         const request = new sql.Request(pool);
-        request.input("ProjectID", sql.Int, ProjectID);
-        request.input("PunchID", sql.Int, PunchID);
-        request.input("dateSubmitted", sql.DateTime, dateSubmitted);
-        request.input("dateCompleted", sql.DateTime, dateCompleted);
-        request.input("bidPackageId", sql.Int, bidPackageId);
-        request.input("Location", sql.VarChar(255), Location);
-        request.input("Item", sql.Text, Item);
-        request.input("ResponsibleParty", sql.VarChar(255), ResponsibleParty);
-        request.input("Status", sql.VarChar(255), Status);
-        request.input("SubSignOff", sql.VarChar(255), SubSignOff);
-        request.input("ContractorSignOff", sql.VarChar(255), ContractorSignOff);
-        request.input("FinalSignOff", sql.VarChar(50), FinalSignOff);
-        request.input("Origin", sql.VarChar(255), Origin);
-        request.input("Originator", sql.VarChar(255), Originator);
-        request.input("Comments", sql.NVarChar(sql.MAX), Comments);
-        request.input("listnumber", sql.Int, listnumber);
-        request.input("itemnumber", sql.Int, itemnumber);
-        request.input("history", sql.Text, history);
-        request.input("attachment", sql.NVarChar(100), attachment);
-        request.input("Drawing_Link", sql.NVarChar(256), Drawing_Link);
+        request.input("dateOfTesting", sql.VarChar(50), dateOfTesting);
+        request.input("timeOfTesting", sql.VarChar(50), timeOfTesting);
+        request.input("locationOfTesting", sql.VarChar(50), locationOfTesting);
+        request.input("structure", sql.VarChar(50), structure);
+        request.input("typeOfStructure", sql.VarChar(50), typeOfStructure);
+        request.input("rdNo", sql.VarChar(50), rdNo);
+        request.input("statementRef", sql.VarChar(50), statementRef);
+        request.input("consent", sql.Int, consent);
+        request.input("yesConsent", sql.Int, yesConsent);
+        request.input("noConsent", sql.Int, noConsent);
+        request.input("reviewNot", sql.Int, reviewNot);
+        request.input("inspectionType", sql.VarChar(50), inspectionType);
         request
-          .execute("PunchList_Bim360_Write_New")
+          .execute("Wir_Write_New")
           .then(() => {
             resolve({ status: 200, message: "success" });
           })
