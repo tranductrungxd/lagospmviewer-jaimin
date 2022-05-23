@@ -12,3 +12,9 @@ $(document).on("change","#inspectionType",function() {
 $(document).on("click","#modalCancel",function() {
     $("#myModal").toggle("modal");
 });
+
+$(document).on("change","#projects",function() {
+	if($(this).val() == "snags") {
+		location.href = "https://shrouded-ridge-44534.herokuapp.com/issues";
+	}
+})
