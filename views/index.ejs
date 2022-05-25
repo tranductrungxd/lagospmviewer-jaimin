@@ -28,29 +28,29 @@
         </li>
         <li class="nav-item emptyLi"></li>
         <li class="nav-item dropdown">
-          <select class="" id="projects" style="background-color: transparent;width:auto;border:none;">
-						<option style="background: white;" value="">
+          <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" class="" id="projects" style="background-color: transparent;width:auto;border:none;">
+						<option style="background: white;" value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=1">
               Animal Research Building - USDA
             </option>
-            <option style="background: white;" value="">
+            <option style="background: white;" value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=3">
               PSCo Lipan Distribution Complex
             </option>
-            <option style="background: white;" value="">
+            <option style="background: white;" value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=7">
               Sample Townhome Development
             </option>
-            <option style="background: white;" value="">
+            <option style="background: white;" value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=17">
               Sobha Hartland
             </option>
-            <option style="background: white;" value="">
+            <option style="background: white;" value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=20">
               Sample Commercial HQ Building
             </option>
-            <option style="background: white;" value="">
+            <option style="background: white;" value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=22">
               Dunkirk Elementary School
             </option>
-            <option style="background: white;" value="" selected="">
+            <option style="background: white;" value="https://lagosviewer.herokuapp.com" selected="">
               WIR ADG
             </option>
-            <option style="background: white;" value="snags">
+            <option style="background: white;" value="https://shrouded-ridge-44534.herokuapp.com/issues">
               Snags ADG
             </option>
         </select>
@@ -134,7 +134,7 @@
   <div class="modal-content">
 
     <div class="modal-body" style="padding: 0px;">
-      <form method="post" action="wirs">
+      <form method="post" action="wirs" id="wirForm">
       <div class="row" style="padding: 19px 20px 10px 40px;">
         <div class="col-md-3">
           <img style="height: 40%;" src="img/Picture1.png" />
@@ -2470,11 +2470,11 @@
                 </div>
               </div>
               </div>
-                        </div>
+            </div>
       </div>
       <hr>
       <button style="float: right;margin: 10px;" type="button" class="btn btn-danger" id="modalCancel">Close</button>
-      <button style="float: right;margin: 10px;" type="submit" class="btn btn-primary">Save</button>
+      <button style="float: right;margin: 10px;" type="button" id="saveWir" class="btn btn-primary">Save</button>
     </form>
     </div>
     
