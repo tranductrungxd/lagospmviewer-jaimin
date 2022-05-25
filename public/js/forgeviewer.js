@@ -457,7 +457,9 @@ Autodesk.Viewing.theExtensionManager.registerExtension('BIM360IssueExtension', B
 
 $(document).on('click',"#saveWir",function() {
 
-  newIssueData.attributes.title = $("#rdNO").val()+$("#structure").val();
+  $("#wirForm").submit();
+
+ /* newIssueData.attributes.title = $("#rdNO").val()+$("#structure").val();
 
   var it = "e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2";
   var urls = 'https://developer.api.autodesk.com/issues/v1/containers/'+it+'/quality-issues'
@@ -479,7 +481,7 @@ $(document).on('click',"#saveWir",function() {
           $("#wirForm").submit();
           BIM360IssueExtension.prototype.loadIssues();
         }
-  });
+  });*/
 
 });
 
