@@ -330,6 +330,7 @@ function fetchAllIssuesFromBim360() {
 
 $(document).on("click","#addWIR",function() {
     var issueData = "";
+   // $("#myModal").toggle("modal");
      var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
      pushPinExtension.removeAllItems(); 
       pushPinExtension.pushPinManager.addEventListener('pushpin.created', function (e) {
@@ -364,7 +365,7 @@ $(document).on("click","#addWIR",function() {
             };
              $("#myModal").toggle("modal");
          });     
-     pushPinExtension.startCreateItem({ label: "New", status: 'open', type: 'issues' });
+     pushPinExtension.startCreateItem({ label: "New", status: 'open', type: 'issues' }); 
           
 });
 
@@ -457,9 +458,16 @@ Autodesk.Viewing.theExtensionManager.registerExtension('BIM360IssueExtension', B
 
 $(document).on('click',"#saveWir",function() {
 
-  $("#wirForm").submit();
+  $('input[type=checkbox]').each(function () {
+    if($(this).is(':checked')) {
+      $(this).val(1);
+    } else {
+      $(this).val(0);
+      $(this).prop("checked", true);
+    }
+  });
 
- /* newIssueData.attributes.title = $("#rdNO").val()+$("#structure").val();
+ newIssueData.attributes.title = $("#rdNO").val()+$("#structure").val();
 
   var it = "e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2";
   var urls = 'https://developer.api.autodesk.com/issues/v1/containers/'+it+'/quality-issues'
@@ -481,7 +489,7 @@ $(document).on('click',"#saveWir",function() {
           $("#wirForm").submit();
           BIM360IssueExtension.prototype.loadIssues();
         }
-  });*/
+  });
 
 });
 

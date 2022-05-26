@@ -46,11 +46,20 @@ router.route("/wirs").get( async (req,res)=>{
 router.route("/wirs").post( async (req,res)=>{
   try {
     const wir = req.body;
-    wir.consent=="undefined" ? wir.consent=0 : wir.consent=1;
-    wir.yesConsent=="undefined" ? wir.yesConsent=0 : wir.yesConsent=1;
-    wir.noConsent=="undefined" ? wir.noConsent=0 : wir.noConsent=1;
-    wir.reviewNot=="undefined" ? wir.reviewNot=0 : wir.reviewNot=1;
-    await new SQL_LPM().createNewWIR(wir);
+    console.log(wir);
+    const payload = await new SQL_LPM().createNewWIR(wir);
+    
+    switch(wir.inspectionType) {
+      case "sbe":
+        await new SQL_LPM().createNewSBE(wir,payload.id);
+        break;
+      case "swd":
+        // code block
+        break;
+      default:
+        // code block
+    }
+
     res.redirect("/");
   } catch (err) {
     console.log(err);
