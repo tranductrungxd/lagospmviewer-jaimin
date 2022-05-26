@@ -8,10 +8,14 @@
   <title>LagosPM Viewer</title>
   <link rel="shortcut icon" href="images/favicon.png" />
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css" type="text/css">
+  <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/style.min.css"
+    type="text/css">
   <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/7.*/viewer3D.min.js"></script>
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+    integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -28,8 +32,10 @@
         </li>
         <li class="nav-item emptyLi"></li>
         <li class="nav-item dropdown">
-          <select onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" class="" id="projects" style="background-color: transparent;width:auto;border:none;">
-						<option style="background: white;" value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=1">
+          <select
+            onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);"
+            class="" id="projects" style="background-color: transparent;width:auto;border:none;">
+            <option style="background: white;" value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=1">
               Animal Research Building - USDA
             </option>
             <option style="background: white;" value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=3">
@@ -38,13 +44,16 @@
             <option style="background: white;" value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=7">
               Sample Townhome Development
             </option>
-            <option style="background: white;" value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=17">
+            <option style="background: white;"
+              value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=17">
               Sobha Hartland
             </option>
-            <option style="background: white;" value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=20">
+            <option style="background: white;"
+              value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=20">
               Sample Commercial HQ Building
             </option>
-            <option style="background: white;" value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=22">
+            <option style="background: white;"
+              value="https://demo.lagospm.com/ltepage.cfm?fn=collaboration.menu&pid=22">
               Dunkirk Elementary School
             </option>
             <option style="background: white;" value="https://lagosviewer.herokuapp.com" selected="">
@@ -53,10 +62,16 @@
             <option style="background: white;" value="https://shrouded-ridge-44534.herokuapp.com/issues">
               Snags ADG
             </option>
-        </select>
+          </select>
         </li>
         <li class="nav-item" style="margin-left: 15px;">
-          <a style="cursor: pointer;" class="tooltip1" title="Add WIR" class="" id="addWIR"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="LocationOnIcon"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
+          <a style="cursor: pointer;" class="tooltip1" title="Add WIR" class="" id="addWIR"><svg
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true"
+              viewBox="0 0 24 24" data-testid="LocationOnIcon">
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
+              </path>
+            </svg>
             <span class="tooltiptext1">WIR</span>
           </a>
         </li>
@@ -64,229 +79,264 @@
     </div>
   </nav>
   <div id="root">
-   
-  <!-- <div class="jss2">
-    <div position="static" style="box-shadow: none; padding: 0px; display: flex; flex-flow: row;">
-    <div class="jss7 jss11"><img src="img/lagos_logo_rec.png" class="jss8"></div>
-    <div class="jss9 jss12 MuiBox-root css-0">
-      <p class="MuiTypography-root MuiTypography-body1 css-hnz17l">Guggenheim Abu Dhabi</p></div>
-    </div>
-    <div class="jss25 jss26">
-      <a style="cursor: pointer;" class="tooltip1" title="Add WIR" class="" id="addWIR"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="LocationOnIcon"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
-        <span class="tooltiptext1">WIR</span>
-      </a>
-    </div>
-  </div> -->
-      <div class="allotment-module_splitView__1rmCV allotment-module_horizontal__Tf6PK allotment-module_separatorBorder__3xs3c _31aRXMFdgfZRfSR4FvhJc3">
-  <div class="allotment-module_splitViewContainer__1ugsQ">
-    <div id="leftPanel" class="allotment-module_splitViewView__KtCWc jss4 allotment-module_visible__phJMN" data-testid="split-view-view" style="left: 0px; width: 307px;">
-    <div>
-      <ul class="MuiList-root MuiList-padding MuiList-dense css-1ontqvh">
-        <li class="jss13 MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-q6hm0g" style="background: none;">
-          <h4 style="margin-left:30%;">WIR ADG</h4>  
-        </li> 
-      </ul>
-      <hr class="hrstyle">
-      <ul class="MuiList-root MuiList-padding MuiList-dense css-1ontqvh mainUlwir">
-        <div>
-          <% for(var i=0; i<wirs.length; i++) {%>
-            <li></li>
-            <li class="jss13 MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-q6hm0g" style="background: none;">
-              <div class="jss17 MuiListItemIcon-root css-1f8bwsm"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="LocationOnIcon"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg></div>
-              <div class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-1xar93x" title="Need to inspect the foundation at this location.">
-                <span class="MuiTypography-root MuiTypography-body2 jss19 MuiListItemText-primary css-14tqbo1">
-                  <% if(wirs[i].inspection_type=="sbe"){ %>
-                    Sand Blast Cleaning of Rebars
-                  <% } else if(wirs[i].inspection_type=="swd"){ %>  
-                    Sea Wall Deligence
-                 <% } else if(wirs[i].inspection_type=="tc"){ %>  
-                  Thermal Control
-               <% } else if(wirs[i].inspection_type=="sw"){ %>  
-                Shotcrete Works
-             <% } else if(wirs[i].inspection_type=="sri"){ %>  
-              Still Reinforcement Installation
-           <% } %>
-                  </span>
-                <p class="MuiTypography-root MuiTypography-body2 jss20 MuiListItemText-secondary css-mbfek"><%= wirs[i].structure %></p>
+    <div class="loader" id="loader"></div>
+    <div
+      class="allotment-module_splitView__1rmCV allotment-module_horizontal__Tf6PK allotment-module_separatorBorder__3xs3c _31aRXMFdgfZRfSR4FvhJc3">
+      <div class="allotment-module_splitViewContainer__1ugsQ">
+        <div id="leftPanel" class="allotment-module_splitViewView__KtCWc jss4 allotment-module_visible__phJMN"
+          data-testid="split-view-view" style="left: 0px; width: 307px;">
+          <div>
+            <ul class="MuiList-root MuiList-padding MuiList-dense css-1ontqvh">
+              <li class="jss13 MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-q6hm0g"
+                style="background: none;">
+                <h4 style="margin-left:30%;">WIR ADG</h4>
+              </li>
+            </ul>
+            <hr class="hrstyle">
+            <ul class="MuiList-root MuiList-padding MuiList-dense css-1ontqvh mainUlwir">
+              <div>
+                <% for(var i=0; i<wirs.length; i++) {%>
+                  <li></li>
+                  <li
+                    class="jss13 MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-q6hm0g"
+                    style="background: none;">
+                    <div class="jss17 MuiListItemIcon-root css-1f8bwsm"><svg
+                        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
+                        aria-hidden="true" viewBox="0 0 24 24" data-testid="LocationOnIcon">
+                        <path
+                          d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
+                        </path>
+                      </svg></div>
+                    <div class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-1xar93x"
+                      title="Need to inspect the foundation at this location.">
+                      <span class="MuiTypography-root MuiTypography-body2 jss19 MuiListItemText-primary css-14tqbo1">
+                        <% if(wirs[i].inspection_type=="sbe" ){ %>
+                          Sand Blast Cleaning of Rebars
+                          <% } else if(wirs[i].inspection_type=="swd" ){ %>
+                            Sea Wall Deligence
+                            <% } else if(wirs[i].inspection_type=="tc" ){ %>
+                              Thermal Control
+                              <% } else if(wirs[i].inspection_type=="sw" ){ %>
+                                Shotcrete Works
+                                <% } else if(wirs[i].inspection_type=="sri" ){ %>
+                                  Still Reinforcement Installation
+                                  <% } %>
+                      </span>
+                      <p class="MuiTypography-root MuiTypography-body2 jss20 MuiListItemText-secondary css-mbfek">
+                        <%= wirs[i].structure %>
+                      </p>
+                    </div>
+                    <span class="jss14">
+                      <%= wirs[i].date_of_inspection %>
+                    </span>
+                    <div class="MuiListItemSecondaryAction-root css-y3qv5r">
+                      <div class="jss21"><button
+                          class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall jss22 css-1j7qk7u"
+                          tabindex="0" type="button" aria-label="View in LagosPM"><a
+                            href="https://demo.lagospm.com/ltepage.cfm?fn=punchlist.editpunch&amp;punchid=2287&amp;pid=17&amp;lte=true"
+                            target="_blank"><svg stroke="currentColor" fill="currentColor" stroke-width="0"
+                              viewBox="0 0 24 24" class="jss22" height="1em" width="1em"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <g>
+                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                <path
+                                  d="M5.828 7l2.536 2.536L6.95 10.95 2 6l4.95-4.95 1.414 1.414L5.828 5H13a8 8 0 1 1 0 16H4v-2h9a6 6 0 1 0 0-12H5.828z">
+                                </path>
+                              </g>
+                            </svg></a><span class="MuiTouchRipple-root css-w0pj6f"></span></button></div>
+                    </div>
+                  </li>
+                  <hr class="MuiDivider-root MuiDivider-fullWidth css-39bbo6">
+                  <% } %>
               </div>
-              <span class="jss14"><%= wirs[i].date_of_inspection %></span>
-              <div class="MuiListItemSecondaryAction-root css-y3qv5r">
-                <div class="jss21"><button class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall jss22 css-1j7qk7u" tabindex="0" type="button" aria-label="View in LagosPM"><a href="https://demo.lagospm.com/ltepage.cfm?fn=punchlist.editpunch&amp;punchid=2287&amp;pid=17&amp;lte=true" target="_blank"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class="jss22" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><g><path fill="none" d="M0 0h24v24H0z"></path><path d="M5.828 7l2.536 2.536L6.95 10.95 2 6l4.95-4.95 1.414 1.414L5.828 5H13a8 8 0 1 1 0 16H4v-2h9a6 6 0 1 0 0-12H5.828z"></path></g></svg></a><span class="MuiTouchRipple-root css-w0pj6f"></span></button></div></div>
-            </li>
-            <hr class="MuiDivider-root MuiDivider-fullWidth css-39bbo6">
-         <% } %>
+            </ul>
+          </div>
         </div>
-      </ul>
-    </div>
-  </div>
-  <div id="rightPanel" class="allotment-module_splitViewView__KtCWc allotment-module_visible__phJMN" data-testid="split-view-view" style="left: 307px; width: 1229px;">
-    <div class="jss5">
-      <div class="css-1x72cfx">
-        <div id="forgeViewer"></div>
+        <div id="rightPanel" class="allotment-module_splitViewView__KtCWc allotment-module_visible__phJMN"
+          data-testid="split-view-view" style="left: 307px; width: 1229px;">
+          <div class="jss5">
+            <div class="css-1x72cfx">
+              <div id="forgeViewer"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  </div>
-</div>
-  </div>
-<div class="modal" id="myModal">
-<div class="modal-dialog modal-xl">
-  <div class="modal-content">
+  <div class="modal" id="myModal">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
 
-    <div class="modal-body" style="padding: 0px 10px;">
-      <form method="post" action="wirs" id="wirForm">
-      <div class="row" style="padding: 19px 20px 10px 40px;">
-        <div class="col-md-3">
-          <img style="height: 40%;" src="img/Picture1.png" />
+        <div class="modal-body" style="padding: 0px 10px;">
+          <form method="post" action="wirs" id="wirForm">
+            <div class="row" style="padding: 19px 20px 10px 40px;">
+              <div class="col-md-3">
+                <img style="height: 40%;" src="img/Picture1.png" />
+              </div>
+              <div class="col-md-2">
+                <img style="height: 40%;" src="img/Picture2.jpg" />
+              </div>
+              <div class="col-md-5">
+                <img src="img/Picture3.jpg" />
+              </div>
+              <div class="col-md-2">
+                <img style="height: 40%;" src="img/Picture4.png" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-3"></div>
+              <div class="col-md-6" style="margin-left: 45px;">
+                <b>
+                  <h6>GUGGENHEIM ABU DHABI MUSEUM PROJECT - MAIN WORKS</h6>
+                  <h6 style="margin-left: 35px;">INSPECTION CHECKLIST - REBAR COUPLER TESTING</h6>
+                </b>
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+            <hr>
+            <hr class="hrstyle">
+            <div class="row">
+              <div class="col-md-6" style="border-right: 1px solid grey;">
+                <div class="form-group row" style="margin-top: 10px;">
+                  <label for="dateOfTesting" class="col-sm-4 col-form-label alignCss">Date of Testing:</label>
+                  <div class="col-sm-8">
+                    <input type="date" class="form-control" id="dateOfTesting" name="dateOfTesting"
+                      placeholder="Enter date of testing" />
+                  </div>
+                </div>
+                <div style="margin-top: 5px;" class="form-group row">
+                  <label for="timeOfTesting" class="col-sm-4 col-form-label alignCss">Time of Testing:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="timeOfTesting" name="timeOfTesting"
+                      placeholder="Enter time of testing">
+                  </div>
+                </div>
+                <div style="margin-top: 5px; margin-bottom: 10px;" class="form-group row">
+                  <label for="locationOfTesting" class="col-sm-4 col-form-label alignCss">Location of Testing:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="locationOfTesting" name="locationOfTesting"
+                      placeholder="Enter location of testing" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label for="dateOfTesting" class="col-sm-2 col-form-label alignCss">Client:</label>
+                  <label for="dateOfTesting" class="col-sm-10 col-form-label">Department of Culture and Tourism
+                    (DCT)</label>
+                </div>
+                <div style="margin-top: 5px;" class="form-group row">
+                  <label for="dateOfTesting" class="col-sm-2 col-form-label alignCss">Contractor:</label>
+                  <label for="dateOfTesting" class="col-sm-10 col-form-label">Sixco-Trojan Joint Venture (STJV)</label>
+                </div>
+                <div style="margin-top: 5px; margin-bottom: 10px;" class="form-group row">
+                  <label for="dateOfTesting" class="col-sm-2 col-form-label alignCss">Project:</label>
+                  <label for="dateOfTesting" class="col-sm-10 col-form-label">Sobha Hartland</label>
+                </div>
+              </div>
+            </div>
+            <hr class="hrstyle">
+            <hr class="hrstyle" style="margin-top: 10px;">
+            <div class="row">
+              <div class="col-md-6" style="border-right: 1px solid grey;"><b style="margin-left: 210px;">Description</b>
+              </div>
+              <div class="col-md-6"><b style="margin-left: 210px;">Status</b></div>
+            </div>
+            <hr class="hrstyle">
+            <div class="row">
+              <div class="col-md-6" style="border-right: 1px solid grey;">
+                <div class="form-group row" style="margin-top: 10px;">
+                  <label for="structure" class="col-sm-4 col-form-label alignCss">Structure:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="structure" name="structure"
+                      placeholder="Enter structure" />
+                  </div>
+                </div>
+                <div style="margin-top: 5px;" class="form-group row">
+                  <label for="typeOfStructure" class="col-sm-4 col-form-label alignCss">Type of Structure:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="typeOfStructure" name="typeOfStructure"
+                      placeholder="Enter type of structure">
+                  </div>
+                </div>
+                <div style="margin-top: 5px;" class="form-group row">
+                  <label for="rdNo" class="col-sm-4 col-form-label alignCss">Reference Drawing No:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="rdNo" name="rdNo" placeholder="Enter drawing no" />
+                  </div>
+                </div>
+                <div style="margin-top: 5px;" class="form-group row">
+                  <label for="statementRef" class="col-sm-4 col-form-label">Method Statement Ref No:</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="statementRef" name="statementRef"
+                      placeholder="Enter statement no" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="row">
+                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="consent" /></div>
+                  <div class="col-md-11"><label class="col-form-label">: Consent to Proceed</label></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="yesConsent" />
+                  </div>
+                  <div class="col-md-11"><label class="col-form-label">: Consent to proceed, subject to comment</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="noConsent" />
+                  </div>
+                  <div class="col-md-11"><label class="col-form-label">: No Consent to proceed</label></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="reviewNot" />
+                  </div>
+                  <div class="col-md-11"><label class="col-form-label">: Review not required, for information</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="hrstyle">
+            <hr>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group row">
+                  <label for="inspectionType" class="col-sm-2 col-form-label alignCss"><b>Inspection Type:</b></label>
+                  <div class="col-sm-4">
+                    <select name="inspectionType" id="inspectionType" class="form-control">
+                      <option value="0"> Please Select </option>
+                      <option value="sbe"> SAND BLAST CLEANING OF REBARS</option>
+                      <option value="swd"> SEA WALL DILIGENCE</option>
+                      <option value="sw"> SHOTCRETE WORKS</option>
+                      <option value="sri"> STEEL REINFORCEMENT INSTALLATION</option>
+                      <option value="tc"> THERMAL CONTROL</option>
+                      <option value="wp1"> WP1 WATERPROOFING</option>
+                      <option value="wp2"> WP2 WATERPROOFING</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <%- include('types/sandBlast.ejs') %>
+                <%- include('types/seaWall.ejs') %>
+                  <%- include('types/shotcreteWorks.ejs') %>
+                    <%- include('types/steelInstallation.ejs') %>
+                      <%- include('types/thermalControl.ejs') %>
+                        <%- include('types/waterProofOne.ejs') %>
+                          <%- include('types/waterProofTwo.ejs') %>
+            </div>
+            <hr>
+            <button style="float: right;margin: 10px;" type="button" class="btn btn-danger"
+              id="modalCancel">Close</button>
+            <button style="float: right;margin: 10px;" type="button" id="saveWir" class="btn btn-primary">Save</button>
+          </form>
         </div>
-        <div class="col-md-2">
-          <img style="height: 40%;" src="img/Picture2.jpg" />
-        </div>
-        <div class="col-md-5">
-          <img src="img/Picture3.jpg" />
-        </div>
-        <div class="col-md-2">
-          <img style="height: 40%;" src="img/Picture4.png" />
-        </div>
+
       </div>
-      <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6" style="margin-left: 45px;">
-          <b><h6>GUGGENHEIM ABU DHABI MUSEUM PROJECT - MAIN WORKS</h6>
-            <h6 style="margin-left: 35px;">INSPECTION CHECKLIST - REBAR COUPLER TESTING</h6></b>
-        </div>
-        <div class="col-md-3"></div>
-      </div>
-      <hr>
-      <hr class="hrstyle">
-      <div class="row">
-        <div class="col-md-6" style="border-right: 1px solid grey;">
-           <div class="form-group row" style="margin-top: 10px;">
-              <label for="dateOfTesting" class="col-sm-4 col-form-label alignCss">Date of Testing:</label>
-              <div class="col-sm-8">
-                <input type="date" class="form-control" id="dateOfTesting" name="dateOfTesting" placeholder="Enter date of testing" />
-              </div>
-            </div>
-            <div style="margin-top: 5px;" class="form-group row">
-              <label for="timeOfTesting" class="col-sm-4 col-form-label alignCss">Time of Testing:</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="timeOfTesting" name="timeOfTesting" placeholder="Enter time of testing" >
-              </div>
-            </div>
-            <div style="margin-top: 5px; margin-bottom: 10px;" class="form-group row">
-              <label for="locationOfTesting" class="col-sm-4 col-form-label alignCss">Location of Testing:</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="locationOfTesting" name="locationOfTesting" placeholder="Enter location of testing" />
-              </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-           <div class="form-group row">
-              <label for="dateOfTesting" class="col-sm-2 col-form-label alignCss">Client:</label>
-              <label for="dateOfTesting" class="col-sm-10 col-form-label">Department of Culture and Tourism (DCT)</label>
-            </div>
-            <div style="margin-top: 5px;" class="form-group row">
-              <label for="dateOfTesting" class="col-sm-2 col-form-label alignCss">Contractor:</label>
-              <label for="dateOfTesting" class="col-sm-10 col-form-label">Sixco-Trojan Joint Venture (STJV)</label>
-            </div>
-            <div style="margin-top: 5px; margin-bottom: 10px;" class="form-group row">
-              <label for="dateOfTesting" class="col-sm-2 col-form-label alignCss">Project:</label>
-              <label for="dateOfTesting" class="col-sm-10 col-form-label">Sobha Hartland</label>
-            </div>
-        </div>
-      </div>
-      <hr class="hrstyle">
-      <hr class="hrstyle" style="margin-top: 10px;">
-      <div class="row">
-        <div class="col-md-6" style="border-right: 1px solid grey;"><b style="margin-left: 210px;">Description</b></div>
-        <div class="col-md-6"><b style="margin-left: 210px;">Status</b></div>
-      </div>
-      <hr class="hrstyle">
-      <div class="row">
-        <div class="col-md-6" style="border-right: 1px solid grey;">
-          <div class="form-group row" style="margin-top: 10px;">
-              <label for="structure" class="col-sm-4 col-form-label alignCss">Structure:</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="structure" name="structure" placeholder="Enter structure" />
-              </div>
-            </div>
-            <div style="margin-top: 5px;" class="form-group row">
-              <label for="typeOfStructure" class="col-sm-4 col-form-label alignCss">Type of Structure:</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="typeOfStructure" name="typeOfStructure" placeholder="Enter type of structure" >
-              </div>
-            </div>
-            <div style="margin-top: 5px;" class="form-group row">
-              <label for="rdNo" class="col-sm-4 col-form-label alignCss">Reference Drawing No:</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="rdNo" name="rdNo" placeholder="Enter drawing no" />
-              </div>
-            </div>
-            <div style="margin-top: 5px;" class="form-group row">
-              <label for="statementRef" class="col-sm-4 col-form-label">Method Statement Ref No:</label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id="statementRef" name="statementRef" placeholder="Enter statement no" />
-              </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-          <div class="row">
-            <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="consent" /></div>
-            <div class="col-md-11"><label class="col-form-label">: Consent to Proceed</label></div>
-          </div>
-          <div class="row">
-            <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="yesConsent" /></div>
-            <div class="col-md-11"><label class="col-form-label">: Consent to proceed, subject to comment</label></div>
-          </div>
-          <div class="row">
-            <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="noConsent" /></div>
-            <div class="col-md-11"><label class="col-form-label">: No Consent to proceed</label></div>
-          </div>
-          <div class="row">
-            <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="reviewNot" /></div>
-            <div class="col-md-11"><label class="col-form-label">: Review not required, for information</label></div>
-          </div>
-        </div>
-      </div>
-      <hr class="hrstyle">
-      <hr>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="form-group row">
-              <label for="inspectionType" class="col-sm-2 col-form-label alignCss"><b>Inspection Type:</b></label>
-              <div class="col-sm-4">
-                <select name="inspectionType" id="inspectionType" class="form-control">
-                    <option value="0"> Please Select </option>
-                    <option value="sbe"> SAND BLAST CLEANING OF REBARS</option>
-                    <option value="swd"> SEA WALL DILIGENCE</option>
-                    <option value="sw"> SHOTCRETE WORKS</option>
-                    <option value="sri"> STEEL REINFORCEMENT INSTALLATION</option>
-                    <option value="tc"> THERMAL CONTROL</option>
-                    <option value="wp1"> WP1 WATERPROOFING</option>
-                    <option value="wp2"> WP2 WATERPROOFING</option>
-                </select>
-              </div>
-            </div>
-        </div>
-      </div>
-      <div class="row">
-        <%- include('types/sandBlast.ejs') %>
-        <%- include('types/seaWall.ejs') %>
-        <%- include('types/shotcreteWorks.ejs') %>
-        <%- include('types/steelInstallation.ejs') %>
-        <%- include('types/thermalControl.ejs') %>
-        <%- include('types/waterProofOne.ejs') %>
-        <%- include('types/waterProofTwo.ejs') %>
-      </div>
-      <hr>
-      <button style="float: right;margin: 10px;" type="button" class="btn btn-danger" id="modalCancel">Close</button>
-      <button style="float: right;margin: 10px;" type="button" id="saveWir" class="btn btn-primary">Save</button>
-    </form>
     </div>
-    
   </div>
-</div>
-</div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="js/forgeviewer.js"></script>
   <script src="js/main.js"></script>

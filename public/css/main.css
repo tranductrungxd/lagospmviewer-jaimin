@@ -229,7 +229,7 @@ background: #343a40;
 border-bottom: 1px solid #6f6f6f;
 }
 .jss8 {
-width: 90px;
+    width: 90px;
 }
 .float-right {
     float: right!important;
@@ -612,4 +612,25 @@ body {
 .tooltip1:hover .tooltiptext1 {
   visibility: visible;
   opacity: 1;
+}
+
+.loader {
+    border-top: 10px solid #5b6ead;
+    border-right: 10px solid #ca463c;
+    border-bottom: 10px solid #dac667;
+    border-left: 10px solid #5dbc84;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    animation: spin 1s linear infinite;
+    position: fixed;
+    left: 50%;
+    top: 35%;
+    z-index: 9999;
+    display: none;
+}
+  
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

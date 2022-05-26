@@ -116,20 +116,10 @@ class SQL_LPM {
     return new Promise(async (resolve) => {
       try {
         const {
-          dateOfTesting,
-          timeOfTesting,
-          locationOfTesting,
-          structure,
-          typeOfStructure,
-          rdNo,
-          statementRef,
-          consent,
-          yesConsent,
-          noConsent,
-          reviewNot,
-          inspectionType
+          dateOfTesting, timeOfTesting, locationOfTesting, structure, typeOfStructure, rdNo,
+          statementRef, consent, yesConsent, noConsent, reviewNot, inspectionType
         } = wir;
-       
+
         const pool = await pools.poolWebConnect;
         const request = new sql.Request(pool);
         request.input("dateOfTesting", sql.VarChar(50), dateOfTesting);
@@ -147,7 +137,6 @@ class SQL_LPM {
         request
           .execute("Wir_Write_New")
           .then((response) => {
-            console.log(response.recordset[0]['']);
             resolve({ status: 200, message: "success", id: response.recordset[0][''] });
           })
           .catch((err) => {
@@ -156,60 +145,20 @@ class SQL_LPM {
           });
       } catch (err) {
         resolve({ status: 500, message: "server failed" });
-        console.log("lineeeeeeeeeeeee PunchList_Bim360_Write_New" + err);
+        console.log("Error occurred while saving WIR data, Procedure : Wir_Write_New :" + err);
       }
     });
   };
 
-  createNewSBE = async (wir,id) => {
+  createNewSBE = async (wir, id) => {
     return new Promise(async (resolve) => {
       try {
         const {
-          scg1,
-          scg2,
-          siteg1,
-          siteg2,
-          qcg1,
-          qcg2,
-          engg1,
-          engg2,
-          scwp1,
-          scwp2,
-          scwp3,
-          qcwp1,
-          qcwp2,
-          qcwp3,
-          sitewp1,
-          sitewp2,
-          sitewp3,
-          engwp1,
-          engwp2,
-          engwp3,
-          scsb1,
-          scsb2,
-          scsb3,
-          scsb4,
-          sitesb1,
-          sitesb2,
-          sitesb3,
-          sitesb4,
-          qcsb1,
-          qcsb2,
-          qcsb3,
-          qcsb4,
-          engsb1,
-          engsb2,
-          engsb3,
-          engsb4,
-          comments,
-          sitedateso,
-          qcdateso,
-          engedateso,
-          sitenameso,
-          qcnameso,
-          engnameso
+          scg1, scg2, siteg1, siteg2, qcg1, qcg2, engg1, engg2, scwp1, scwp2, scwp3, qcwp1, qcwp2, qcwp3, sitewp1, sitewp2,
+          sitewp3, engwp1, engwp2, engwp3, scsb1, scsb2, scsb3, scsb4, sitesb1, sitesb2, sitesb3, sitesb4, qcsb1, qcsb2,
+          qcsb3, qcsb4, engsb1, engsb2, engsb3, engsb4, comments, sitedateso, qcdateso, engedateso, sitenameso, qcnameso, engnameso
         } = wir;
-       
+
         const pool = await pools.poolWebConnect;
         const request = new sql.Request(pool);
         request.input("wirid", sql.Int, id);
@@ -268,10 +217,29 @@ class SQL_LPM {
           });
       } catch (err) {
         resolve({ status: 500, message: "server failed" });
-        console.log("lineeeeeeeeeeeee PunchList_Bim360_Write_New" + err);
+        console.log("Error occurred while saving checklist data, Procedure : Wir_Write_Sand_Blast : " + err);
       }
     });
   };
+
+  async deleteWirs() {
+    return new Promise(async (resolve) => {
+      try {
+        const pool = await pools.poolWebConnect;
+        const request = new sql.Request(pool);
+        request.query("select * from dbo.wir")
+          .then((result) => {
+            resolve({ status: 200, data: result.recordset });
+          })
+          .catch((err) => {
+            console.log("Error occurred during GetAllWirs " + err);
+            resolve({ status: 500, data: [] });
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
 
 }
 
