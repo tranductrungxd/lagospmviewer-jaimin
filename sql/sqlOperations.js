@@ -117,7 +117,7 @@ class SQL_LPM {
       try {
         const {
           dateOfTesting, timeOfTesting, locationOfTesting, structure, typeOfStructure, rdNo,
-          statementRef, consent, yesConsent, noConsent, reviewNot, inspectionType
+          statementRef, consent, yesConsent, noConsent, reviewNot, inspectionType, issueid
         } = wir;
 
         const pool = await pools.poolWebConnect;
@@ -134,6 +134,7 @@ class SQL_LPM {
         request.input("noConsent", sql.Int, noConsent);
         request.input("reviewNot", sql.Int, reviewNot);
         request.input("inspectionType", sql.VarChar(50), inspectionType);
+        request.input("issueid", sql.VarChar(50), issueid);
         request
           .execute("Wir_Write_New")
           .then((response) => {
@@ -208,7 +209,6 @@ class SQL_LPM {
         request
           .execute("Wir_Write_Sand_Blast")
           .then((response) => {
-            console.log(response);
             resolve({ status: 200, message: "success" });
           })
           .catch((err) => {
@@ -229,6 +229,7 @@ class SQL_LPM {
         const request = new sql.Request(pool);
         request.query("select * from dbo.wir")
           .then((result) => {
+            console.log(result);
             resolve({ status: 200, data: result.recordset });
           })
           .catch((err) => {

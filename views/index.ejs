@@ -16,6 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
     crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>  
 </head>
 
 <body>
@@ -65,14 +66,33 @@
           </select>
         </li>
         <li class="nav-item" style="margin-left: 15px;">
-          <a style="cursor: pointer;" class="tooltip1" title="Add WIR" class="" id="addWIR"><svg
+          <a style="cursor: pointer;" data-toggle="tooltip" data-placement="bottom" title="WIR" class="" id="addWIR"><svg
               class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true"
               viewBox="0 0 24 24" data-testid="LocationOnIcon">
               <path
                 d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
               </path>
             </svg>
-            <span class="tooltiptext1">WIR</span>
+          </a>
+        </li>
+        <li class="nav-item" style="margin-left: 15px;">
+          <a style="cursor: pointer;" data-toggle="tooltip" data-placement="bottom" title="RFI" class="" id="rifpoint"><svg
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true"
+              viewBox="0 0 24 24" data-testid="LocationOnIcon">
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
+              </path>
+            </svg>
+          </a>
+        </li>
+        <li class="nav-item" style="margin-left: 15px;">
+          <a style="cursor: pointer;" data-toggle="tooltip" data-placement="left" title="Snag" class="" id="snagpoint"><svg
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true"
+              viewBox="0 0 24 24" data-testid="LocationOnIcon">
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
+              </path>
+            </svg>
           </a>
         </li>
       </ul>
@@ -107,9 +127,12 @@
                           d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
                         </path>
                       </svg></div>
-                    <div class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-1xar93x"
+                    <div issue="<%= wirs[i].drawing_link %>" id="issueClick" class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-1xar93x"
                       title="Need to inspect the foundation at this location.">
                       <span class="MuiTypography-root MuiTypography-body2 jss19 MuiListItemText-primary css-14tqbo1">
+                        <%= wirs[i].structure %>
+                      </span>
+                      <p class="MuiTypography-root MuiTypography-body2 jss20 MuiListItemText-secondary css-mbfek">
                         <% if(wirs[i].inspection_type=="sbe" ){ %>
                           Sand Blast Cleaning of Rebars
                           <% } else if(wirs[i].inspection_type=="swd" ){ %>
@@ -121,9 +144,6 @@
                                 <% } else if(wirs[i].inspection_type=="sri" ){ %>
                                   Still Reinforcement Installation
                                   <% } %>
-                      </span>
-                      <p class="MuiTypography-root MuiTypography-body2 jss20 MuiListItemText-secondary css-mbfek">
-                        <%= wirs[i].structure %>
                       </p>
                     </div>
                     <span class="jss14">
@@ -331,6 +351,7 @@
             <button style="float: right;margin: 10px;" type="button" class="btn btn-danger"
               id="modalCancel">Close</button>
             <button style="float: right;margin: 10px;" type="button" id="saveWir" class="btn btn-primary">Save</button>
+            <input type="hidden" name="issueid" id="issueid" />
           </form>
         </div>
 

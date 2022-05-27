@@ -80,7 +80,6 @@ function loginToBim360() {
   if (tkn != null && tkn != "undefined" && typeof tkn != "undefined") {
     console.log("Token found.");
     refreshBimDocToken();
-    BIM360IssueExtension.prototype.loadIssues();
   } else {
     sessionStorage.removeItem("refreshToken");
     sessionStorage.removeItem("expire");
@@ -122,7 +121,6 @@ function startCheckingLogin() {
 
 function stopCheckingLogin(timer, code) {
   clearInterval(timer);
-  BIM360IssueExtension.prototype.loadIssues();
 }
 
 function onDocumentLoadFailure(viewerErrorCode) {
@@ -208,7 +206,7 @@ function BIM360IssuePanel(viewer, container, id, title, options) {
 BIM360IssuePanel.prototype = Object.create(Autodesk.Viewing.UI.PropertyPanel.prototype);
 BIM360IssuePanel.prototype.constructor = BIM360IssuePanel;
 
-BIM360IssueExtension.prototype.loadIssues = function (containerId, urn) {
+BIM360IssueExtension.prototype.loadIssues = function (issueId) {
 
   var _this = this;
   if (typeof _this.viewer == "undefined") {
@@ -218,13 +216,13 @@ BIM360IssueExtension.prototype.loadIssues = function (containerId, urn) {
   if (_this.panel == null) {
     _this.panel = new BIM360IssuePanel(_this.viewer, _this.viewer.container, 'bim360IssuePanel', 'BIM360 Issues');
   }
-  _this.getIssues();
+  _this.getIssues(issueId);
 }
 
-BIM360IssueExtension.prototype.getIssues = function () {
+BIM360IssueExtension.prototype.getIssues = function (issueId) {
   var _this = this;
 
-  _this.issues = fetchAllIssuesFromBim360();
+  _this.issues = fetchAllIssuesFromBim360(issueId);
   var pushPinExtension = _this.viewer.getExtension(_this.pushPinExtensionName);
   if (_this.panel) _this.panel.removeAllProperties();
   if (_this.issues.length > 0) {
@@ -296,11 +294,11 @@ BIM360IssueExtension.prototype.createIssue = function () {
 }
 
 
-function fetchAllIssuesFromBim360() {
+function fetchAllIssuesFromBim360(issueId) {
   var accessToken = sessionStorage.getItem("bimToken");
   var returnArray = [];
   var it = "e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2";
-  var url = "https://developer.api.autodesk.com/issues/v1/containers/" + it + "/quality-issues?page[limit]=100";
+  var url = "https://developer.api.autodesk.com/issues/v1/containers/"+it+"/quality-issues/"+issueId;
   $.ajax({
     type: "GET",
     beforeSend: function (request) {
@@ -312,15 +310,13 @@ function fetchAllIssuesFromBim360() {
     error: function (httpObj, textStatus) {
       if (httpObj.status == 401) {
         var token = refreshBimDocToken();
-        fetchAllIssuesFromBim360();
+        fetchAllIssuesFromBim360(issueId);
       }
     },
     success: function (msg) {
 
       if (!$.isEmptyObject(msg.data)) {
-        for (var i = 0; i < msg.data.length; i++) {
-          returnArray.push(msg.data[i]);
-        }
+        returnArray.push(msg.data);
       }
     }
   });
@@ -429,29 +425,6 @@ BIM360CreateIssuePanel.prototype.initialize = function () {
 
 };
 
-
-function createAnIssue(data) {
-  var ids = "e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2";
-  var urls = 'https://developer.api.autodesk.com/issues/v1/containers/' + ids + '/quality-issues'
-  $.ajax({
-    type: "POST",
-    beforeSend: function (request) {
-      request.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("bimToken"));
-      request.setRequestHeader("Content-Type", "application/vnd.api+json");
-    },
-    url: urls,
-    async: false,
-    data: JSON.stringify({ data: data }),
-    error: function (httpObj, textStatus) {
-      pushPinExtension.pushPinManager.removeItemById('0');
-      console.log(httpObj);
-    },
-    success: function () {
-      BIM360IssueExtension.prototype.loadIssues();
-    }
-  });
-}
-
 Autodesk.Viewing.theExtensionManager.registerExtension('BIM360IssueExtension', BIM360IssueExtension);
 
 $(document).on('click', "#saveWir", function () {
@@ -464,6 +437,29 @@ $(document).on('click', "#saveWir", function () {
     }
   });
 
+  newIssueData.attributes.title = $("#structure").val();
+  var urls = 'https://developer.api.autodesk.com/issues/v1/containers/e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2/quality-issues'
+
+  $.ajax({
+    type: "POST",
+    beforeSend: function (request) {
+      request.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("bimToken"));
+      request.setRequestHeader("Content-Type", "application/vnd.api+json");
+    },
+    url: urls,
+    async: false,
+    data: JSON.stringify({ data: newIssueData }),
+    error: function (httpObj, textStatus) {
+      console.log(httpObj);
+    },
+    success: function (res) {
+      if(res!="undefined" && !$.isEmptyObject(res.data) && res.data.id != "undefined") {
+        $("#issueid").val(res.data.id);
+      }
+      console.log("issue created successfully. " + res.data.id);
+    }
+  });
+
   $("#wirForm").submit();
 
 });
@@ -471,21 +467,19 @@ $(document).on('click', "#saveWir", function () {
 $("form").on("submit", function (e) {
 
   var dataString = $(this).serialize();
-
+  console.log(dataString);
   $('input[type=checkbox]').each(function () {
     if (!$(this).is(':checked') && $(this).attr("name") !== undefined) {
       dataString += "&" + $(this).attr("name") + "=0";
     }
   });
 
-  newIssueData.attributes.title = $("#structure").val();
 
   $.ajax({
     type: "POST",
     url: "wirs",
     data: dataString,
     success: function () {
-      saveIssueData();
       $("#loader").hide();
       location.reload();
     },
@@ -497,28 +491,14 @@ $("form").on("submit", function (e) {
   e.preventDefault();
 });
 
-function saveIssueData() {
-
-  var urls = 'https://developer.api.autodesk.com/issues/v1/containers/e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2/quality-issues'
-
-  $.ajax({
-    type: "POST",
-    beforeSend: function (request) {
-      request.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("bimToken"));
-      request.setRequestHeader("Content-Type", "application/vnd.api+json");
-    },
-    url: urls,
-    async: true,
-    data: JSON.stringify({ data: newIssueData }),
-    error: function (httpObj, textStatus) {
-      console.log(httpObj);
-    },
-    success: function (res) {
-      console.log("issue created successfully.");
-    }
-  });
-
-}
+$(document).on("click","#issueClick",function() {
+  var id = $(this).attr("issue");
+  if(id==null) {
+    console.log("No issue linked to the WIR.")
+  } else {
+    BIM360IssueExtension.prototype.loadIssues(id);
+  }
+})
 
 //https://shrouded-ridge-44534.herokuapp.com/api/forge/oauth/callback
 //http://localhost:80/Lagos/Home/autodeskRedirect

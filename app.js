@@ -51,7 +51,6 @@ router.route("/wirs").get(async (req, res) => {
 router.route("/wirs").post(async (req, res) => {
   try {
     const wir = req.body;
-    console.log(wir);
     const payload = await new SQL_LPM().createNewWIR(wir);
 
     switch (wir.inspectionType) {

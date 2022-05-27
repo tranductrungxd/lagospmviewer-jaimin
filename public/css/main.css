@@ -247,7 +247,7 @@ select.custom-select {
     display: inline-block;
 }
 .emptyLi {
-    width: 40rem;
+    width: 35rem;
 }
 .rightNav {
     background-color: #ffc107 !important;
@@ -577,10 +577,17 @@ body {
     height: 100vh
 }
 
+#rifpoint {
+    color: green;
+}
+
+#snagpoint {
+    color: red;
+}
+
 .tooltip1 {
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted black;
 }
 
 .tooltip1 .tooltiptext1 {
