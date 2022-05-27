@@ -15,4 +15,14 @@ $(document).on("click","#modalCancel",function() {
 
 $(function () {
 	$('[data-toggle="tooltip"]').tooltip()
-  })
+});
+
+// $(".jss13").hover(function(){
+// 	var id = $(this).attr("wirid");
+// 	console.log(id);
+//     $("#return"+id).show();
+// },function(){
+// 	console.log("hide" + id);
+//     var id = $(this).attr("wirid");
+//     $("#return"+id).hide();
+// });

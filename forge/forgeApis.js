@@ -5,7 +5,7 @@ const {
   getAuth3LegCode,
   generateAuth3LegToken,
 } = require("./oauth");
-const { getDataInit } = require("./forgeApisBase");
+const { getDataInit, refreshToken } = require("./forgeApisBase");
 
 router.post("/getDataInit", async (req, res, next) => {
   try {
@@ -41,7 +41,7 @@ router.get("/oauth/tokenForge_3LegsCode", async (req, res, next) => {
 
 //get code from auth3Leg
 router.get("/oauth/tokenForge_3Legs", async (req, res) => {
-    var code  = req.query.code;
+  var code  = req.query.code;
   try {
     if (code !== null) {
       const payload = await generateAuth3LegToken(code);
@@ -55,5 +55,11 @@ router.get("/oauth/tokenForge_3Legs", async (req, res) => {
     res.status(500).send([]);
   }
 });
+
+router.get("/oauth/refreshToken", async (req, res) => {
+  var refresh = req.query.refresh;
+  const payload = await refreshToken(refresh);
+  res.status(200).send(payload);
+})
 
 module.exports = router;

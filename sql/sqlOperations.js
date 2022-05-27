@@ -222,6 +222,83 @@ class SQL_LPM {
     });
   };
 
+  createNewSWD = async (wir, id) => {
+    return new Promise(async (resolve) => {
+      try {
+        const { seascg1,seascg2,seascg3,seasiteg1,seasiteg2,seasiteg3,seaqcg1,seaqcg2,seaqcg3,seaengg1,seaengg2,seaengg3,
+          seascwp1,seascwp2,seasitewp1,seasitewp2,seaqcwp1,seaqcwp2,seaengwp1,seaengwp2,seascsw1,seascsw2,seascsw3,
+          seascsw4,seascsw5,seasitesw1,seasitesw2,seasitesw3,seasitesw4,seasitesw5,seaqcsw1,seaqcsw2,seaqcsw3,seaqcsw4,
+          seaqcsw5,seaengsw1,seaengsw2,seaengsw3,seaengsw4,seaengsw5,seastjvcom,seaengcom,seasitedateso,seaqcdateso,seaengedateso,
+          seasitenameso,seaqcnameso,seaengnameso } = wir;
+
+        const pool = await pools.poolWebConnect;
+        const request = new sql.Request(pool);
+        request.input("wirid", sql.Int, id);
+        request.input("seascg1", sql.Int, seascg1);
+        request.input("seascg2", sql.Int, seascg2);
+        request.input("seascg3", sql.Int, seascg3);
+        request.input("seasiteg1", sql.Int, seasiteg1);
+        request.input("seasiteg2", sql.Int, seasiteg2);
+        request.input("seasiteg3", sql.Int, seasiteg3);
+        request.input("seaqcg1", sql.Int, seaqcg1);
+        request.input("seaqcg2", sql.Int, seaqcg2);
+        request.input("seaqcg3", sql.Int, seaqcg3);
+        request.input("seaengg1", sql.VarChar(50), seaengg1);
+        request.input("seaengg2", sql.VarChar(50), seaengg2);
+        request.input("seaengg3", sql.VarChar(50), seaengg3);
+        request.input("seascwp1", sql.Int, seascwp1);
+        request.input("seascwp2", sql.Int, seascwp2);
+        request.input("seasitewp1", sql.Int, seasitewp1);
+        request.input("seasitewp2", sql.Int, seasitewp2);
+        request.input("seaqcwp1", sql.Int, seaqcwp1);
+        request.input("seaqcwp2", sql.Int, seaqcwp2);
+        request.input("seaengwp1", sql.VarChar(50), seaengwp1);
+        request.input("seaengwp2", sql.VarChar(50), seaengwp2);
+        request.input("seascsw1", sql.Int, seascsw1);
+        request.input("seascsw2", sql.Int, seascsw2);
+        request.input("seascsw3", sql.Int, seascsw3);
+        request.input("seascsw4", sql.Int, seascsw4);
+        request.input("seascsw5", sql.Int, seascsw5);
+        request.input("seasitesw1", sql.Int, seasitesw1);
+        request.input("seasitesw2", sql.Int, seasitesw2);
+        request.input("seasitesw3", sql.Int, seasitesw3);
+        request.input("seasitesw4", sql.Int, seasitesw4);
+        request.input("seasitesw5", sql.Int, seasitesw5);
+        request.input("seaqcsw1", sql.Int, seaqcsw1);
+        request.input("seaqcsw2", sql.Int, seaqcsw2);
+        request.input("seaqcsw3", sql.Int, seaqcsw3);
+        request.input("seaqcsw4", sql.Int, seaqcsw4);
+        request.input("seaqcsw5", sql.Int, seaqcsw5);
+        request.input("seaengsw1", sql.VarChar(50), seaengsw1);
+        request.input("seaengsw2", sql.VarChar(50), seaengsw2);
+        request.input("seaengsw3", sql.VarChar(50), seaengsw3);
+        request.input("seaengsw4", sql.VarChar(50), seaengsw4);
+        request.input("seaengsw5", sql.VarChar(50), seaengsw5);
+        request.input("seastjvcom", sql.VarChar(50), seastjvcom);
+        request.input("seaengcom", sql.VarChar(50), seaengcom);
+        request.input("seasitedateso", sql.VarChar(50), seasitedateso);
+        request.input("seaqcdateso", sql.VarChar(50), seaqcdateso);
+        request.input("seaengedateso", sql.VarChar(50), seaengedateso);
+        request.input("seasitenameso", sql.VarChar(50), seasitenameso);
+        request.input("seaqcnameso", sql.VarChar(50), seaqcnameso);
+        request.input("seaengnameso", sql.VarChar(50), seaengnameso);
+        request
+          .execute("Wir_Write_Sea_Wall")
+          .then((response) => {
+            console.log(response);
+            resolve({ status: 200, message: "success" });
+          })
+          .catch((err) => {
+            console.log(err);
+            resolve({ status: 500, message: "server failed" });
+          });
+      } catch (err) {
+        resolve({ status: 500, message: "server failed" });
+        console.log("Error occurred while saving checklist data, Procedure : Wir_Write_Sand_Blast : " + err);
+      }
+    });
+  };
+
   async deleteWirs() {
     return new Promise(async (resolve) => {
       try {

@@ -117,7 +117,7 @@
               <div>
                 <% for(var i=0; i<wirs.length; i++) {%>
                   <li></li>
-                  <li
+                  <li wirid="<%= wirs[i].wirid %>"
                     class="jss13 MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-q6hm0g"
                     style="background: none;">
                     <div class="jss17 MuiListItemIcon-root css-1f8bwsm"><svg
@@ -150,10 +150,10 @@
                       <%= wirs[i].date_of_inspection %>
                     </span>
                     <div class="MuiListItemSecondaryAction-root css-y3qv5r">
-                      <div class="jss21"><button
+                      <div class="jss21"><button id="return<%= wirs[i].wirid %>"
                           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall jss22 css-1j7qk7u"
                           tabindex="0" type="button" aria-label="View in LagosPM"><a
-                            href="https://demo.lagospm.com/ltepage.cfm?fn=punchlist.editpunch&amp;punchid=2287&amp;pid=17&amp;lte=true"
+                            href="https://demo.lagospm.com/ltepage.cfm?fn=wir.edit&wirid=<%= wirs[i].wirid %>"
                             target="_blank"><svg stroke="currentColor" fill="currentColor" stroke-width="0"
                               viewBox="0 0 24 24" class="jss22" height="1em" width="1em"
                               xmlns="http://www.w3.org/2000/svg">
@@ -176,7 +176,7 @@
           data-testid="split-view-view" style="left: 307px; width: 1229px;">
           <div class="jss5">
             <div class="css-1x72cfx">
-              <div id="forgeViewer"></div>
+              <div style="width: 100%;" id="forgeViewer"></div>
             </div>
           </div>
         </div>

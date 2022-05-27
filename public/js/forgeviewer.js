@@ -35,34 +35,54 @@ function getForgeToken(callback) {
 
 function getThreeLeggedToken(callback) {
   var refresh = sessionStorage.getItem("refreshToken");
-  fetch('Home/refreshToken?token=' + refresh).then(res => {
-    res.json().then(data => {
-
-      var token = JSON.parse(data).access_token;
-      var refreshToken = JSON.parse(data).refresh_token;
-      var expire = JSON.parse(data).expires_in;
-
-      sessionStorage.setItem("refreshToken", refreshToken);
-      sessionStorage.setItem("bimToken", token);
-      callback(token, expire);
-
-    });
+  $.ajax({
+    type: "POST",
+    url: "https://developer.api.autodesk.com/authentication/v1/refreshtoken?scope=data:read%20data:write%20data:create%20data:search%20code:all%20account:read%20user-profile:read%20viewables:read",
+    beforeSend: function(request) {
+      request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    },
+    data: {
+      "client_id":"QsqosEk9aHS6VIdEWrfgPBiOBBqFHB5r",
+      "client_secret":"IHZ6iLFuAqHMFDj5",
+      "grant_type":"refresh_token",
+      "refresh_token":refresh
+    },
+    success: function (res) {
+      sessionStorage.setItem("refreshToken",res.refresh_token);
+      sessionStorage.setItem("bimToken",res.access_token);
+      sessionStorage.setItem("expire",res.expires_in);
+      getThreeLeggedToken(res.access_token,res.expires_in);
+    },
+    error: function (e) {
+      sessionStorage.removeItem("refreshToken");
+      sessionStorage.removeItem("bimToken");
+    }
   });
 }
 
 function refreshBimDocToken() {
   var refresh = sessionStorage.getItem("refreshToken");
-  fetch('Home/refreshToken?token=' + refresh).then(res => {
-    res.json().then(data => {
-
-      var token = JSON.parse(data).access_token;
-      var refreshToken = JSON.parse(data).refresh_token;
-      var expire = JSON.parse(data).expires_in;
-
-      sessionStorage.setItem("refreshToken", refreshToken);
-      sessionStorage.setItem("bimToken", token);
-
-    });
+  $.ajax({
+    type: "POST",
+    url: "https://developer.api.autodesk.com/authentication/v1/refreshtoken?scope=data:read%20data:write%20data:create%20data:search%20code:all%20account:read%20user-profile:read%20viewables:read",
+    beforeSend: function(request) {
+      request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    },
+    data: {
+      "client_id":"QsqosEk9aHS6VIdEWrfgPBiOBBqFHB5r",
+      "client_secret":"IHZ6iLFuAqHMFDj5",
+      "grant_type":"refresh_token",
+      "refresh_token":refresh
+    },
+    success: function (res) {
+      sessionStorage.setItem("refreshToken",res.refresh_token);
+      sessionStorage.setItem("bimToken",res.access_token);
+      sessionStorage.setItem("expire",res.expires_in);
+    },
+    error: function (e) {
+      sessionStorage.removeItem("refreshToken");
+      sessionStorage.removeItem("bimToken");
+    }
   });
 }
 
@@ -96,7 +116,6 @@ function loginToBim360() {
       newWindow.focus();
     }
   }
-
 }
 
 function startCheckingLogin() {
@@ -498,7 +517,14 @@ $(document).on("click","#issueClick",function() {
   } else {
     BIM360IssueExtension.prototype.loadIssues(id);
   }
-})
+});
+
+// setTimeout(() => {
+//   const divElem = $('canvas')[0];
+//   new ResizeObserver(() => { 
+//     console.log("resizeing");
+//     viewer.resize(); }).observe(divElem);
+// },6000);
 
 //https://shrouded-ridge-44534.herokuapp.com/api/forge/oauth/callback
 //http://localhost:80/Lagos/Home/autodeskRedirect

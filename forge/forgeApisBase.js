@@ -31,6 +31,28 @@ const getAllProjectInHub = async (hubId) => {
   }
 };
 
+const refreshToken = async (refresh) => {
+  try {
+    if(refresh) {
+      const url = `https://developer.api.autodesk.com/authentication/v1/refreshtoken`; 
+      
+      let req = {
+          'client_id' : process.env.FORGE_CLIENT_ID, 
+        	'client_secret' : process.env.FORGE_CLIENT_SECRECT,
+        	'grant_type' : 'refresh_token',
+        	'refresh_token' : refresh,
+        	'scope' : 'data:read'
+      };
+      
+      const payload = await axios.post(url, req, { headers : {'Content-Type' : 'application/x-www-form-urlencoded'} });
+      return { status: payload.status, data: payload.data };
+    }
+  } catch (error) {
+      console.log(error.response);
+      return { status: error.response.status, data: [] };
+  }
+};
+
 const getIssues = async (container_id, token) => {
   try {
     if (token) {
@@ -111,4 +133,5 @@ module.exports = {
   getDataInit,
   getHubs,
   getAllProjectInHub,
+  refreshToken
 };

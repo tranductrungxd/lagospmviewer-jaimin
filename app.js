@@ -58,7 +58,7 @@ router.route("/wirs").post(async (req, res) => {
         await new SQL_LPM().createNewSBE(wir, payload.id);
         break;
       case "swd":
-        // code block
+        await new SQL_LPM().createNewSWD(wir, payload.id);
         break;
       default:
       // code block
