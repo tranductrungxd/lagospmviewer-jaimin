@@ -519,12 +519,14 @@ $(document).on("click","#issueClick",function() {
   }
 });
 
-// setTimeout(() => {
-//   const divElem = $('canvas')[0];
-//   new ResizeObserver(() => { 
-//     console.log("resizeing");
-//     viewer.resize(); }).observe(divElem);
-// },6000);
+ window.onresize = function() {
+  var can = $("canvas")[0];
+  can.width = screen.width;
+  can.height = screen.height;
+  can.style.width = screen.width+"px";
+  can.style.height = screen.height+"px";
+  viewer.resize();
+}
 
 //https://shrouded-ridge-44534.herokuapp.com/api/forge/oauth/callback
 //http://localhost:80/Lagos/Home/autodeskRedirect
