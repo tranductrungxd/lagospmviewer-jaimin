@@ -14,7 +14,9 @@ $(document).on("click","#modalCancel",function() {
 });
 
 $(function () {
-	$('[data-toggle="tooltip"]').tooltip()
+	$('[data-toggle="tooltip"]').tooltip({
+        placement: 'bottom'
+    })
 });
 
 // $(".jss13").hover(function(){
