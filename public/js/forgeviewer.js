@@ -346,7 +346,7 @@ function fetchAllIssuesFromBim360(issueId) {
 }
 
 $(document).on("click", "#addWIR", function () {
-  var issueData = "";
+
   //$("#myModal").toggle("modal");
   var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
    pushPinExtension.removeAllItems(); 
@@ -381,6 +381,11 @@ $(document).on("click", "#addWIR", function () {
              }
           };
            $("#myModal").toggle("modal");
+           $(':input','#wirForm')
+           .not(':button, :submit, :reset, :hidden')
+           .val('')
+           .removeAttr('checked')
+           .removeAttr('selected');
        });     
    pushPinExtension.startCreateItem({ label: "New", status: 'open', type: 'issues' });
 
@@ -599,12 +604,11 @@ function processChecklist(data,wirid) {
           }
       });
       
-     /* $(':input','#readModal')
-      .not(':button, :submit, :reset, :hidden')
-      .val('')
-      .prop('checked', false)
-      .prop('selected', false);
-*/
+        $(':input','#readModal')
+           .not(':button, :submit, :reset, :hidden')
+           .val('')
+           .removeAttr('checked')
+           .removeAttr('selected');
       
       $("#dateOfTestingRead").val(data.date_of_inspection);
       $("#timeOfTestingRead").val(data.time_of_inspection);
