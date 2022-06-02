@@ -35,21 +35,21 @@
                 <div class="form-group row" style="margin-top: 10px;">
                   <label for="dateOfTesting" class="col-sm-4 col-form-label alignCss">Date of Testing:</label>
                   <div class="col-sm-8">
-                    <input type="date" class="form-control" id="dateOfTestingRead" name="dateOfTesting"
+                    <input type="date" class="form-control" id="dateOfTestingRead"
                        readonly="readonly" />
                   </div>
                 </div>
                 <div style="margin-top: 5px;" class="form-group row">
                   <label for="timeOfTesting" class="col-sm-4 col-form-label alignCss">Time of Testing:</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="timeOfTestingRead" name="timeOfTesting"
+                    <input type="text" class="form-control" id="timeOfTestingRead"
                        readonly="readonly">
                   </div>
                 </div>
                 <div style="margin-top: 5px; margin-bottom: 10px;" class="form-group row">
                   <label for="locationOfTesting" class="col-sm-4 col-form-label alignCss">Location of Testing:</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="locationOfTestingRead" name="locationOfTesting"
+                    <input type="text" class="form-control" id="locationOfTestingRead"
                        readonly="readonly" />
                   </div>
                 </div>
@@ -83,50 +83,50 @@
                 <div class="form-group row" style="margin-top: 10px;">
                   <label for="structure" class="col-sm-4 col-form-label alignCss">Structure:</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="structureRead" name="structure"
+                    <input type="text" class="form-control" id="structureRead"
                       readonly="readonly" />
                   </div>
                 </div>
                 <div style="margin-top: 5px;" class="form-group row">
                   <label for="typeOfStructure" class="col-sm-4 col-form-label alignCss">Type of Structure:</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="typeOfStructureRead" name="typeOfStructure"
+                    <input type="text" class="form-control" id="typeOfStructureRead"
                      readonly="readonly">
                   </div>
                 </div>
                 <div style="margin-top: 5px;" class="form-group row">
                   <label for="rdNo" class="col-sm-4 col-form-label alignCss">Reference Drawing:</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="rdNoRead" name="rdNo"
+                    <input type="text" class="form-control" id="rdNoRead"
                     readonly="readonly" />
                   </div>
                 </div>
                 <div style="margin-top: 5px;" class="form-group row">
                   <label for="statementRef" class="col-sm-4 col-form-label alignCss">Method Statement:</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="statementRefRead" name="statementRef"
+                    <input type="text" class="form-control" id="statementRefRead"
                       placeholder="Enter method statement no" readonly="readonly" />
                   </div>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="row">
-                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" id="consentRead" name="consent" readonly="readonly" /></div>
+                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" id="consentRead" readonly="readonly" /></div>
                   <div class="col-md-11"><label class="col-form-label">: Consent to Proceed</label></div>
                 </div>
                 <div class="row">
-                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" id="yesConsentRead" name="yesConsent" readonly="readonly" />
+                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" id="yesConsentRead" readonly="readonly" />
                   </div>
                   <div class="col-md-11"><label class="col-form-label">: Consent to proceed, subject to comment</label>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" id="noConsentRead" name="noConsent" readonly="readonly" />
+                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" id="noConsentRead" readonly="readonly" />
                   </div>
                   <div class="col-md-11"><label class="col-form-label">: No Consent to proceed</label></div>
                 </div>
                 <div class="row">
-                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" id="reviewNotRead" name="reviewNot" readonly="readonly" />
+                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" id="reviewNotRead" readonly="readonly" />
                   </div>
                   <div class="col-md-11"><label class="col-form-label">: Review not required, for information</label>
                   </div>
@@ -140,7 +140,7 @@
                 <div class="form-group row">
                   <label for="inspectionType" class="col-sm-2 col-form-label alignCss"><b>Inspection Type:</b></label>
                   <div class="col-sm-4">
-                    <select name="inspectionType" id="inspectionTypeRead" class="form-control" readonly="readonly">
+                    <select id="inspectionTypeRead" class="form-control" readonly="readonly">
                       <option value="0"> Please Select </option>
                       <option value="sbe"> SAND BLAST CLEANING OF REBARS</option>
                       <option value="swd"> SEA WALL DILIGENCE</option>
@@ -155,8 +155,8 @@
               </div>
             </div>
             <div class="row">
-              <%- include('types/sandBlast.ejs') %>
-                <%- include('types/seaWall.ejs') %>
+              <%- include('types/sandBlastRead.ejs') %>
+                <%- include('types/seaWallRead.ejs') %>
                   <%- include('types/shotcreteWorks.ejs') %>
                     <%- include('types/steelInstallation.ejs') %>
                       <%- include('types/thermalControl.ejs') %>
