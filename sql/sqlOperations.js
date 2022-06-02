@@ -200,7 +200,7 @@ class SQL_LPM {
         request.input("sb2_eng", sql.VarChar(50), engsb2);
         request.input("sb3_eng", sql.VarChar(50), engsb3);
         request.input("sb4_eng", sql.VarChar(50), engsb4);
-        request.input("comments", sql.VarChar(50), comments);
+        request.input("comments", sql.VarChar(1500), comments);
         request.input("so_date_site", sql.VarChar(50), sitedateso);
         request.input("so_date_qc", sql.VarChar(50), qcdateso);
         request.input("so_date_eng", sql.VarChar(50), engedateso);
@@ -275,8 +275,8 @@ class SQL_LPM {
         request.input("seaengsw3", sql.VarChar(50), seaengsw3);
         request.input("seaengsw4", sql.VarChar(50), seaengsw4);
         request.input("seaengsw5", sql.VarChar(50), seaengsw5);
-        request.input("seastjvcom", sql.VarChar(50), seastjvcom);
-        request.input("seaengcom", sql.VarChar(50), seaengcom);
+        request.input("seastjvcom", sql.VarChar(1555), seastjvcom);
+        request.input("seaengcom", sql.VarChar(1555), seaengcom);
         request.input("seasitedateso", sql.VarChar(50), seasitedateso);
         request.input("seaqcdateso", sql.VarChar(50), seaqcdateso);
         request.input("seaengedateso", sql.VarChar(50), seaengedateso);
