@@ -697,7 +697,7 @@ body {
     display:flex;
 }
 
-@media only screen and (min-width: 2400px) {
+@media only screen and (min-width: 400px) {
 
 #projects {
     width: 115px !important;
