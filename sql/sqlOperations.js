@@ -117,7 +117,7 @@ class SQL_LPM {
       try {
         const {
           dateOfTesting, timeOfTesting, locationOfTesting, structure, typeOfStructure, rdNo,
-          statementRef, consent, yesConsent, noConsent, reviewNot, inspectionType, issueid
+          statementRef, consent, yesConsent, noConsent, reviewNot, inspectionType, issueid, seqid
         } = wir;
 
         const pool = await pools.poolWebConnect;
@@ -135,6 +135,7 @@ class SQL_LPM {
         request.input("reviewNot", sql.Int, reviewNot);
         request.input("inspectionType", sql.VarChar(50), inspectionType);
         request.input("issueid", sql.VarChar(50), issueid);
+        request.input("seqid", sql.VarChar(50), seqid);
         request
           .execute("Wir_Write_New")
           .then((response) => {
@@ -298,6 +299,84 @@ class SQL_LPM {
       }
     });
   };
+
+  async getSingleWir(id) {
+    return new Promise(async (resolve) => {
+      try {
+        const pool = await pools.poolWebConnect;
+        const request = new sql.Request(pool);
+        request.query("select * from dbo.wir where wirid="+id)
+          .then((result) => {
+            console.log(result);
+            resolve({ status: 200, data: result.recordset });
+          })
+          .catch((err) => {
+            console.log("Error occurred during getting single wir " + err);
+            resolve({ status: 500, data: [] });
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  async getSingleWirChecklist(id,table) {
+    return new Promise(async (resolve) => {
+      try {
+        const pool = await pools.poolWebConnect;
+        const request = new sql.Request(pool);
+        request.query("select * from dbo."+table+" where wirid="+id)
+          .then((result) => {
+            console.log(result);
+            resolve({ status: 200, data: result.recordset });
+          })
+          .catch((err) => {
+            console.log("Error occurred during getting single wir checklist " + err);
+            resolve({ status: 500, data: [] });
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  async removeWirById(id) {
+    return new Promise(async (resolve) => {
+      try {
+        const pool = await pools.poolWebConnect;
+        const request = new sql.Request(pool);
+        request.query("delete from dbo.wir where wirid="+id)
+          .then((result) => {
+            resolve({ status: 200 });
+          })
+          .catch((err) => {
+            console.log("Error occurred during deleting " + err);
+            resolve({ status: 500, data: [] });
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
+
+  async removeWirChecklistById(id,table) {
+    return new Promise(async (resolve) => {
+      try {
+        const pool = await pools.poolWebConnect;
+        const request = new sql.Request(pool);
+        request.query("delete from dbo."+table+" where wirid="+id)
+          .then((result) => {
+            resolve({ status: 200 });
+          })
+          .catch((err) => {
+            console.log("Error occurred during deleting " + err);
+            resolve({ status: 500, data: [] });
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
 
   async deleteWirs() {
     return new Promise(async (resolve) => {

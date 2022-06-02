@@ -181,7 +181,6 @@ justify-content: flex-end;
 }
 .jss16 {
 color: white !important;
-background-color: #1572d9 !important;
 }
 .jss17 {
 color: #c2c7d0 !important;
@@ -269,6 +268,54 @@ background-color: #ffc107;
 }
 .jss10 {
 font-size: 1.5rem;
+}
+
+.css-vubbuv {
+    user-select: none;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    fill: currentcolor;
+    flex-shrink: 0;
+    transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    font-size: 1.5rem;
+}
+
+.css-1yxmbwk {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    background-color: transparent;
+    outline: 0px;
+    border: 0px;
+    margin: 0px;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    appearance: none;
+    text-decoration: none;
+    text-align: center;
+    flex: 0 0 auto;
+    font-size: 1.5rem;
+    padding: 8px;
+    border-radius: 50%;
+    overflow: visible;
+    color: rgba(0, 0, 0, 0.54);
+    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+#rightPanel {
+    display: none;
+    left: 75%;
+    width: 385px;
+    background-color: ghostwhite;
+    position: absolute;
+    padding: 10px;
 }
 
 .jss1 {
@@ -641,4 +688,11 @@ body {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.action {
+    display: none;
+}
+.mainWir:hover .action {
+    display:block;
 }

@@ -1,5 +1,6 @@
 var viewer;
 var newIssueData;
+var tempWirData;
 var options = {
   env: 'AutodeskProduction',
   getAccessToken: getForgeToken
@@ -90,6 +91,7 @@ function onDocumentLoadSuccess(doc) {
 
   var viewables = doc.getRoot().getDefaultGeometry();
   viewer.loadDocumentNode(doc, viewables).then(i => {
+    $("#guiviewer3d-toolbar").css("margin-bottom","20px");
     loginToBim360();
   });
 
@@ -456,6 +458,13 @@ $(document).on('click', "#saveWir", function () {
     }
   });
 
+  var seqid = 'WIR';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < 10; i++ ) {
+      seqid += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
   newIssueData.attributes.title = $("#structure").val();
   var urls = 'https://developer.api.autodesk.com/issues/v1/containers/e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2/quality-issues'
 
@@ -474,6 +483,7 @@ $(document).on('click', "#saveWir", function () {
     success: function (res) {
       if(res!="undefined" && !$.isEmptyObject(res.data) && res.data.id != "undefined") {
         $("#issueid").val(res.data.id);
+        $("#seqid").val(seqid);
       }
       console.log("issue created successfully. " + res.data.id);
     }
@@ -486,7 +496,6 @@ $(document).on('click', "#saveWir", function () {
 $("form").on("submit", function (e) {
 
   var dataString = $(this).serialize();
-  console.log(dataString);
   $('input[type=checkbox]').each(function () {
     if (!$(this).is(':checked') && $(this).attr("name") !== undefined) {
       dataString += "&" + $(this).attr("name") + "=0";
@@ -511,13 +520,187 @@ $("form").on("submit", function (e) {
 });
 
 $(document).on("click","#issueClick",function() {
+  $("#loader").show();
+  tempWirData = {};
+
   var id = $(this).attr("issue");
+  var wirid = $(this).attr("wirid");
+  
+  loadIssueDetailPanel(wirid);
+  
   if(id==null) {
     console.log("No issue linked to the WIR.")
   } else {
     BIM360IssueExtension.prototype.loadIssues(id);
   }
+  $("#loader").hide();
 });
+
+function loadIssueDetailPanel(wirid) {
+
+  $.ajax({
+    type: "GET",
+    url: "getWir?id="+wirid,
+    success: function (data) {
+      processDetails(data[0]);
+    },
+    error: function (e) {
+      console.log(e);
+      $("#loader").hide();
+    }
+  });
+
+  $("#middlePanel").css("width","calc(75% - 307px)");
+	$("#rightPanel").show();
+  viewer.resize();
+
+}
+
+function processDetails(data) {
+
+  tempWirData=data;
+
+  $("#detailStructure").val(data.structure);
+  $("#detailTypeStructure").val(data.type_of_stucture);
+  $("#detailStructure").val(data.structure);
+  $("#detailDate").val(data.date_of_inspection);
+  $("#detailTime").val(data.time_of_inspection);
+
+  if(data.inspection_type=="sbe" ) {
+    $("#detailInspection").val("Sand Blast Cleaning of Rebars");
+  } else if(data.inspection_type=="swd" ) {
+    $("#detailInspection").val("Sea Wall Deligence");
+  } else if(data.inspection_type=="tc" ){ 
+    $("#detailInspection").val("Thermal Control");
+  } else if(data.inspection_type=="sw" ){ 
+    $("#detailInspection").val("Shotcrete Works");
+  } else if(data.inspection_type=="sri" ){
+    $("#detailInspection").val("Still Reinforcement Installation");
+  } 
+
+  $("#thumId").attr("wirid",data.wirid);
+
+}
+
+function processChecklist(data,wirid) {
+  $.ajax({
+    type: "GET",
+    url: "getWirChecklist?id="+wirid+"&type="+data.inspection_type,
+    success: function (datas) {
+      var list = datas[0];
+      
+      $("#myModalRead").modal("show");
+
+      $('.inspDet').each(function(i, obj) {
+          if(data.inspection_type==$(this).attr("id")) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+      });
+      
+     /* $(':input','#readModal')
+      .not(':button, :submit, :reset, :hidden')
+      .val('')
+      .prop('checked', false)
+      .prop('selected', false);
+*/
+      
+      $("#dateOfTestingRead").val(data.date_of_inspection);
+      $("#timeOfTestingRead").val(data.time_of_inspection);
+      $("#locationOfTestingRead").val(data.location);
+      $("#structureRead").val(data.structure);
+      $("#typeOfStructureRead").val(data.type_of_stucture);
+      $("#rdNoRead").val(data.ref_draw_no);
+      $("#statementRefRead").val(data.method_sta_ref_no);
+      data.consent_proceed == 1 ? $("#consentRead").attr("checked","checked") : $("#consentRead").removeAttr("checked");
+      data.consent_proceed_comment == 1 ? $("#yesConsentRead").attr("checked","checked") : $("#yesConsentRead").removeAttr("checked");
+      data.no_consent == 1 ? $("#noConsentRead").attr("checked","checked") : $("#noConsentRead").removeAttr("checked");
+      data.rev_not_req == 1 ? $("#reviewNotRead").attr("checked","checked") : $("#reviewNotRead").removeAttr("checked");
+      $("#inspectionTypeRead").val(data.inspection_type);
+
+      // checklist
+      if(data.inspection_type=="sbe") {
+        $.each(list,function(k,v) {
+          
+          $("#sbe input[type=checkbox]").each(function() {
+            if($(this).attr("id")==k && v==1) {
+              $(this).attr("checked","checked");
+            }
+          });
+
+          $("#sbe input[type=text]").each(function() {
+            if($(this).attr("id")==k && v!="") {
+              $(this).val(v);
+            }
+          });
+
+          $("#sbe input[type=date]").each(function() {
+            if(k=="so_date_site" && $(this).attr("id")=="sitedateso" && v!="") {
+              $(this).val(list.so_date_site);
+            } else if(k=="so_date_qc" && $(this).attr("id")=="qcdateso" && v!="") {
+              $(this).val(list.so_date_qc);
+            } else if(k=="so_date_eng" && $(this).attr("id")=="engedateso" && v!="") {
+              $(this).val(list.so_date_eng);
+            }
+          });
+
+        });
+
+      } else if(data.inspection_type=="swd") {
+        $.each(list,function(k,v) {
+
+          $("#swd input[type=checkbox]").each(function() {
+            if($(this).attr("id")==k && v==1) {
+              $(this).attr("checked","checked");
+            }
+          });
+
+          $("#swd input[type=text]").each(function() {
+            if($(this).attr("id")==k && v!="") {
+              $(this).val(v);
+            }
+          });
+
+          $("#swd input[type=date]").each(function() {
+            if(k=="so_date_site" && $(this).attr("id")=="sitedateso1" && v!="") {
+              $(this).val(list.so_date_site);
+            } else if(k=="so_date_qc" && $(this).attr("id")=="qcdateso1" && v!="") {
+              $(this).val(list.so_date_qc);
+            } else if(k=="so_date_eng" && $(this).attr("id")=="engedateso1" && v!="") {
+              $(this).val(list.so_date_eng);
+            }
+          });
+        });
+      }
+    },
+    error: function (e) {
+      console.log(e);
+      $("#loader").hide();
+    }
+  });
+}
+
+$(document).on("click","#thumId",function() {
+
+  var wirid = $(this).attr("wirid");
+  if(!$.isEmptyObject(tempWirData)) {
+    processChecklist(tempWirData,wirid);
+  } else {
+    $.ajax({
+      type: "GET",
+      url: "getWir?id="+wirid,
+      success: function (data) {
+        tempWirData=data[0];
+        processChecklist(tempWirData,wirid);
+      },
+      error: function (e) {
+        console.log(e);
+        $("#loader").hide();
+      }
+    });
+  }
+})
 
  window.onresize = function() {
   var can = $("canvas")[0];
@@ -528,6 +711,12 @@ $(document).on("click","#issueClick",function() {
   viewer.resize();
 }
 
+$(document).on('click',"#closeDetail",function() {
+	$("#middlePanel").css("width","calc(100% - 307px)");
+	$("#rightPanel").hide();
+  viewer.resize();
+});
+
 //https://shrouded-ridge-44534.herokuapp.com/api/forge/oauth/callback
 //http://localhost:80/Lagos/Home/autodeskRedirect
 
@@ -536,5 +725,12 @@ git add .
 git commit -am "make it better"
 git push heroku master
 git push ordigin master
+
+
+$(':input','#myform')
+  .not(':button, :submit, :reset, :hidden')
+  .val('')
+  .prop('checked', false)
+  .prop('selected', false);
 
 */

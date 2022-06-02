@@ -17,6 +17,9 @@
     integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
     crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>  
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+
 </head>
 
 <body>
@@ -28,10 +31,10 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto rightNav py-4 row" style="width: calc(100% - 307px);">
-        <div class="nav-item col-md-3">
+        <div class="nav-item col-md-5">
           <p class="MuiTypography-root MuiTypography-body1 css-hnz17l">Guggenheim Abu Dhabi</p>
         </div>
-        <div class="col-md-4"></div>
+        <div class="col-md-2"></div>
         <div class="dropdown col-md-3">
           <select
             onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);"
@@ -68,7 +71,7 @@
         <div class="col-md-2">
           <ul class="navbar-nav">
             <li class="nav-item" style="margin-left: 15px;">
-              <a style="cursor: pointer;" data-toggle="tooltip" data-placement="bottom" title="WIR" class="" id="addWIR"><svg
+              <a style="cursor: pointer;" data-toggle="tooltip" data-placement="bottom" title="Work Inspection Requests ADG" class="" id="addWIR"><svg
                   class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true"
                   viewBox="0 0 24 24" data-testid="LocationOnIcon">
                   <path
@@ -110,20 +113,13 @@
         <div id="leftPanel" class="allotment-module_splitViewView__KtCWc jss4 allotment-module_visible__phJMN"
           data-testid="split-view-view" style="left: 0px; width: 307px;">
           <div>
-            <ul class="MuiList-root MuiList-padding MuiList-dense css-1ontqvh">
-              <li class="jss13 MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-q6hm0g"
-                style="background: none;">
-                <h4 style="margin-left:30%;">WIR ADG</h4>
-              </li>
-            </ul>
-            <hr class="hrstyle">
             <ul class="MuiList-root MuiList-padding MuiList-dense css-1ontqvh mainUlwir">
               <div>
                 <% for(var i=0; i<wirs.length; i++) {%>
-                  <li></li>
-                  <li wirid="<%= wirs[i].wirid %>"
-                    class="jss13 MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-q6hm0g"
+                  <li wirid="<%= wirs[i].wirid %>" id="box<%= wirs[i].wirid %>"
+                    class="mainWir jss13 MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-q6hm0g"
                     style="background: none;">
+                    <small itype="<%= wirs[i].inspection_type %>" wirid="<%= wirs[i].wirid %>" style="color:red" class="removeWir action">x</small>
                     <div class="jss17 MuiListItemIcon-root css-1f8bwsm"><svg
                         class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
                         aria-hidden="true" viewBox="0 0 24 24" data-testid="LocationOnIcon">
@@ -131,7 +127,7 @@
                           d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
                         </path>
                       </svg></div>
-                    <div issue="<%= wirs[i].drawing_link %>" id="issueClick" class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-1xar93x"
+                    <div class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-1xar93x"
                       title="Need to inspect the foundation at this location.">
                       <span class="MuiTypography-root MuiTypography-body2 jss19 MuiListItemText-primary css-14tqbo1">
                         <%= wirs[i].structure %>
@@ -154,7 +150,7 @@
                       <%= wirs[i].date_of_inspection %>
                     </span>
                     <div class="MuiListItemSecondaryAction-root css-y3qv5r">
-                      <div class="jss21"><button id="return<%= wirs[i].wirid %>"
+                      <div class="jss21 action"><button id="return<%= wirs[i].wirid %>"
                           class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall jss22 css-1j7qk7u"
                           tabindex="0" type="button" aria-label="View in LagosPM"><a
                             href="https://demo.lagospm.com/ltepage.cfm?fn=wir.edit&wirid=<%= wirs[i].wirid %>"
@@ -167,16 +163,22 @@
                                   d="M5.828 7l2.536 2.536L6.95 10.95 2 6l4.95-4.95 1.414 1.414L5.828 5H13a8 8 0 1 1 0 16H4v-2h9a6 6 0 1 0 0-12H5.828z">
                                 </path>
                               </g>
-                            </svg></a><span class="MuiTouchRipple-root css-w0pj6f"></span></button></div>
+                            </svg></a><span class="MuiTouchRipple-root css-w0pj6f"></span></button>
+                            <button issue="<%= wirs[i].drawing_link %>" wirid="<%= wirs[i].wirid %>" id="issueClick"  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall jss16 css-1j7qk7u" tabindex="0" type="button" aria-label="Detail">
+                              <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-1k33q06" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+                              <span class="MuiTouchRipple-root css-w0pj6f"></span></button>
+                          </div>
+                            
                     </div>
                   </li>
-                  <hr class="MuiDivider-root MuiDivider-fullWidth css-39bbo6">
+                  <hr id="hr<%= wirs[i].wirid %>" class="MuiDivider-root MuiDivider-fullWidth css-39bbo6">
                   <% } %>
               </div>
             </ul>
           </div>
         </div>
-        <div id="rightPanel" class="allotment-module_splitViewView__KtCWc allotment-module_visible__phJMN"
+        <div id="middlePanel" class="allotment-module_splitViewView__KtCWc allotment-module_visible__phJMN"
           data-testid="split-view-view" style="left: 307px; width: calc(100% - 307px);">
           <div class="jss5">
             <div class="css-1x72cfx">
@@ -184,184 +186,57 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="modal" id="myModal">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-
-        <div class="modal-body" style="padding: 0px 10px;">
-          <form method="post" action="wirs" id="wirForm">
-            <div class="row" style="padding: 19px 20px 10px 40px;">
-              <div class="col-md-3">
-                <img style="height: 40%;" src="img/Picture1.png" />
-              </div>
-              <div class="col-md-2">
-                <img style="height: 40%;" src="img/Picture2.jpg" />
-              </div>
-              <div class="col-md-5">
-                <img src="img/Picture3.jpg" />
-              </div>
-              <div class="col-md-2">
-                <img style="height: 40%;" src="img/Picture4.png" />
+        <div id="rightPanel">
+          <div class="css-ssqu8q">
+            <button id="closeDetail" class="css-1yxmbwk" tabindex="0" type="button">
+              <svg class="css-vubbuv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ChevronRightIcon">
+                <path d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+              </svg>
+              <span class="MuiTouchRipple-root css-w0pj6f"></span>
+            </button>
+          </div>
+          <hr>
+          <form>
+            <div class="row">
+              <div class="col-md-12 form-group">
+                <label style="padding: 5px 0px 5px 0px;">Structure:</label>
+                <input class="form-control" type="text" readonly="readonly" id="detailStructure" />
               </div>
             </div>
             <div class="row">
-              <div class="col-md-3"></div>
-              <div class="col-md-6" style="margin-left: 45px;">
-                <b>
-                  <h6>GUGGENHEIM ABU DHABI MUSEUM PROJECT - MAIN WORKS</h6>
-                  <h6 style="margin-left: 35px;">INSPECTION CHECKLIST - REBAR COUPLER TESTING</h6>
-                </b>
-              </div>
-              <div class="col-md-3"></div>
-            </div>
-            <hr>
-            <hr class="hrstyle">
-            <div class="row">
-              <div class="col-md-6" style="border-right: 1px solid grey;">
-                <div class="form-group row" style="margin-top: 10px;">
-                  <label for="dateOfTesting" class="col-sm-4 col-form-label alignCss">Date of Testing:</label>
-                  <div class="col-sm-8">
-                    <input type="date" class="form-control" id="dateOfTesting" name="dateOfTesting"
-                      placeholder="Enter date of testing" />
-                  </div>
-                </div>
-                <div style="margin-top: 5px;" class="form-group row">
-                  <label for="timeOfTesting" class="col-sm-4 col-form-label alignCss">Time of Testing:</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="timeOfTesting" name="timeOfTesting"
-                      placeholder="Enter time of testing">
-                  </div>
-                </div>
-                <div style="margin-top: 5px; margin-bottom: 10px;" class="form-group row">
-                  <label for="locationOfTesting" class="col-sm-4 col-form-label alignCss">Location of Testing:</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="locationOfTesting" name="locationOfTesting"
-                      placeholder="Enter location of testing" />
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label for="dateOfTesting" class="col-sm-2 col-form-label alignCss">Client:</label>
-                  <label for="dateOfTesting" class="col-sm-10 col-form-label">Department of Culture and Tourism
-                    (DCT)</label>
-                </div>
-                <div style="margin-top: 5px;" class="form-group row">
-                  <label for="dateOfTesting" class="col-sm-2 col-form-label alignCss">Contractor:</label>
-                  <label for="dateOfTesting" class="col-sm-10 col-form-label">Sixco-Trojan Joint Venture (STJV)</label>
-                </div>
-                <div style="margin-top: 5px; margin-bottom: 10px;" class="form-group row">
-                  <label for="dateOfTesting" class="col-sm-2 col-form-label alignCss">Project:</label>
-                  <label for="dateOfTesting" class="col-sm-10 col-form-label">Sobha Hartland</label>
-                </div>
-              </div>
-            </div>
-            <hr class="hrstyle">
-            <hr class="hrstyle" style="margin-top: 10px;">
-            <div class="row">
-              <div class="col-md-6" style="border-right: 1px solid grey;"><b style="margin-left: 210px;">Description</b>
-              </div>
-              <div class="col-md-6"><b style="margin-left: 210px;">Status</b></div>
-            </div>
-            <hr class="hrstyle">
-            <div class="row">
-              <div class="col-md-6" style="border-right: 1px solid grey;">
-                <div class="form-group row" style="margin-top: 10px;">
-                  <label for="structure" class="col-sm-4 col-form-label alignCss">Structure:</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="structure" name="structure"
-                      placeholder="Enter structure" />
-                  </div>
-                </div>
-                <div style="margin-top: 5px;" class="form-group row">
-                  <label for="typeOfStructure" class="col-sm-4 col-form-label alignCss">Type of Structure:</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="typeOfStructure" name="typeOfStructure"
-                      placeholder="Enter type of structure">
-                  </div>
-                </div>
-                <div style="margin-top: 5px;" class="form-group row">
-                  <label for="rdNo" class="col-sm-4 col-form-label alignCss">Reference Drawing:</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="rdNo" name="rdNo" placeholder="Enter reference drawing no" />
-                  </div>
-                </div>
-                <div style="margin-top: 5px;" class="form-group row">
-                  <label for="statementRef" class="col-sm-4 col-form-label alignCss">Method Statement:</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="statementRef" name="statementRef"
-                      placeholder="Enter method statement no" />
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="row">
-                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="consent" /></div>
-                  <div class="col-md-11"><label class="col-form-label">: Consent to Proceed</label></div>
-                </div>
-                <div class="row">
-                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="yesConsent" />
-                  </div>
-                  <div class="col-md-11"><label class="col-form-label">: Consent to proceed, subject to comment</label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="noConsent" />
-                  </div>
-                  <div class="col-md-11"><label class="col-form-label">: No Consent to proceed</label></div>
-                </div>
-                <div class="row">
-                  <div class="col-md-1"><input style="height:40px; width: 25px;" type="checkbox" name="reviewNot" />
-                  </div>
-                  <div class="col-md-11"><label class="col-form-label">: Review not required, for information</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <hr class="hrstyle">
-            <hr>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group row">
-                  <label for="inspectionType" class="col-sm-2 col-form-label alignCss"><b>Inspection Type:</b></label>
-                  <div class="col-sm-4">
-                    <select name="inspectionType" id="inspectionType" class="form-control">
-                      <option value="0"> Please Select </option>
-                      <option value="sbe"> SAND BLAST CLEANING OF REBARS</option>
-                      <option value="swd"> SEA WALL DILIGENCE</option>
-                      <option value="sw"> SHOTCRETE WORKS</option>
-                      <option value="sri"> STEEL REINFORCEMENT INSTALLATION</option>
-                      <option value="tc"> THERMAL CONTROL</option>
-                      <option value="wp1"> WP1 WATERPROOFING</option>
-                      <option value="wp2"> WP2 WATERPROOFING</option>
-                    </select>
-                  </div>
-                </div>
+              <div class="col-md-12 form-group">
+                <label style="padding: 5px 0px 5px 0px;">Type of Structure:</label>
+                <input class="form-control" type="text" readonly="readonly" id="detailTypeStructure" />
               </div>
             </div>
             <div class="row">
-              <%- include('types/sandBlast.ejs') %>
-                <%- include('types/seaWall.ejs') %>
-                  <%- include('types/shotcreteWorks.ejs') %>
-                    <%- include('types/steelInstallation.ejs') %>
-                      <%- include('types/thermalControl.ejs') %>
-                        <%- include('types/waterProofOne.ejs') %>
-                          <%- include('types/waterProofTwo.ejs') %>
+              <div class="col-md-12 form-group">
+                <label style="padding: 5px 0px 5px 0px;">Inspection Type:</label>
+                <input class="form-control" type="text" readonly="readonly" id="detailInspection" />
+              </div>
             </div>
-            <hr>
-            <button style="float: right;margin: 10px;" type="button" class="btn btn-danger"
-              id="modalCancel">Close</button>
-            <button style="float: right;margin: 10px;" type="button" id="saveWir" class="btn btn-primary">Save</button>
-            <input type="hidden" name="issueid" id="issueid" />
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <label style="padding: 5px 0px 5px 0px;">Date of Testing:</label>
+                <input class="form-control" type="date" readonly="readonly" id="detailDate" />
+              </div>
+              <div class="col-md-6 form-group">
+                <label style="padding: 5px 0px 5px 0px;">
+                  Time of Testing:
+                </label>
+                <input class="form-control" type="text" readonly="readonly" id="detailTime" />
+              </div>
+            </div>
+            <div id="thumId" class="row col-lg-12" style="padding:30px; cursor: pointer;">
+              <img src="img/thumbnail.png" alt="Thumbnail" />
+            </div>
           </form>
         </div>
-
       </div>
     </div>
   </div>
+  <%- include('wirModal.ejs') %>
+  <%- include('wirModalRead.ejs') %>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="js/forgeviewer.js"></script>
   <script src="js/main.js"></script>

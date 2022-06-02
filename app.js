@@ -71,6 +71,52 @@ router.route("/wirs").post(async (req, res) => {
   }
 });
 
+router.route('/getWir').get(async (req,res) => {
+  try {
+    var id = req.query.id;
+    const payload = await new SQL_LPM().getSingleWir(id);
+    res.status(payload.status).send(payload.data);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error");
+  }
+});
+
+router.route('/getWirChecklist').get(async (req,res) => {
+  try {
+    var id = req.query.id;
+    var type = req.query.type;
+    if(type=="sbe") {
+      var table = "wir_insp_sand_blast";
+    } else if(type=="swd") {
+      var table = "wir_insp_sea_wall";
+    } else {
+      res.status(500).send("Error");
+    }
+    const payload = await new SQL_LPM().getSingleWirChecklist(id,table);
+    res.status(payload.status).send(payload.data);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error");
+  }
+});
+
+router.route("/removeWir").get(async (req,res) => {
+  var id = req.query.id;
+  var type = req.query.type;
+  
+  const payload = await new SQL_LPM().removeWirById(id);
+
+  if(type=="sbe") {
+    await new SQL_LPM().removeWirChecklistById(id,"wir_insp_sand_blast");
+  } else if(type=="swd") {
+    await new SQL_LPM().removeWirChecklistById(id,"wir_insp_sea_wall");
+  }
+
+  res.status(payload.status).send(payload.data);
+
+});
+
 router.use("/forge", require("./forge/forgeApis"));
 
 const PORT = process.env.PORT || 3000;
