@@ -694,5 +694,5 @@ body {
     display: none;
 }
 .mainWir:hover .action {
-    display:block;
+    display:flex;
 }
