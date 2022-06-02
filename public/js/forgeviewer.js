@@ -479,7 +479,7 @@ $(document).on('click', "#saveWir", function () {
     newid = "0000"+newid;
   }
 
-  newIssueData.attributes.title = $("#structure").val();
+  newIssueData.attributes.title = newid;
   var urls = 'https://developer.api.autodesk.com/issues/v1/containers/e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2/quality-issues'
 
   $.ajax({
