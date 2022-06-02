@@ -606,7 +606,7 @@ function processChecklist(data,wirid) {
       $("#myModalRead").modal("show");
 
       $('.inspDet').each(function(i, obj) {
-          if(data.inspection_type==$(this).attr("id")) {
+          if("a"+data.inspection_type==$(this).attr("id")) {
             $(this).show();
           } else {
             $(this).hide();
@@ -636,19 +636,19 @@ function processChecklist(data,wirid) {
       if(data.inspection_type=="sbe") {
         $.each(list,function(k,v) {
           
-          $("#sbe input[type=checkbox]").each(function() {
+          $("#asbe input[type=checkbox]").each(function() {
             if($(this).attr("id")==k && v==1) {
               $(this).attr("checked","checked");
             }
           });
 
-          $("#sbe input[type=text]").each(function() {
+          $("#asbe input[type=text]").each(function() {
             if($(this).attr("id")==k && v!="") {
               $(this).val(v);
             }
           });
 
-          $("#sbe input[type=date]").each(function() {
+          $("#asbe input[type=date]").each(function() {
             if(k=="so_date_site" && $(this).attr("id")=="sitedateso" && v!="") {
               $(this).val(list.so_date_site);
             } else if(k=="so_date_qc" && $(this).attr("id")=="qcdateso" && v!="") {
@@ -663,19 +663,19 @@ function processChecklist(data,wirid) {
       } else if(data.inspection_type=="swd") {
         $.each(list,function(k,v) {
 
-          $("#swd input[type=checkbox]").each(function() {
+          $("#aswd input[type=checkbox]").each(function() {
             if($(this).attr("id")==k && v==1) {
               $(this).attr("checked","checked");
             }
           });
 
-          $("#swd input[type=text]").each(function() {
+          $("#aswd input[type=text]").each(function() {
             if($(this).attr("id")==k && v!="") {
               $(this).val(v);
             }
           });
 
-          $("#swd input[type=date]").each(function() {
+          $("#aswd input[type=date]").each(function() {
             if(k=="so_date_site" && $(this).attr("id")=="sitedateso1" && v!="") {
               $(this).val(list.so_date_site);
             } else if(k=="so_date_qc" && $(this).attr("id")=="qcdateso1" && v!="") {
