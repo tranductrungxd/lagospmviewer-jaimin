@@ -8,8 +8,7 @@ var options = {
 var documentId = 'urn:dXJuOmFkc2sud2lwcHJvZDpmcy5maWxlOnZmLlhfMTV4Z19TUS1ldDh3YUpfcVkxNVE_dmVyc2lvbj0x';
 
 Autodesk.Viewing.Initializer(options, () => {
-  viewer = new Autodesk.Viewing.Private.GuiViewer3D(document.getElementById('forgeViewer'),
-    { loaderExtensions: { svf: "Autodesk.MemoryLimited" } });
+  viewer = new Autodesk.Viewing.Private.GuiViewer3D(document.getElementById('forgeViewer'));
   viewer.start();
   viewer.setOptimizeNavigation(true);
   viewer.forEachExtension(function (ext) {
@@ -351,6 +350,7 @@ function fetchAllIssuesFromBim360(issueId) {
       if (!$.isEmptyObject(msg.data)) {
         returnArray.push(msg.data);
       }
+     // animateIssue(msg);
     }
   });
 
@@ -363,11 +363,10 @@ $(document).on("click", "#addWIR", function () {
   var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
    pushPinExtension.removeAllItems(); 
     pushPinExtension.pushPinManager.addEventListener('pushpin.created', function (e) {
-           pushPinExtension.pushPinManager.removeEventListener('pushpin.created', arguments.callee);
+          pushPinExtension.pushPinManager.removeEventListener('pushpin.created', arguments.callee);
           pushPinExtension.endCreateItem();
-           var target_urn = sessionStorage.getItem("containerUrn");
-           var starting_version = 1;
-             var issue = pushPinExtension.getItemById(pushPinExtension.pushPinManager.pushPinList[0].itemData.id ); 
+           
+          var issue = pushPinExtension.getItemById(pushPinExtension.pushPinManager.pushPinList[0].itemData.id ); 
        
            if (issue === null) return; 
            newIssueData = {
@@ -380,8 +379,8 @@ $(document).on("click", "#addWIR", function () {
                ng_issue_subtype_id: "458b5a31-5052-4417-a415-db05c7c9e05f",
                sheet_metadata: { 
                  is3D: true,
-                 sheetGuid: this.viewer.model.getDocumentNode().data.guid,
-                 sheetName: this.viewer.model.getDocumentNode().data.name
+                 sheetGuid: "c53bae93-9d1d-4f27-9577-892b41b7e414-00a6d1b3",
+                 sheetName: "{3D}",
                },
                pushpin_attributes: { 
                  attributes_version : 2,
@@ -464,6 +463,36 @@ BIM360CreateIssuePanel.prototype.initialize = function () {
 };
 
 Autodesk.Viewing.theExtensionManager.registerExtension('BIM360IssueExtension', BIM360IssueExtension);
+
+function animateIssue(issue) {
+
+  var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
+
+  issue = issue.data;
+  console.log(issue);
+  const issueAttributes = issue.attributes;
+  const pushpinAttributes = issue.attributes.pushpin_attributes;
+
+      if (pushpinAttributes) {
+        const location = pushpinAttributes.location;
+        const position = new THREE.Vector3(location.x, location.y, location.z);
+        const item = {
+          id: issue.id,
+          label: issueAttributes.identifier,
+          status:
+            issue.type && issueAttributes.status.indexOf(issue.type) === -1
+              ? `${issue.type}-${issueAttributes.status}`
+              : issueAttributes.status,
+          position,
+          type: issue.type,
+          objectId: pushpinAttributes.object_id,
+        };
+        console.log(pushpinAttributes.viewer_state);
+        pushPinExtension.loadItemsV2(item);
+        viewer.restoreState(pushpinAttributes.viewer_state);
+        pushPinExtension.pushPinManager.selectOne(issue.id);
+      }
+}
 
 $(document).on('click', "#saveWir", function () {
   $("#loader").show();
@@ -557,11 +586,10 @@ $(document).on("click", ".mainWir", function() {
 
   var id = $('#issueClick', this).attr("issue");
 
-  if(id==null) {
+  if(id==null || id=="") {
     console.log("No issue linked to the WIR.")
   } else {
     BIM360IssueExtension.prototype.loadIssues(id);
-   
   }
 
 })
@@ -577,7 +605,7 @@ $(document).on("click","#issueClick",function() {
   
   loadIssueDetailPanel(wirid);
   
-  if(id==null) {
+  if(id==null || id=="") {
     console.log("No issue linked to the WIR.")
   } else {
     BIM360IssueExtension.prototype.loadIssues(id);
@@ -599,7 +627,7 @@ function loadIssueDetailPanel(wirid) {
     }
   });
 
-  $("#middlePanel").css("width","calc(75% - 307px)");
+  $("#middlePanel").css("width","calc(82% - 307px)");
 	$("#rightPanel").show();
   viewer.resize();
 

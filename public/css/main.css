@@ -311,11 +311,12 @@ font-size: 1.5rem;
 
 #rightPanel {
     display: none;
-    left: 75%;
-    width: 385px;
+    left: 82%;
+    width: 270px;
     background-color: ghostwhite;
     position: absolute;
     padding: 10px;
+    height: 100%;
 }
 
 .jss1 {
