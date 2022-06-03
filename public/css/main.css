@@ -697,6 +697,14 @@ body {
     display:flex;
 }
 
+.css-q6hm0g:hover {
+    background: rgb(86, 86, 86);
+}
+
+.selected {
+    background: rgb(86, 86, 86);
+}
+
 @media only screen and (min-width: 400px) {
 
 #projects {

@@ -378,15 +378,33 @@ class SQL_LPM {
     });
   }
 
+  async getLatestIdWir() {
+    return new Promise(async (resolve) => {
+      try {
+        const pool = await pools.poolWebConnect;
+        const request = new sql.Request(pool);
+        request.query("select MAX(wirid) from dbo.wir")
+          .then((result) => {
+            resolve({ status: 200, data: result.recordset[0][''] });
+          })
+          .catch((err) => {
+            console.log("Error occurred during getting latest id " + err);
+            resolve({ status: 500, data: [] });
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
+
   async deleteWirs() {
     return new Promise(async (resolve) => {
       try {
         const pool = await pools.poolWebConnect;
         const request = new sql.Request(pool);
-        request.query("select * from dbo.wir")
+        request.query("select MAX(wirid) from dbo.wir")
           .then((result) => {
-            console.log(result);
-            resolve({ status: 200, data: result.recordset });
+            resolve({ status: 200, data: response.recordset[0][''] });
           })
           .catch((err) => {
             console.log("Error occurred during GetAllWirs " + err);

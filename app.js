@@ -117,6 +117,13 @@ router.route("/removeWir").get(async (req,res) => {
 
 });
 
+router.route("/getLatestIdWir").get(async (req,res) => {
+
+  const payload = await new SQL_LPM().getLatestIdWir();
+  res.status(payload.status).send(payload.data);
+
+});
+
 router.use("/forge", require("./forge/forgeApis"));
 
 const PORT = process.env.PORT || 3000;

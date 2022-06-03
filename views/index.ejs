@@ -118,7 +118,7 @@
                 <% for(var i=0; i<wirs.length; i++) {%>
                   <li wirid="<%= wirs[i].wirid %>" id="box<%= wirs[i].wirid %>"
                     class="mainWir jss13 MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding css-q6hm0g"
-                    style="background: none;">
+                    >
                     <small itype="<%= wirs[i].inspection_type %>" wirid="<%= wirs[i].wirid %>" style="color:red" class="removeWir action">x</small>
                     <div class="jss17 MuiListItemIcon-root css-1f8bwsm"><svg
                         class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
@@ -127,11 +127,11 @@
                           d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z">
                         </path>
                       </svg></div>
-                      <div style="padding: 10px;">0000<%= wirs[i].wirid %></div>
+                      <div style="padding: 10px;"><%= (2000+parseInt(wirs[i].wirid)) %></div>
                     <div class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-1xar93x"
                       title="Need to inspect the foundation at this location.">
                       <span class="MuiTypography-root MuiTypography-body2 jss19 MuiListItemText-primary css-14tqbo1">
-                        <%= wirs[i].structure %>
+                        <%= wirs[i].location %>
                       </span>
                       <p class="MuiTypography-root MuiTypography-body2 jss20 MuiListItemText-secondary css-mbfek">
                         <% if(wirs[i].inspection_type=="sbe" ){ %>
