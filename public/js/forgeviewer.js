@@ -802,8 +802,6 @@ git commit -am "make it better"
 git push heroku master
 git push ordigin master
 
-click anywhere should animate the issue
-right panel size to 83%
 show whole photo thumbnail of WIR in right panel
 export pdf faster
 srink the design of form for export

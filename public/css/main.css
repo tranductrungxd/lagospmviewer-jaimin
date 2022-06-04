@@ -307,12 +307,13 @@ font-size: 1.5rem;
     overflow: visible;
     color: rgba(0, 0, 0, 0.54);
     transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    padding-left: 0px;
 }
 
 #rightPanel {
     display: none;
     left: 82%;
-    width: 270px;
+    width: 18%;
     background-color: ghostwhite;
     position: absolute;
     padding: 10px;
@@ -709,7 +710,7 @@ body {
 @media only screen and (min-width: 400px) {
 
 #projects {
-    width: 115px !important;
+    width: 260px !important;
 }
 
 }
