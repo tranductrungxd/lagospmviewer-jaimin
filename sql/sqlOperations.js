@@ -397,6 +397,25 @@ class SQL_LPM {
     });
   }
 
+  async updateWir(wir,issue) {
+    return new Promise(async (resolve) => {
+      try {
+        const pool = await pools.poolWebConnect;
+        const request = new sql.Request(pool);
+        request.query("update dbo.wir set drawing_link='"+issue+"' where wirid="+wir)
+          .then((result) => {
+            resolve({ status: 200, data: result.recordset[0][''] });
+          })
+          .catch((err) => {
+            console.log("Error occurred during getting latest id " + err);
+            resolve({ status: 500, data: [] });
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  }
+
   async deleteWirs() {
     return new Promise(async (resolve) => {
       try {

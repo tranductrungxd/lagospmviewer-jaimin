@@ -40,7 +40,7 @@
 }
 
 #quote {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 #author {
@@ -58,7 +58,6 @@ font-family: 'Oswald', sans-serif;
 
 	<div class="header">
 	  <p id="quote"></p>
-	  <b><p id="author"></p></b>
 	</div>
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   
@@ -66,8 +65,7 @@ font-family: 'Oswald', sans-serif;
 	getQuote();
 
 function getQuote() {
-  $('#quote').html("Hold on a sec! We are logging you in.");
-  $('#author').html("LagosPM");
+  $('#quote').html("Redirecting you to LagosPM...");
   localStorage.setItem("bimToken", `<%= accessToken %>`);
   localStorage.setItem("refreshToken",`<%= refreshToken %>`);
   localStorage.setItem("expire",`<%= expireIn %>`);

@@ -686,6 +686,10 @@ body {
     z-index: 9999;
     display: none;
 }
+
+.text-green {
+    color: green;
+}
   
 @keyframes spin {
     0% { transform: rotate(0deg); }
@@ -707,10 +711,62 @@ body {
     background: rgb(86, 86, 86);
 }
 
-@media only screen and (min-width: 400px) {
 
-#projects {
-    width: 260px !important;
+@media only screen and (max-width: 1299px) {
+
+    .headerImg {
+        height: 30%;
+    }
+
+    #projects {
+        width: 225px !important;
+    }
+
+    .pinPoints {
+        margin-left: 0px;
+    }
+
 }
 
+@media only screen and (max-width: 1199px) {
+
+    #projects {
+        width: 170px !important;
+    }
+
 }
+
+@media only screen and (max-width: 990px) {
+
+    .headerImg {
+        height: 20%;
+    }
+
+    #projects {
+        width: 170px !important;
+    }
+
+}
+
+@media only screen and (min-width: 1300px) {
+
+    .headerImg {
+        height: 40%;
+    }
+
+    #projects {
+        width: 260px !important;
+    }
+
+    .pinPoints {
+        margin-left: 15px;
+    }
+
+}
+/* 
+@media (min-width: 400px) {
+    .navbar-expand-lg .navbar-collapse {
+        display: flex!important;
+        flex-basis: auto;
+    }
+} */

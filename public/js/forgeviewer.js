@@ -793,6 +793,84 @@ $(document).on('click',"#closeDetail",function() {
   viewer.resize();
 });
 
+function createIssueFromLPM(wirid, url) {
+  var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
+   pushPinExtension.removeAllItems(); 
+    pushPinExtension.pushPinManager.addEventListener('pushpin.created', function (e) {
+          pushPinExtension.pushPinManager.removeEventListener('pushpin.created', arguments.callee);
+          pushPinExtension.endCreateItem();
+           
+          var issue = pushPinExtension.getItemById(pushPinExtension.pushPinManager.pushPinList[0].itemData.id ); 
+       
+           if (issue === null) return; 
+           newIssueData = {
+             type: 'quality_issues',
+             attributes: {
+               title: "", 
+               status: "open",
+               target_urn: "",
+               ng_issue_type_id: "ac26c7c5-95e1-49c6-9898-536a65f41c27",
+               ng_issue_subtype_id: "458b5a31-5052-4417-a415-db05c7c9e05f",
+               sheet_metadata: { 
+                 is3D: true,
+                 sheetGuid: "c53bae93-9d1d-4f27-9577-892b41b7e414-00a6d1b3",
+                 sheetName: "{3D}",
+               },
+               pushpin_attributes: { 
+                 attributes_version : 2,
+                 type: 'TwoDVectorPushpin', 
+                 object_id: issue.objectId, 
+                 location: issue.position, 
+                 viewer_state: issue.viewerState 
+               },
+             }
+          };
+
+          
+          newIssueData.attributes.title = parseInt(wirid)+2000;
+          var urls = 'https://developer.api.autodesk.com/issues/v1/containers/e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2/quality-issues'
+      
+          $.ajax({
+            type: "POST",
+            beforeSend: function (request) {
+              request.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("bimToken"));
+              request.setRequestHeader("Content-Type", "application/vnd.api+json");
+            },
+            url: urls,
+            async: false,
+            data: JSON.stringify({ data: newIssueData }),
+            error: function (httpObj, textStatus) {
+              console.log(httpObj);
+            },
+            success: function (res) {
+              if(res!="undefined" && !$.isEmptyObject(res.data) && res.data.id != "undefined") {
+                $("#issueid").val(res.data.id);
+                $("#seqid").val(seqid);
+              }
+              console.log("issue created successfully. " + res.data.id);
+              updateWirIdWithIssueId(wirid,res.data.id);
+            }
+          });
+
+       });     
+   pushPinExtension.startCreateItem({ label: "New", status: 'open', type: 'issues' });
+}
+
+function updateWirIdWithIssueId(wirid,issueId) {
+  $.ajax({
+    type: "POST",
+    url: "updateWir?wirid="+wirid+"&issueid="+issueId,
+    success: function () {
+      $("#loader").hide();
+      window.location.href="https://lagosviewer.herokuapp.com";
+    },
+    error: function (e) {
+      console.log(e);
+      $("#loader").hide();
+    }
+  });
+}
+
 //https://shrouded-ridge-44534.herokuapp.com/api/forge/oauth/callback
 //http://localhost:80/Lagos/Home/autodeskRedirect
 

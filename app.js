@@ -71,6 +71,18 @@ router.route("/wirs").post(async (req, res) => {
   }
 });
 
+router.route("/updateWir").post(async (req, res) => {
+  try {
+    const wir = req.query.wirid;
+    const issueId = req.query.issueid;
+    const payload = await new SQL_LPM().updateWir(wir,issueId);
+    res.status(payload.status).send(payload.data);
+  } catch (err) {
+    console.log(err);
+    res.redirect("");
+  }
+});
+
 router.route('/getWir').get(async (req,res) => {
   try {
     var id = req.query.id;
