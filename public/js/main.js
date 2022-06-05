@@ -4,7 +4,7 @@ $(document).ready(function() {
   var url = getUrlParameter('url');
 
   if(wirid && url) {
-    $('#points').prepend(`<li onClick="createIssueFromLPM(${wirid}, ${url})" class="nav-item pinPoints" id="modelLinkLi">
+    $('#points').prepend(`<li onClick="createIssueFromLPM('${wirid}', '${url}')" class="nav-item pinPoints" id="modelLinkLi">
     <i class="fa fa-link text-green fa-spin" data-toggle="tooltip" data-placement="bottom" title="Link model element"></i>
     </li>`);
   } else {
