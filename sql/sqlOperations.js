@@ -404,10 +404,10 @@ class SQL_LPM {
         const request = new sql.Request(pool);
         request.query("update dbo.wir set drawing_link='"+issue+"' where wirid="+wir)
           .then((result) => {
-            resolve({ status: 200, data: result.recordset[0][''] });
+            resolve({ status: 200, data: result });
           })
           .catch((err) => {
-            console.log("Error occurred during getting latest id " + err);
+            console.log("Error occurred while updating wir" + err);
             resolve({ status: 500, data: [] });
           });
       } catch (error) {
