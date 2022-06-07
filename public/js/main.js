@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
 
   var wirid = getUrlParameter('id');
@@ -5,8 +6,8 @@ $(document).ready(function() {
 
   if(wirid && url) {
     $('#points').prepend(`<li onClick="createIssueFromLPM('${wirid}', '${url}')" class="nav-item pinPoints" id="modelLinkLi">
-    <i class="fa fa-link text-green fa-spin" data-toggle="tooltip" data-placement="bottom" title="Link model element"></i>
-    </li>`);
+    <a class="text-blue mr-1 btn-default"><i class="fa fa-link text-green fa-spin" data-toggle="tooltip" data-placement="bottom" title="Link model element"></i>
+    </a></li>`);
   } else {
     $("#modelLinkLi").remove();
   }

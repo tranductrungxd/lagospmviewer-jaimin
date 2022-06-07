@@ -15,7 +15,7 @@ Autodesk.Viewing.Initializer(options, () => {
     console.log("Extension ID:" + ext.id);
   });
 
-  viewer.loadExtension("Autodesk.BIM360.Extension.PushPin");
+ // viewer.loadExtension("Autodesk.BIM360.Extension.PushPin");
   viewer.loadExtension("BIM360IssueExtension");
 
   Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
@@ -359,9 +359,10 @@ function fetchAllIssuesFromBim360(issueId) {
 
 $(document).on("click", "#addWIR", function () {
   checkToken();
+  toastr.info('Go ahead and select the model element.');
   //$("#myModal").toggle("modal");
   var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
-   pushPinExtension.removeAllItems(); 
+   //pushPinExtension.removeAllItems(); 
     pushPinExtension.pushPinManager.addEventListener('pushpin.created', function (e) {
           pushPinExtension.pushPinManager.removeEventListener('pushpin.created', arguments.callee);
           pushPinExtension.endCreateItem();
@@ -582,7 +583,17 @@ $(document).on("click", ".mainWir", function() {
     $(this).removeClass("selected");
   });
 
+  $(".css-1xar93x").each(function() {
+    $(this).removeClass("selectedContent");
+  });
+
+  $(".wirNumber").each(function() {
+    $(this).removeClass("selectedContent");
+  });
+
   $(this).addClass("selected");
+  $("#"+$(this).attr("id") +" .css-1xar93x").addClass("selectedContent");
+  $("#"+$(this).attr("id") +" .wirNumber").addClass("selectedContent");
 
   var id = $('#issueClick', this).attr("issue");
 
@@ -794,8 +805,9 @@ $(document).on('click',"#closeDetail",function() {
 });
 
 function createIssueFromLPM(wirid, url) {
+  toastr.info('Link Activated. Select the element in the model.');
   var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
-   pushPinExtension.removeAllItems(); 
+   //pushPinExtension.removeAllItems(); 
     pushPinExtension.pushPinManager.addEventListener('pushpin.created', function (e) {
           pushPinExtension.pushPinManager.removeEventListener('pushpin.created', arguments.callee);
           pushPinExtension.endCreateItem();

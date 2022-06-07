@@ -87,20 +87,24 @@
 .css-14tqbo1 {
     margin: 0px;
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-weight: 400;
     font-size: 0.875rem;
     line-height: 1.43;
     letter-spacing: 0.01071em;
     display: block;
 }
+.btn-default {
+    background-color: #eef0db;
+    border-color: #ddd;
+    color: #444;
+    padding: 4px 8px;
+    border-radius: 5px;
+}
 .css-mbfek {
     margin: 0px;
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    font-weight: 400;
     font-size: 0.875rem;
     line-height: 1.43;
     letter-spacing: 0.01071em;
-    color: rgba(0, 0, 0, 0.6);
     display: block;
 }
 .css-1j7qk7u {
@@ -190,14 +194,12 @@ min-width: 20px !important;
 padding: 10px;
 }
 .jss19 {
-color: #c2c7d0;
 width: 80%;
 overflow: hidden;
 white-space: nowrap;
 text-overflow: ellipsis;
 }
 .jss20 {
-color: #929292 !important;
 width: 75%;
 overflow: hidden;
 font-size: 0.7rem !important;
@@ -229,7 +231,7 @@ background: #343a40;
 border-bottom: 1px solid #6f6f6f;
 }
 .jss8 {
-    width: 90px;
+    width: 286px;
 }
 .float-right {
     float: right!important;
@@ -711,6 +713,15 @@ body {
     background: rgb(86, 86, 86);
 }
 
+.selectedContent {
+    color: #ffe38f !important;
+    font-weight: 700 !important;
+}
+
+#toast-container .toast-info {
+    background-color: #17a2b8;
+    opacity: 0.9 !important;
+}
 
 @media only screen and (max-width: 1299px) {
 
