@@ -65,7 +65,7 @@ font-family: 'Oswald', sans-serif;
 	getQuote();
 
 function getQuote() {
-  $('#quote').html("Redirecting you to LagosPM...");
+  $('#quote').html("Loading...");
   localStorage.setItem("bimToken", `<%= accessToken %>`);
   localStorage.setItem("refreshToken",`<%= refreshToken %>`);
   localStorage.setItem("expire",`<%= expireIn %>`);
