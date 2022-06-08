@@ -34,7 +34,7 @@ function getForgeToken(callback) {
 }
 
 function getThreeLeggedToken(callback) {
-  var refresh = sessionStorage.getItem("refreshToken");
+  var refresh = localStorage.getItem("refreshToken");
   if(refresh != null && refresh != "" && refresh != "undefined" && typeof refresh != "undefined") {
     $.ajax({
       type: "POST",
@@ -49,21 +49,21 @@ function getThreeLeggedToken(callback) {
         "refresh_token":refresh
       },
       success: function (res) {
-        sessionStorage.setItem("refreshToken",res.refresh_token);
-        sessionStorage.setItem("bimToken",res.access_token);
-        sessionStorage.setItem("expire",res.expires_in);
+        localStorage.setItem("refreshToken",res.refresh_token);
+        localStorage.setItem("bimToken",res.access_token);
+        localStorage.setItem("expire",res.expires_in);
         getThreeLeggedToken(res.access_token,res.expires_in);
       },
       error: function (e) {
-        sessionStorage.removeItem("refreshToken");
-        sessionStorage.removeItem("bimToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("bimToken");
       }
     });
   }
 }
 
 function refreshBimDocToken() {
-  var refresh = sessionStorage.getItem("refreshToken");
+  var refresh = localStorage.getItem("refreshToken");
   if(refresh != null && refresh != "" && refresh != "undefined" && typeof refresh != "undefined") {
     $.ajax({
       type: "POST",
@@ -78,13 +78,13 @@ function refreshBimDocToken() {
         "refresh_token":refresh
       },
       success: function (res) {
-        sessionStorage.setItem("refreshToken",res.refresh_token);
-        sessionStorage.setItem("bimToken",res.access_token);
-        sessionStorage.setItem("expire",res.expires_in);
+        localStorage.setItem("refreshToken",res.refresh_token);
+        localStorage.setItem("bimToken",res.access_token);
+        localStorage.setItem("expire",res.expires_in);
       },
       error: function (e) {
-        sessionStorage.removeItem("refreshToken");
-        sessionStorage.removeItem("bimToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("bimToken");
       }
     });
   }
@@ -101,21 +101,21 @@ function onDocumentLoadSuccess(doc) {
 }
 
 async function checkToken() {
-  var tkn = sessionStorage.getItem("refreshToken");
+  var tkn = localStorage.getItem("refreshToken");
   if (tkn == null || tkn == "undefined" || typeof tkn === "undefined") {
     await loginToBim360();
   }  
 }
 
 function loginToBim360() {
-  var tkn = sessionStorage.getItem("refreshToken");
+  var tkn = localStorage.getItem("refreshToken");
   if (tkn != null && tkn != "undefined" && typeof tkn != "undefined") {
     console.log("Token found.");
     refreshBimDocToken();
   } else {
-    sessionStorage.removeItem("refreshToken");
-    sessionStorage.removeItem("expire");
-    sessionStorage.removeItem("bimToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("expire");
+    localStorage.removeItem("bimToken");
     var url = "https://developer.api.autodesk.com//authentication/v1/authorize?"
       + "client_id=QsqosEk9aHS6VIdEWrfgPBiOBBqFHB5r&response_type=code&redirect_uri="
       + "https://lagosviewer.herokuapp.com/forge/oauth/tokenForge_3Legs&scope=data:read%20data:write%20data:create%20data:search%20code:all%20account:read%20user-profile:read%20viewables:read";
@@ -137,12 +137,6 @@ function startCheckingLogin() {
     count++;
     code = localStorage.getItem("refreshToken");
     if (code != null && code != "" && typeof code != "undefined") {
-      sessionStorage.setItem("bimToken", localStorage.getItem("bimToken"));
-      sessionStorage.setItem("refreshToken", localStorage.getItem("refreshToken"));
-      sessionStorage.setItem("expire", localStorage.getItem("expire"));
-      localStorage.removeItem("bimToken");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("expire");
       stopCheckingLogin(timerId, code);
     } else if (count > 60) {
       clearInterval(timerId);
@@ -290,7 +284,7 @@ BIM360IssueExtension.prototype.showIssues = function () {
       var dateUpdated = issue.attributes.updated_at;
       var dueDate = issue.attributes.due_date;
       var issueStatus = issue.attributes.status.charAt(0).toUpperCase() + issue.attributes.status.slice(1);
-
+      console.log("boom " + issue);
       var issueAttributes = issue.attributes;
       var pushpinAttributes = issue.attributes.pushpin_attributes;
       if (pushpinAttributes) {
@@ -307,9 +301,14 @@ BIM360IssueExtension.prototype.showIssues = function () {
         });
       }
     }
+
+    pushPinExtension.loadItemsV2(pushpinDataArray);
+    viewer.restoreState(pushpinAttributes.viewer_state);
+    pushPinExtension.pushPinManager.selectOne(issue.id);
+
   })
 
-  pushPinExtension.loadItemsV2(pushpinDataArray);
+ 
 
 }
 
@@ -325,7 +324,7 @@ BIM360IssueExtension.prototype.createIssue = function () {
 
 
 function fetchAllIssuesFromBim360(issueId) {
-  var accessToken = sessionStorage.getItem("bimToken");
+  var accessToken = localStorage.getItem("bimToken");
   var returnArray = [];
   var it = "e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2";
   var url = "https://developer.api.autodesk.com/issues/v1/containers/"+it+"/quality-issues/"+issueId;
@@ -340,7 +339,7 @@ function fetchAllIssuesFromBim360(issueId) {
     error: function (httpObj, textStatus) {
       if (httpObj.status == 401) {
         var token = refreshBimDocToken();
-        if(sessionStorage.getItem("refreshToken") != "undefined" && sessionStorage.getItem("refreshToken") != null) {
+        if(localStorage.getItem("refreshToken") != "undefined" && localStorage.getItem("refreshToken") != null) {
           fetchAllIssuesFromBim360(issueId);
         }
       }
@@ -466,7 +465,7 @@ BIM360CreateIssuePanel.prototype.initialize = function () {
 Autodesk.Viewing.theExtensionManager.registerExtension('BIM360IssueExtension', BIM360IssueExtension);
 
 function animateIssue(issue) {
-
+  viewer.loadExtension("Autodesk.BIM360.Extension.PushPin");
   var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
 
   issue = issue.data;
@@ -528,7 +527,7 @@ $(document).on('click', "#saveWir", function () {
     $.ajax({
       type: "POST",
       beforeSend: function (request) {
-        request.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("bimToken"));
+        request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("bimToken"));
         request.setRequestHeader("Content-Type", "application/vnd.api+json");
       },
       url: urls,
@@ -845,7 +844,7 @@ function createIssueFromLPM(wirid, url) {
           $.ajax({
             type: "POST",
             beforeSend: function (request) {
-              request.setRequestHeader("Authorization", "Bearer " + sessionStorage.getItem("bimToken"));
+              request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("bimToken"));
               request.setRequestHeader("Content-Type", "application/vnd.api+json");
             },
             url: urls,
