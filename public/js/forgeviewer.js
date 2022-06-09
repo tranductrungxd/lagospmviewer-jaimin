@@ -124,6 +124,7 @@ function refreshBimDocToken() {
       error: function (e) {
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("bimToken");
+        loginToBim360();
       }
     });
   }
@@ -143,6 +144,7 @@ function onDocumentLoadSuccess(doc) {
 }
 
 async function checkToken() {
+  refreshBimDocToken();
   var tkn = localStorage.getItem("refreshToken");
   if (tkn == null || tkn == "undefined" || typeof tkn === "undefined") {
     await loginToBim360();
@@ -380,7 +382,7 @@ function fetchAllIssuesFromBim360(issueId) {
     async: false,
     error: function (httpObj, textStatus) {
       if (httpObj.status == 401) {
-        var token = refreshBimDocToken();
+        refreshBimDocToken();
         if(localStorage.getItem("refreshToken") != "undefined" && localStorage.getItem("refreshToken") != null) {
           fetchAllIssuesFromBim360(issueId);
         }
@@ -554,7 +556,6 @@ $(document).on('click', "#saveWir", function () {
   }
 
   $.getJSON( "/getLatestIdWir", function(latest) {
-    
     var newid;
 
     if(latest!=null && latest!="undefined") {
@@ -846,6 +847,9 @@ $(document).on('click',"#closeDetail",function() {
 });
 
 function createIssueFromLPM(wirid, url) {
+
+  checkToken();
+
   toastr.info('Link Activated. Select the element in the model.');
   var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
    //pushPinExtension.removeAllItems(); 

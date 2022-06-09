@@ -1,34 +1,30 @@
 <div class="modal" id="myModalRead">
+  <style>
+tbody, td, tfoot, th, thead, tr {
+    padding: 4px 1px 1px 6px !important;
+}
+  </style>
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
 
         <div class="modal-body" style="padding: 0px 10px;">
           <form id = "readModal">
-            <div class="row" style="padding: 19px 20px 10px 40px;">
-              <div class="col-md-3">
-                <img class="headerImg" src="img/Picture1.png" />
-              </div>
-              <div class="col-md-2">
-                <img class="headerImg" src="img/Picture2.jpg" />
-              </div>
-              <div class="col-md-5">
-                <img class="headerImg" src="img/Picture3.jpg" />
-              </div>
-              <div class="col-md-2">
-                <img class="headerImg" src="img/Picture4.png" />
-              </div>
+            <div class="" style="padding: 10px 0px 5px 40px;">
+                <img class="headerImg1" src="img/Picture1.png" />
+                <img class="headerImg1" src="img/Picture2.jpg" />
+                <img class="headerImg1" src="img/Picture3.jpg" />
+                <img class="headerImg1" src="img/Picture4.png" />
             </div>
             <div class="row">
               <div class="col-md-3"></div>
               <div class="col-md-6" style="margin-left: 45px;">
                 <b>
-                  <h6>GUGGENHEIM ABU DHABI MUSEUM PROJECT - MAIN WORKS</h6>
-                  <h6 style="margin-left: 35px;">INSPECTION CHECKLIST - REBAR COUPLER TESTING</h6>
+                  <h6 class="readMainFont">GUGGENHEIM ABU DHABI MUSEUM PROJECT - MAIN WORKS</h6>
+                  <h6 class="readMainFont" style="margin-left: 35px;">INSPECTION CHECKLIST - REBAR COUPLER TESTING</h6>
                 </b>
               </div>
               <div class="col-md-3"></div>
             </div>
-            <hr>
             <hr class="hrstyle">
             <div class="row">
               <div class="col-md-6" style="border-right: 1px solid grey;">
@@ -70,7 +66,6 @@
                 </div>
               </div>
             </div>
-            <hr class="hrstyle">
             <hr class="hrstyle" style="margin-top: 10px;">
             <div class="row">
               <div class="col-md-6" style="border-right: 1px solid grey;"><b style="margin-left: 210px;">Description</b>
@@ -134,8 +129,7 @@
               </div>
             </div>
             <hr class="hrstyle">
-            <hr>
-            <div class="row">
+            <div class="row" style="margin-top: 5px;">
               <div class="col-md-12">
                 <div class="form-group row">
                   <label for="inspectionType" class="col-sm-2 col-form-label alignCss"><b>Inspection Type:</b></label>
@@ -154,7 +148,7 @@
                 </div>
               </div>
             </div>
-            <div class="row">
+            <div class="row" style="margin-top: -30px;">
               <%- include('types/sandBlastRead.ejs') %>
                 <%- include('types/seaWallRead.ejs') %>
                   <%- include('types/shotcreteWorks.ejs') %>

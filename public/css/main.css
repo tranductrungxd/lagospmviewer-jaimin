@@ -723,10 +723,25 @@ body {
     opacity: 0.9 !important;
 }
 
+.headerImg1 {
+    width: 130px !important;
+    margin-left: 6rem;
+}
+
 @media only screen and (max-width: 1299px) {
 
     .headerImg {
         height: 30%;
+    }
+
+    .readMainFont {
+        font-size: 12px;
+    }
+
+    .headerImg1 {
+        height: 25%;
+        width: 85px !important;
+        margin-left: 4.5rem;
     }
 
     #projects {
@@ -753,6 +768,10 @@ body {
         height: 20%;
     }
 
+    .headerImg1 {
+        height: 15%;
+    }
+
     #projects {
         width: 170px !important;
     }
@@ -763,6 +782,10 @@ body {
 
     .headerImg {
         height: 40%;
+    }
+
+    .headerImg1 {
+        height: 30%;
     }
 
     #projects {
