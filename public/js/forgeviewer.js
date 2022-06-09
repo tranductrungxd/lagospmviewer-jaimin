@@ -20,7 +20,46 @@ Autodesk.Viewing.Initializer(options, () => {
 
   Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
 
+  // viewer.addEventListener(Autodesk.Viewing.GEOMETRY_LOADED_EVENT, function () {
+  //   var instanceTree = viewer.model.getData().instanceTree;
+  //   console.log(instanceTree);
+  //   check();
+  // });
+
+  //viewer.addEventListener(Autodesk.Viewing.AGGREGATE_SELECTION_CHANGED_EVENT, onModelElementSelect);
+
 });
+
+const HEATMAP_TYPES = ['Issue Frequency', 'Time to Next Schedule', 'Average Cost'];
+const ERROR_FREQUENCY = [];
+const TIME_TO_SCHEDULE = [];
+const AVERAGE_COST = [];
+for (let i = 81000; i < 81300; i++) {
+    ERROR_FREQUENCY.push({ id: i, heat: Math.random() });
+    TIME_TO_SCHEDULE.push({ id: i, heat: Math.random() });
+    AVERAGE_COST.push({ id: i, heat: Math.random() });
+}
+
+var stat = 1;
+function onModelElementSelect(selectionEvent) {
+  var color = {};
+  var selSet1 = viewer.getSelection();
+  viewer.clearSelection();
+  
+  for( let i = 0; i < selSet1.length; i++ ) {
+    
+    if(stat <= 8) {
+      applyColorsToModel(selSet1[i],2);
+    } else if (stat <= 16) {
+      applyColorsToModel(selSet1[i],3);
+    } else {
+      applyColorsToModel(selSet1[i],6);
+    }
+   
+  }
+  
+  stat++;
+}
 
 function getForgeToken(callback) {
   fetch('forge/oauth/tokenForge_2Legs').then(res => {
@@ -95,6 +134,9 @@ function onDocumentLoadSuccess(doc) {
   var viewables = doc.getRoot().getDefaultGeometry();
   viewer.loadDocumentNode(doc, viewables).then(i => {
     $("#guiviewer3d-toolbar").css("margin-bottom","20px");
+    setTimeout(() => {
+      viewer.loadExtension("Autodesk.BIM360.Extension.PushPin");
+    },3000);
     loginToBim360();
   });
 
@@ -880,6 +922,54 @@ function updateWirIdWithIssueId(wirid,issueId) {
       $("#loader").hide();
     }
   });
+}
+
+function applyColorsToModel(dbIdOfNode,applyStatus) {
+  var color = {};
+     if (applyStatus == 0) {
+         color["r"] = parseFloat(238 / 255);
+         color["g"] = parseFloat(220 / 255);
+         color["b"] = parseFloat(29 / 255);
+     } else if (applyStatus == 1) {
+         color["r"] = parseFloat(255 / 255);
+         color["g"] = parseFloat(114 / 255);
+         color["b"] = parseFloat(97 / 255);
+     } else if (applyStatus == 2) {
+         color["r"] = parseFloat(5 / 255);
+         color["g"] = parseFloat(227 / 255);
+         color["b"] = parseFloat(68 / 255);
+     } else if (applyStatus == 3) {
+         color["r"] = parseFloat(175 / 255);
+         color["g"] = parseFloat(209 / 255);
+         color["b"] = parseFloat(39 / 255);
+     } else if (applyStatus == 4) {
+         color["r"] = parseFloat(84 / 255);
+         color["g"] = parseFloat(27 / 255);
+         color["b"] = parseFloat(96 / 255);
+     } else if (applyStatus == 5) {
+         color["r"] = parseFloat(247 / 255);
+         color["g"] = parseFloat(191 / 255);
+         color["b"] = parseFloat(63 / 255);
+     } else if (applyStatus == 6) {
+         color["r"] = parseFloat(228 / 255);
+         color["g"] = parseFloat(0 / 255);
+         color["b"] = parseFloat(0 / 255);
+     } else if (applyStatus == 7) {
+         color["r"] = parseFloat(4 / 255);
+         color["g"] = parseFloat(150 / 255);
+         color["b"] = parseFloat(46 / 255);
+     } else if (applyStatus == 8) {
+         color["r"] = parseFloat(90 / 255);
+         color["g"] = parseFloat(85 / 255);
+         color["b"] = parseFloat(181 / 255);
+     } else if (applyStatus == 9) {
+         color["r"] = parseFloat(2 / 255);
+         color["g"] = parseFloat(64 / 255);
+         color["b"] = parseFloat(9 / 255);
+     } else {
+         console.log("DEBUG Color - no color for given status - node status:" + applyStatus);
+     }
+     viewer.setThemingColor(dbIdOfNode, new THREE.Vector4(color["r"], color["g"], color["b"], 1));
 }
 
 //https://shrouded-ridge-44534.herokuapp.com/api/forge/oauth/callback
