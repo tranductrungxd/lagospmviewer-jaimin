@@ -405,7 +405,7 @@ $(document).on("click", "#addWIR", function () {
   toastr.info('Go ahead and select the model element.');
   //$("#myModal").toggle("modal");
   var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
-   //pushPinExtension.removeAllItems(); 
+   pushPinExtension.removeAllItems(); 
     pushPinExtension.pushPinManager.addEventListener('pushpin.created', function (e) {
           pushPinExtension.pushPinManager.removeEventListener('pushpin.created', arguments.callee);
           pushPinExtension.endCreateItem();
@@ -638,11 +638,15 @@ $(document).on("click", ".mainWir", function() {
   $("#"+$(this).attr("id") +" .wirNumber").addClass("selectedContent");
 
   var id = $('#issueClick', this).attr("issue");
+  var wirid = $('#issueClick', this).attr("wirid");
 
   if(id==null || id=="") {
     console.log("No issue linked to the WIR.")
   } else {
     BIM360IssueExtension.prototype.loadIssues(id);
+    if(document.getElementById('rightPanel').style.display=="block") {
+      loadIssueDetailPanel(wirid);
+    }
   }
 
 })
@@ -852,7 +856,7 @@ function createIssueFromLPM(wirid, url) {
 
   toastr.info('Link Activated. Select the element in the model.');
   var pushPinExtension = viewer.getExtension("Autodesk.BIM360.Extension.PushPin");
-   //pushPinExtension.removeAllItems(); 
+   pushPinExtension.removeAllItems(); 
     pushPinExtension.pushPinManager.addEventListener('pushpin.created', function (e) {
           pushPinExtension.pushPinManager.removeEventListener('pushpin.created', arguments.callee);
           pushPinExtension.endCreateItem();
