@@ -194,13 +194,13 @@ min-width: 20px !important;
 padding: 10px;
 }
 .jss19 {
-width: 80%;
+width: 100%;
 overflow: hidden;
 white-space: nowrap;
 text-overflow: ellipsis;
 }
 .jss20 {
-width: 75%;
+width: 100%;
 overflow: hidden;
 font-size: 0.7rem !important;
 white-space: nowrap;
