@@ -165,14 +165,12 @@ function loginToBim360() {
       + "https://lagosviewer.herokuapp.com/forge/oauth/tokenForge_3Legs&scope=data:read%20data:write%20data:create%20data:search%20code:all%20account:read%20user-profile:read%20viewables:read";
     var left = (screen.width / 2) - (650 / 2);
     var top = (screen.height / 3) - (600 / 2);
-    setTimeout(() => {
-      var newWindow = window.open(url, 'Logon to your BIM360 account.', 'height=600,width=650,top=' + top + ',left=' + left);
-      console.log(newWindow);
-      startCheckingLogin();
-      if (window.focus) {
-        newWindow.focus();
-      }
-    },2000);
+    var newWindow = window.open(url, 'Logon to your BIM360 account.', 'height=600,width=650,top=' + top + ',left=' + left);
+    console.log(newWindow);
+    startCheckingLogin();
+    if (window.focus) {
+      newWindow.focus();
+    }
   }
 }
 
