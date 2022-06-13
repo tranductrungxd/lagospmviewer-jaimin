@@ -56,7 +56,7 @@ $(function () {
 });
 
 $(document).on("click","#exportPdf",function() {
-
+  var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 	var HTML_Width = $("#readModal").width();
     var HTML_Height = $("#readModal").height();
     var top_left_margin = 15;
@@ -76,7 +76,11 @@ $(document).on("click","#exportPdf",function() {
             pdf.addPage(PDF_Width, PDF_Height);
             pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height*i)+(top_left_margin*4),canvas_image_width,canvas_image_height);
         }
-        pdf.output("WorkInspectionRequests.pdf");
+        if(isSafari) {
+          pdf.output("WorkInspectionRequests.pdf");
+        } else {
+          pdf.save("WorkInspectionRequests.pdf");
+        }
     });
 
 });
