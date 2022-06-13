@@ -166,7 +166,7 @@ function loginToBim360() {
     var left = (screen.width / 2) - (650 / 2);
     var top = (screen.height / 3) - (600 / 2);
     var newWindow = window.open(url, 'Logon to your BIM360 account.', 'height=600,width=650,top=' + top + ',left=' + left);
-
+    console.log(newWindow);
     startCheckingLogin();
     if (window.focus) {
       newWindow.focus();
