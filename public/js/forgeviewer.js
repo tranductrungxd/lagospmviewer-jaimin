@@ -170,7 +170,9 @@ function getCookie(cname) {
 function loginToBim360() {
   var tkn = localStorage.getItem("refreshToken");
 
-  if (tkn != null && tkn != "undefined" && typeof tkn != "undefined" && getCookie("bimlogin") != "new") {
+  console.log(getCookie("bimlogin"));
+
+  if (tkn != null && tkn != "undefined" && typeof tkn != "undefined" && getCookie("bimlogin") == "alive") {
     console.log("Token found.");
     refreshBimDocToken();
   } else {
@@ -192,14 +194,13 @@ function loginToBim360() {
 }
 
 function startCheckingLogin() {
-  document.cookie = "bimlogin=new";
   var code = null;
   let count = 0;
   let timerId = setInterval(() => {
     count++;
     code = localStorage.getItem("refreshToken");
     if (code != null && code != "" && typeof code != "undefined") {
-      document.cookie = "bimlogin=new";
+      document.cookie = "bimlogin=alive";
       stopCheckingLogin(timerId, code);
     } else if (count > 60) {
       clearInterval(timerId);
