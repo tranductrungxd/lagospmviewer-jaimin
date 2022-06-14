@@ -170,8 +170,6 @@ function getCookie(cname) {
 function loginToBim360() {
   var tkn = localStorage.getItem("refreshToken");
 
-  console.log(getCookie("bimlogin"));
-
   if (tkn != null && tkn != "undefined" && typeof tkn != "undefined" && getCookie("bimlogin") == "alive") {
     console.log("Token found.");
     refreshBimDocToken();
