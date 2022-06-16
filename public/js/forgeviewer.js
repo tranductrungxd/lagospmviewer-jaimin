@@ -45,7 +45,7 @@ function onModelElementSelect(selectionEvent) {
   var color = {};
   var selSet1 = viewer.getSelection();
   viewer.clearSelection();
-  
+  console.log(selSet1);
   for( let i = 0; i < selSet1.length; i++ ) {
     
     if(stat <= 8) {
@@ -950,7 +950,7 @@ function updateWirIdWithIssueId(wirid,issueId) {
   });
 }
 
-function applyColorsToModel(dbIdOfNode,applyStatus) {
+function applyColorsToModel(dbIdOfNode,applyStatus,applyviewer) {
   var color = {};
      if (applyStatus == 0) {
          color["r"] = parseFloat(238 / 255);
@@ -995,7 +995,251 @@ function applyColorsToModel(dbIdOfNode,applyStatus) {
      } else {
          console.log("DEBUG Color - no color for given status - node status:" + applyStatus);
      }
-     viewer.setThemingColor(dbIdOfNode, new THREE.Vector4(color["r"], color["g"], color["b"], 1));
+     applyviewer.setThemingColor(dbIdOfNode, new THREE.Vector4(color["r"], color["g"], color["b"], 1));
+}
+
+
+function startPlannedVsActual() {
+  console.log("boom");
+  if(!$.isEmptyObject(viewer) && !$.isEmptyObject(viewer.getVisibleModels()[0])) {
+    console.log("dhoom");
+    var secondUrn = documentId;
+      $("#modelList_form").addClass("divDisabled");
+
+      var options = {
+          env: 'AutodeskProduction',
+          getAccessToken: getForgeToken
+        };
+      
+
+      Autodesk.Viewing.Initializer(options, () => {
+        const div = document.getElementById('forgeViewer2')
+        comparisonViewer = new Autodesk.Viewing.Private.GuiViewer3D(div, { loaderExtensions: { svf: "Autodesk.MemoryLimited" }});
+
+        comparisonViewer.start();
+        comparisonViewer.setOptimizeNavigation(true);
+        
+        // Handling events
+        
+        if(!$.isEmptyObject(comparisonViewer)) {
+          
+           var sfilter = {
+            viewport: true
+             };
+
+           
+           comparisonViewer.addEventListener(Autodesk.Viewing.CAMERA_CHANGE_EVENT, function()
+                   {
+               if(!$.isEmptyObject(comparisonViewer)) {
+                 var v1state = viewer.getState(sfilter);
+                     var v2state = comparisonViewer.getState(sfilter);
+                     
+                     if (!compareViewports(v1state, v2state)) {
+                       viewerFlick=2;
+                         viewer.restoreState(comparisonViewer.getState(sfilter), sfilter, true);
+                     } else if(viewerFlick=1) {
+                       viewerFlick=0;
+                     }
+               }
+                   }); 
+             
+               viewer.addEventListener(Autodesk.Viewing.CAMERA_CHANGE_EVENT, function()
+               {
+                 if(!$.isEmptyObject(comparisonViewer)) {
+                 var v1state = viewer.getState(sfilter);
+                     var v2state = comparisonViewer.getState(sfilter);
+                     
+                     if (!compareViewports(v1state, v2state) && viewerFlick == 0) {
+                       viewerFlick=1;
+                       comparisonViewer.restoreState(viewer.getState(sfilter), sfilter, true);
+                     } else if(viewerFlick==2) {
+                       viewerFlick=0;
+                     }
+                 }
+                     });
+
+          
+           comparisonViewer.addEventListener(Autodesk.Viewing.AGGREGATE_SELECTION_CHANGED_EVENT, function(event)
+            {
+            var e = event.selections;
+            if(!$.isEmptyObject(comparisonViewer) && !$.isEmptyObject(e)) {
+              var selections = [];
+                
+              if(e && typeof e[0].dbIdArray != "undefined" && viewerClick==0) {	
+                viewerClick=2;
+                for(var i=0;i<comparisonViewer.getVisibleModels().length;i++) {
+                  
+                  if(comparisonViewer.getVisibleModels()[i].getModelId() == e[0].model.getModelId()) {
+                    selections.push({
+                      model: viewer.getVisibleModels()[i],
+                      ids: e[0].dbIdArray
+                    });
+                  }
+                  
+                }	
+              } else if (viewerClick==1) {
+                viewerClick=0;
+              } else if($.isEmptyObject(e)) {
+                viewerClick=0;
+              }
+              
+              for(var i=0;i<selections.length;i++) {
+                var select = [selections[i]];
+                viewer.impl.selector.setAggregateSelection(null);
+                viewer.impl.selector.setAggregateSelection( select );
+              }
+             }
+          }); 
+           
+        }
+        
+        Autodesk.Viewing.Document.load(secondUrn, (doc) => {
+            var viewables = doc.getRoot().getDefaultGeometry();
+            var modelOption = null;
+            
+              modelOption = {
+                keepCurrentModels: true,
+              };
+            
+            comparisonViewer.loadDocumentNode(doc, viewables, modelOption).then((model1) => {
+              comparisonModel=model1;
+             
+              setTimeout(() => {
+                $("#forgeViewer2 .viewcubeWrapper").hide();
+              }, 2000);  
+                resizeAndShowHideEventsForPlannedVsActualOn();
+            });
+          });
+      });
+  }
+}
+
+function compareViewports(stateA, stateB) {
+  var viewportA = stateA["viewport"] || {};
+  var viewportB = stateB["viewport"] || {};
+  
+  if( viewportA["aspectRatio"] !== viewportB["aspectRatio"] && viewportA["distanceToOrbit"] !== viewportB["distanceToOrbit"]) {
+       return false;
+  }
+  
+  return true;
+}
+
+$(document).on('input change','#comparisionRange', function (event) {
+  event.preventDefault();
+  $(`#forgeViewer2 > .adsk-viewing-viewer`).css("width",`${$(this).val()}%`);
+  if(parseInt($(this).val()) > 80) {
+    $("#forgeViewer2 .viewcubeWrapper").show();
+    $("#forgeViewer .viewcubeWrapper").hide();
+  
+  } else {
+    $("#forgeViewer .viewcubeWrapper").show();
+    $("#forgeViewer2 .viewcubeWrapper").hide();
+   
+  }
+});
+
+function resizeAndShowHideEventsForPlannedVsActualOn() {
+			console.log("over here");
+  $(".loaderContainer").show();
+  
+  viewer.unloadExtension("SearchElementExtension");
+  viewer.unloadExtension("VersonControlExtension");
+  viewer.unloadExtension("SelectTaskExtension");
+  viewer.unloadExtension("Autodesk.Explode");
+  viewer.unloadExtension("Autodesk.Measure");
+  viewer.unloadExtension("Autodesk.Section");
+  viewer.unloadExtension("Autodesk.FullScreen");
+  
+  $(`#plannedVsActualSwitch`).show();
+  $(`#forgeViewer2 > .adsk-viewing-viewer`).css({"width":"50%","border-right":"2px solid grey"});
+  $(`#comparisionRange`).show().val("50");
+  $(`#forgeViewer div#guiviewer3d-toolbar, #forgeViewer2 div#guiviewer3d-toolbar`).addClass("adsk-toolbar-vertical").css({"right":"unset","left":"10px"});
+  $(`#autodeskSigninButton`).hide();
+  $(`#forgeViewer #guiviewer3d-toolbar`).hide();
+  $(`#forgeViewer2 .adsk-viewing-viewer`).css("top","0px");
+  
+  var element = $(`#forgeViewer2 #allPlannedVsActualExtensionToolbar`);
+  $(`#forgeViewer2 #allPlannedVsActualExtensionToolbar,#forgeViewer #allPlannedVsActualExtensionToolbar`).remove();
+  $(`#forgeViewer2 #guiviewer3d-toolbar,#forgeViewer #guiviewer3d-toolbar`).prepend(element);
+  
+  setTimeout(() => {
+    $(`#forgeViewer .adsk-viewing-viewer .adsk-toolbar.adsk-toolbar-vertical .adsk-button>.toolbar-vertical-group,
+        #forgeViewer2 .adsk-viewing-viewer .adsk-toolbar.adsk-toolbar-vertical .adsk-button>.toolbar-vertical-group`).css({"right":"unset","left":"7vh"});
+    
+    $(`.adsk-viewing-viewer .adsk-toolbar.adsk-toolbar-vertical .adsk-button>.toolbar-vertical-group~.adsk-control-tooltip`).css({"left":"8vh","right":"unset","bottom":20});
+    
+    $(`#forgeViewer`).append(`<div class="liveButtonDiv"><img class="liveButton" alt="live" src="app/images/Live.gif" /></div>`);
+    $(`#forgeViewer2`).append(`<div class="forgeInfoButtonDiv"><button class="btn-new forgeInfoButton" id="forgeInfoButton">Planned <i  class="fa fa-info-circle fa-2" aria-hidden="true"></i></button>
+    <div class="forgeInfoContainer" id="forgeInfoContainer"><div class="row">
+    <div class="col-lg-1"><span class="forgeInfoCompleteBox"></span></div><div class="col-lg-11"><label>Planned completion (to view rendered view, click on the render button)</label></div>
+    <div class="col-lg-1"><span class="forgeInfoStartedBox"></span></div><div class="col-lg-11"><label>Planned in progress</label></div>
+    <div class="col-lg-1"><span class="forgeInfoDotBox"></span></div><div class="col-lg-11"><label>Model elements in wireframe mode are future tasks or not linked to any tasks.</label></div></div></div></div>`);
+    
+    $(`.adsk-control-tooltip`).css({"left":"8vh","right":"unset","bottom":20});
+    comparisonViewer.unloadExtension("Autodesk.Explode");
+    comparisonViewer.unloadExtension("Autodesk.Measure");
+    comparisonViewer.unloadExtension("Autodesk.Section");
+    
+    $(`#forgeViewer #toolbar-fullscreenTool`).hide();
+    $(`#forgeViewer2 #toolbar-fullscreenTool`).hide();
+    $(`#forgeViewer #toolbar-cameraSubmenuTool`).hide();
+    $(`#forgeViewer2 #toolbar-cameraSubmenuTool`).remove();
+    
+    
+  },1000);
+  
+  setTimeout(() => {
+    var selSet1 = [8638,42791,80698,8573,11249,11730,20419];
+    for( let i = 0; i < selSet1.length; i++ ) {
+    
+      if(i <= 2) {
+        applyColorsToModel(selSet1[i],2,viewer);
+        applyColorsToModel(selSet1[i],4,comparisonViewer);
+      } else if (i <= 4) {
+        applyColorsToModel(selSet1[i],3,viewer);
+        applyColorsToModel(selSet1[i],7,comparisonViewer);
+      } else {
+        applyColorsToModel(selSet1[i],6,viewer);
+        applyColorsToModel(selSet1[i],5,comparisonViewer);
+      }
+     
+    }
+
+  },3000);
+  
+  const divElem = $('canvas')[0]
+  new ResizeObserver(() => { 
+    var styleWidth = $(`#forgeViewer2 > .adsk-viewing-viewer`).css("width");
+    $(`#forgeViewer2 > .adsk-viewing-viewer`).css("width","100%");
+    comparisonViewer.resize();
+    $(`#forgeViewer2 > .adsk-viewing-viewer`).css("width",styleWidth);
+  }).observe(divElem);
+  
+  
+   $("#forgeViewer2 #toolbar-zoomTool").click(function() {
+      $("#forgeViewer2 #toolbar-orbitTools").show();
+      $("#forgeViewer2 #toolbar-panTool").show();
+      $("#forgeViewer2 #toolbar-zoomTool").show();
+      $("#forgeViewer #toolbar-zoomTool").click();
+      $(`#forgeViewer #toolbar-cameraSubmenuTool`).hide();
+   });
+   
+   $("#forgeViewer2 #toolbar-panTool").click(function() {
+    $("#forgeViewer2 #toolbar-orbitTools").show();
+      $("#forgeViewer2 #toolbar-panTool").show();
+      $("#forgeViewer2 #toolbar-zoomTool").show();
+      $("#forgeViewer #toolbar-panTool").click();
+      $(`#forgeViewer #toolbar-cameraSubmenuTool`).hide();
+   });
+   
+   $("#forgeViewer2 #toolbar-orbitTools").click(function() {
+    $("#forgeViewer2 #toolbar-orbitTools").show();
+      $("#forgeViewer2 #toolbar-panTool").show();
+      $("#forgeViewer2 #toolbar-zoomTool").show();
+      $(`#forgeViewer #toolbar-cameraSubmenuTool`).hide();
+   });
+   
 }
 
 //https://shrouded-ridge-44534.herokuapp.com/api/forge/oauth/callback

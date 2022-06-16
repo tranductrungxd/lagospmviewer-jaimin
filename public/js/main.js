@@ -3,6 +3,7 @@ $(document).ready(function() {
 
   var wirid = getUrlParameter('id');
   var url = getUrlParameter('url');
+  var planned = getUrlParameter('planned');
 
   if(wirid && url) {
     $('#points').prepend(`<li onClick="createIssueFromLPM('${wirid}', '${url}')" class="nav-item pinPoints" id="modelLinkLi">
@@ -10,6 +11,14 @@ $(document).ready(function() {
     </a></li>`);
   } else {
     $("#modelLinkLi").remove();
+  }
+
+  if(planned) {
+    setTimeout(() => {
+      startPlannedVsActual();
+      $(".css-1x72cfx").css("display","inline-block");
+      $(".css-1x72cfx").css("position","relative");
+    },10000)
   }
 
 });
