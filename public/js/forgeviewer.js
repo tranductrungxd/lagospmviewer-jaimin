@@ -395,7 +395,7 @@ function fetchAllIssuesFromBim360(issueId) {
   console.log(accessToken)
   var returnArray = [];
   var it = "e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2";
-  var url = "https://developer.api.autodesk.com/issues/v1/containers/"+it+"/quality-issues/"+issueId;
+  var url = "https://developer.api.autodesk.com/issues/v2/containers/"+it+"/quality-issues/"+issueId;
   $.ajax({
     type: "GET",
     dataType: "jsonp",
