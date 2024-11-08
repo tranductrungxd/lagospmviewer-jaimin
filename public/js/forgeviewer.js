@@ -392,10 +392,10 @@ BIM360IssueExtension.prototype.createIssue = function () {
 
 function fetchAllIssuesFromBim360(issueId) {
   var accessToken = localStorage.getItem("bimToken");
- 
+  console.log(accessToken)
   var returnArray = [];
   var it = "e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2";
-  var url = "https://developer.api.autodesk.com/issues/v2/containers/"+it+"/"+issueId;
+  var url = "https://developer.api.autodesk.com/issues/v2/containers/"+it+"/issues/"+issueId;
   $.ajax({
     type: "GET",
     dataType: "jsonp",
@@ -591,7 +591,7 @@ $(document).on('click', "#saveWir", function () {
     }
     
     newIssueData.attributes.title = newid;
-    var urls = 'https://developer.api.autodesk.com/issues/v1/containers/e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2/quality-issues'
+    var urls = 'https://developer.api.autodesk.com/issues/v1/containers/e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2/issues'
 
     $.ajax({
       type: "POST",
@@ -915,7 +915,7 @@ function createIssueFromLPM(wirid, url) {
 
           
           newIssueData.attributes.title = parseInt(wirid)+2000;
-          var urls = 'https://developer.api.autodesk.com/issues/v1/containers/e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2/quality-issues'
+          var urls = 'https://developer.api.autodesk.com/issues/v1/containers/e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2/issues'
       
           $.ajax({
             type: "POST",

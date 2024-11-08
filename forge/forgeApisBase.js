@@ -64,7 +64,7 @@ const getIssues = async (container_id, token) => {
         },
       };
 
-      const url = `https://developer.api.autodesk.com/issues/v2/containers/${container_id}/quality-issues?page[limit]=100`;
+      const url = `https://developer.api.autodesk.com/issues/v2/containers/${container_id}/issues?page[limit]=100`;
       const payload = await axios.get(url, configHeader);
       return { status: payload.status, data: payload.data };
     } else {
