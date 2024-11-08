@@ -26,6 +26,7 @@ router.get("/oauth/tokenForge_2Legs", async (req, res, next) => {
       expires_in: token.expires_in,
     });
   } catch (err) {
+    console.log(err)
     res.status(500).send("Error");
   }
 });

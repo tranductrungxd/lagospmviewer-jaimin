@@ -16,6 +16,13 @@ app.use(bodyParser.json())
 app.use(cors())
 app.use('', router)
 
+const corsOptions = {
+  origin: 'http://localhost:3000', // Adjust as needed
+  methods: 'GET,POST',
+  allowedHeaders: 'Content-Type,Authorization',
+};
+app.use(cors(corsOptions));
+
 app.use(express.static('public'))
 app.use('/css', express.static(__dirname + 'public/css'))
 app.use('/js', express.static(__dirname + 'public/js'))

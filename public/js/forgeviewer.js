@@ -177,7 +177,7 @@ function loginToBim360() {
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("expire");
     localStorage.removeItem("bimToken");
-    var url = "https://developer.api.autodesk.com//authentication/v1/authorize?"
+    var url = "https://developer.api.autodesk.com//authentication/v2/authorize?"
       + "client_id=QsqosEk9aHS6VIdEWrfgPBiOBBqFHB5r&response_type=code&redirect_uri="
       + "https://lagosviewer.herokuapp.com/forge/oauth/tokenForge_3Legs&scope=data:read%20data:write%20data:create%20data:search%20code:all%20account:read%20user-profile:read%20viewables:read";
     var left = (screen.width / 2) - (650 / 2);

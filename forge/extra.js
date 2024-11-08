@@ -2342,7 +2342,7 @@
      function getNgIssueTypes(issueId) {
          $("#issueSub").find('option').remove();
          var containerId = sessionStorage.getItem("containerId");
-         var urls = 'https://developer.api.autodesk.com/issues/v1/containers/'+containerId+'/ng-issue-types?include=subtypes';
+         var urls = 'https://developer.api.autodesk.com/issues/v2/containers/'+containerId+'/ng-issue-types?include=subtypes';
           $.ajax({
                type: "GET",
                beforeSend: function(request) {
@@ -2458,7 +2458,7 @@
                
                   
                  var ids = sessionStorage.getItem("containerId");
-                 var urls = 'https://developer.api.autodesk.com/issues/v1/containers/'+ids+'/quality-issues'
+                 var urls = 'https://developer.api.autodesk.com/issues/v2/containers/'+ids+'/quality-issues'
                  $.ajax({
                        type: "POST",
                        beforeSend: function(request) {
