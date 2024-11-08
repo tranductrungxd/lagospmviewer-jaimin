@@ -1,27 +1,20 @@
 require("dotenv").config();
+const cors = require("cors");
 
 const SQL_LPM = require("./sql/sqlOperations");
-var wirs = require('./wirs');
+const wirs = require('./wirs');
 
 const express = require("express")
-var bodyParser = require("body-parser")
-var cors = require("cors");
+const bodyParser = require("body-parser")
 const { response } = require('express');
 const app = express()
-var router = express.Router();
+const router = express.Router();
 const port = 3000
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(cors())
 app.use('', router)
-
-const corsOptions = {
-  origin: 'http://localhost:3000', // Adjust as needed
-  methods: 'GET,POST',
-  allowedHeaders: 'Content-Type,Authorization',
-};
-app.use(cors(corsOptions));
 
 app.use(express.static('public'))
 app.use('/css', express.static(__dirname + 'public/css'))

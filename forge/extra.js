@@ -2505,6 +2505,7 @@
                beforeSend: function(request) {
                  request.setRequestHeader("Authorization", "Bearer "+sessionStorage.getItem("bimToken"));
                  request.setRequestHeader("Content-Type", "application/vnd.api+json");
+                 
                },
                url: urls,
                async: false,

@@ -65,6 +65,7 @@ function getForgeToken(callback) {
   fetch('forge/oauth/tokenForge_2Legs').then(res => {
     res.json().then(data => {
       console.log("Token api called");
+      console.log(data)
       var token = data.access_token;
       var expire = data.expires_in;
       callback(token, expire);
@@ -94,6 +95,7 @@ function getThreeLeggedToken(callback) {
         getThreeLeggedToken(res.access_token,res.expires_in);
       },
       error: function (e) {
+        console.log(e)
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("bimToken");
       }
@@ -122,11 +124,14 @@ function refreshBimDocToken() {
         localStorage.setItem("expire",res.expires_in);
       },
       error: function (e) {
+        console.log(e)
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("bimToken");
         loginToBim360();
       }
     });
+  }else{
+    console.log('refreshToken is missing')
   }
 }
 
@@ -387,11 +392,13 @@ BIM360IssueExtension.prototype.createIssue = function () {
 
 function fetchAllIssuesFromBim360(issueId) {
   var accessToken = localStorage.getItem("bimToken");
+  console.log(accessToken)
   var returnArray = [];
   var it = "e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2";
   var url = "https://developer.api.autodesk.com/issues/v1/containers/"+it+"/quality-issues/"+issueId;
   $.ajax({
     type: "GET",
+    dataType: "jsonp",
     beforeSend: function (request) {
       request.setRequestHeader("Authorization", "Bearer " + accessToken);
       request.setRequestHeader("Content-Type", "application/vnd.api+json");
@@ -399,6 +406,7 @@ function fetchAllIssuesFromBim360(issueId) {
     url: url,
     async: false,
     error: function (httpObj, textStatus) {
+      console.log(httpObj)
       if (httpObj.status == 401) {
         refreshBimDocToken();
         if(localStorage.getItem("refreshToken") != "undefined" && localStorage.getItem("refreshToken") != null) {

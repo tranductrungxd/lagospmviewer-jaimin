@@ -70,6 +70,7 @@ async function generateAuth3LegToken(code) {
       autoRefresh
     );
     const token = await client_3Legs.getToken(code);
+    console.log(token)
     return { status: 200, data: token };
   } catch (error) {
     console.log(error);
