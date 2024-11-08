@@ -591,7 +591,7 @@ $(document).on('click', "#saveWir", function () {
     }
     
     newIssueData.attributes.title = newid;
-    var urls = 'https://developer.api.autodesk.com/issues/v1/containers/e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2/issues'
+    var urls = 'https://developer.api.autodesk.com/issues/v2/containers/e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2/issues'
 
     $.ajax({
       type: "POST",
@@ -915,7 +915,7 @@ function createIssueFromLPM(wirid, url) {
 
           
           newIssueData.attributes.title = parseInt(wirid)+2000;
-          var urls = 'https://developer.api.autodesk.com/issues/v1/containers/e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2/issues'
+          var urls = 'https://developer.api.autodesk.com/issues/v2/containers/e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2/issues'
       
           $.ajax({
             type: "POST",

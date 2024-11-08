@@ -2294,7 +2294,7 @@
          $("#issueSubEdit").find('option').remove();
          $("#issueSubTypeEdit").find('option').remove();
          
-         var urls = 'https://developer.api.autodesk.com/issues/v1/containers/'+containerId+'/ng-issue-types?include=subtypes';
+         var urls = 'https://developer.api.autodesk.com/issues/v2/containers/'+containerId+'/ng-issue-types?include=subtypes';
           $.ajax({
                type: "GET",
                beforeSend: function(request) {
@@ -2499,7 +2499,7 @@
      
          var data = issueData;
          var ids = sessionStorage.getItem("containerId");
-         var urls = 'https://developer.api.autodesk.com/issues/v1/containers/'+ids+'/issues/'+iid
+         var urls = 'https://developer.api.autodesk.com/v2/containers/'+ids+'/issues/'+iid
          $.ajax({
                type: "PATCH",
                beforeSend: function(request) {
@@ -2543,7 +2543,7 @@
          var returnArray=[];
          if(issues != null && typeof issues != "undefined") {
              $.each(issues,function(i,it) {
-                 var url = "https://developer.api.autodesk.com/issues/v1/containers/"+it+"/issues?page[limit]=100";
+                 var url = "https://developer.api.autodesk.com/issues/v2/containers/"+it+"/issues?page[limit]=100";
                   $.ajax({
                        type: "GET",
                        beforeSend: function(request) {
