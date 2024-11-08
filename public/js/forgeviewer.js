@@ -401,7 +401,7 @@ function fetchAllIssuesFromBim360(issueId) {
     dataType: "jsonp",
     beforeSend: function (request) {
       request.setRequestHeader("Authorization", "Bearer " + accessToken);
-      request.setRequestHeader("Content-Type", "application/vnd.api+json");
+      request.setRequestHeader("Content-Type", "application/json");
     },
     url: url,
     async: false,
