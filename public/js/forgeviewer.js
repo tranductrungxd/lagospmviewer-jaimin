@@ -398,7 +398,6 @@ function fetchAllIssuesFromBim360(issueId) {
   var url = "https://developer.api.autodesk.com/issues/v2/containers/"+it+"/issues/"+issueId;
   $.ajax({
     type: "GET",
-    dataType: "jsonp",
     beforeSend: function (request) {
       request.setRequestHeader("Authorization", "Bearer " + accessToken);
       request.setRequestHeader("Content-Type", "application/json");

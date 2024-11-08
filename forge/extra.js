@@ -2342,7 +2342,7 @@
      function getNgIssueTypes(issueId) {
          $("#issueSub").find('option').remove();
          var containerId = sessionStorage.getItem("containerId");
-         var urls = 'https://developer.api.autodesk.com/issues/v2/containers/'+containerId+'/ng-issue-types?include=subtypes';
+         var urls = 'https://developer.api.autodesk.com/issues/v2/containers/'+containerId+'/issue-types?include=subtypes';
           $.ajax({
                type: "GET",
                beforeSend: function(request) {
