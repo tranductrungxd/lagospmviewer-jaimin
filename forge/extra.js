@@ -1958,7 +1958,7 @@
 
          BIM360IssueExtension.prototype.showIssues = function () {
            var _this = this;
-          
+        console.log(_this.issues)
            //remove the list of last time
            var pushPinExtension = _this.viewer.getExtension(_this.pushPinExtensionName);
            pushPinExtension.removeAllItems();	

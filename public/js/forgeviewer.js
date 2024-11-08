@@ -182,9 +182,15 @@ function loginToBim360() {
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("expire");
     localStorage.removeItem("bimToken");
-    var url = "https://developer.api.autodesk.com//authentication/v2/authorize?"
+
+  /*   var url = "https://developer.api.autodesk.com//authentication/v2/authorize?"
       + "client_id=QsqosEk9aHS6VIdEWrfgPBiOBBqFHB5r&response_type=code&redirect_uri="
       + "https://lagosviewer.herokuapp.com/forge/oauth/tokenForge_3Legs&scope=data:read%20data:write%20data:create%20data:search%20code:all%20account:read%20user-profile:read%20viewables:read";
+ */
+    var url = "https://developer.api.autodesk.com//authentication/v2/authorize?"
+      + "client_id=QsqosEk9aHS6VIdEWrfgPBiOBBqFHB5r&response_type=code&redirect_uri="
+      + "http://localhost:3000/forge/oauth/tokenForge_3Legs&scope=data:read%20data:write%20data:create%20data:search%20code:all%20account:read%20user-profile:read%20viewables:read";
+
     var left = (screen.width / 2) - (650 / 2);
     var top = (screen.height / 3) - (600 / 2);
     var newWindow = window.open(url, 'Logon to your BIM360 account.', 'height=600,width=650,top=' + top + ',left=' + left);
@@ -345,33 +351,34 @@ BIM360IssueExtension.prototype.showIssues = function () {
   var pushpinDataArray = [];
   $("#bim360IssuePanel-scroll-container > .treeview").prepend("<button id='importIssueBtn' class='forgePanelButton importIssueBtn'>Import selected</button><button id='selectAllIssue' class='forgePanelButton selectAllIssueBtn'>Select All</button>");
   _this.issues.forEach(function (issue) {
-
-    if (issue.attributes.pushpin_attributes.viewer_state != null && typeof issue.attributes.pushpin_attributes.viewer_state.seedURN != "undefined") {
-      var dateCreated = issue.attributes.created_at;
-      var dateUpdated = issue.attributes.updated_at;
-      var dueDate = issue.attributes.due_date;
-      var issueStatus = issue.attributes.status.charAt(0).toUpperCase() + issue.attributes.status.slice(1);
-      console.log("boom " + issue);
-      var issueAttributes = issue.attributes;
-      var pushpinAttributes = issue.attributes.pushpin_attributes;
-      if (pushpinAttributes) {
-        issue.type = issue.type.replace('quality_', '');
-
-        pushpinDataArray.push({
-          id: issue.id,
-          label: issue.attributes.title,
-          status: issue.type && issueAttributes.status.indexOf(issue.type) === -1 ? `${issue.type}-${issueAttributes.status}` : issueAttributes.status,
-          position: pushpinAttributes.location,
-          type: issue.type,
-          objectId: pushpinAttributes.object_id,
-          viewerState: pushpinAttributes.viewer_state
-        });
+    const pushpinAttributes = issue.linkedDocuments[0];
+    if(pushpinAttributes){
+      const viewer_state = pushpinAttributes.details.viewerState
+  
+      if (viewer_state && viewer_state.seedURN != "undefined") {
+    
+        console.log("boom " + issue);
+        const pushpinAttributes = issue.linkedDocuments[0];
+        if (pushpinAttributes) {
+          // issue.type = issue.type.replace('quality_', '');
+          const position = new THREE.Vector3(location.x, location.y, location.z);
+          pushpinDataArray.push({
+            id: issue.id,
+            label: issue.title,
+            status: issue.status,
+            position,
+            type: "issues",
+            objectId: pushpinAttributes.details.objectId,
+            viewerState: viewer_state
+          });
+        }
       }
-    }
+  
+      pushPinExtension.loadItemsV2(pushpinDataArray);
+      viewer.restoreState(pushpinAttributes.viewer_state);
+      pushPinExtension.pushPinManager.selectOne(issue.id);
 
-    pushPinExtension.loadItemsV2(pushpinDataArray);
-    viewer.restoreState(pushpinAttributes.viewer_state);
-    pushPinExtension.pushPinManager.selectOne(issue.id);
+    }
 
   })
 
@@ -392,7 +399,6 @@ BIM360IssueExtension.prototype.createIssue = function () {
 
 function fetchAllIssuesFromBim360(issueId) {
   var accessToken = localStorage.getItem("bimToken");
-  console.log(accessToken)
   var returnArray = [];
   var it = "e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2";
   var url = "https://developer.api.autodesk.com/issues/v2/containers/"+it+"/issues/"+issueId;
@@ -405,7 +411,7 @@ function fetchAllIssuesFromBim360(issueId) {
     url: url,
     async: false,
     error: function (httpObj, textStatus) {
-      console.log(httpObj)
+     
       if (httpObj.status == 401) {
         refreshBimDocToken();
         if(localStorage.getItem("refreshToken") != "undefined" && localStorage.getItem("refreshToken") != null) {
@@ -413,10 +419,9 @@ function fetchAllIssuesFromBim360(issueId) {
         }
       }
     },
-    success: function (msg) {
-
-      if (!$.isEmptyObject(msg.data)) {
-        returnArray.push(msg.data);
+    success: function (data) {
+      if (!$.isEmptyObject(data)) {
+        returnArray.push(data);
       }
      // animateIssue(msg);
     }
