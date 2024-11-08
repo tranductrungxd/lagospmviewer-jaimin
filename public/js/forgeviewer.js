@@ -392,10 +392,10 @@ BIM360IssueExtension.prototype.createIssue = function () {
 
 function fetchAllIssuesFromBim360(issueId) {
   var accessToken = localStorage.getItem("bimToken");
-  console.log(accessToken)
+ 
   var returnArray = [];
   var it = "e79b1aa1-aeb6-40c7-9508-c35e4c7ec6c2";
-  var url = "https://developer.api.autodesk.com/issues/v2/containers/"+it+"/quality-issues/"+issueId;
+  var url = "https://developer.api.autodesk.com/issues/v2/containers/"+it+"/"+issueId;
   $.ajax({
     type: "GET",
     dataType: "jsonp",
