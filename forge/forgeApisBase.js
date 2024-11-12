@@ -34,7 +34,7 @@ const getAllProjectInHub = async (hubId) => {
 const refreshToken = async (refresh) => {
   try {
     if(refresh) {
-      const url = `https://developer.api.autodesk.com/authentication/v1/refreshtoken`; 
+      const url = `https://developer.api.autodesk.com/authentication/v2/token`; 
       
       let req = {
           'client_id' : process.env.FORGE_CLIENT_ID, 
